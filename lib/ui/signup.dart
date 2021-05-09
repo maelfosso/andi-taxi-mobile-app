@@ -76,6 +76,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   TextField(
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Color(0xFFF7F8F9),

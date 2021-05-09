@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         accentColor: Color(0xFF97ADB6),
         primarySwatch: color
       ),
-      home: SignUp()
+      home: Welcome()
       // MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
