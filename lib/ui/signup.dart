@@ -2,6 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatelessWidget {
+
+  _buildBody() { 
+    return Expanded(
+      flex: 1,
+      child: Container(
+        color: Colors.red,
+      )
+    );
+  }
+
+  _buildFooter() {
+    return Container(
+        color: Colors.yellow
+      
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +34,12 @@ class SignUp extends StatelessWidget {
       ),
       body: Container(
         color: Colors.white,
-        child: Container(),
+        child: Column(
+          children: [
+            _buildBody(),
+            _buildFooter()
+          ],
+        )
       ),
     );
   }
