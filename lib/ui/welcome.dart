@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:andi_taxi/ui/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,9 @@ class _WelcomeState extends State<Welcome> {
     initialPage: 0
   );
 
-  static const _kDuration = const Duration(milliseconds: 300);
+  bool _nextStep = false;
+
+  static const _kDuration = const Duration(milliseconds: 0);
 
   static const _kCurve = Curves.ease;
 
@@ -39,6 +42,14 @@ class _WelcomeState extends State<Welcome> {
       "Enable location sharing so that your driver can see where you are"
     )
   ];
+
+  _signUp() {
+    Navigator
+      .of(context)
+      .pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => new SignUp())
+      );
+  }
 
   _buildPage(int index) {
     var content = _pagesContents[index];
@@ -76,9 +87,50 @@ class _WelcomeState extends State<Welcome> {
         controller: _controller,
         itemCount: _pagesContents.length,
         itemBuilder: (BuildContext context, int index) {
-          return _buildPage(index);
+          return _buildPage(index % _pagesContents.length);
+        },        
+        onPageChanged: (int index) {
+          if (index == _pagesContents.length - 1) {
+            setState(() {
+              _nextStep = true;
+            });
+          }
         },
       )
+    );
+  }
+
+  _buildSignButtons() {
+    if (!_nextStep) {
+      return Container();
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(25.0),
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              // style: ButtonStyle(
+              //   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              //     RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(18.0),
+              //     )
+              //   )
+              // ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.0),
+                child: Text(
+                  "Sign Up",
+                  textAlign: TextAlign.center,
+                )
+              ),
+              onPressed: _signUp
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -116,6 +168,7 @@ class _WelcomeState extends State<Welcome> {
           child: Column(
             children: [
               _buildPageView(),
+              _buildSignButtons(),
               _buildDot()
             ],
           ),
