@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatelessWidget {
@@ -13,9 +14,35 @@ class SignUp extends StatelessWidget {
   }
 
   _buildFooter() {
+    TextStyle defaultStyle = TextStyle(
+      color: Color(0xFF97ADB6)
+    );
+    TextStyle linkStyle = TextStyle(
+      color: Color(0xFFC6902E),
+      decoration: TextDecoration.underline
+    );
+
     return Container(
-        color: Colors.yellow
-      
+      padding: const EdgeInsets.symmetric(vertical: 25.0),
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          style: defaultStyle,
+          children: <TextSpan>[
+            TextSpan(
+              text: 'Already have an account? '
+            ),
+            TextSpan(
+              text: 'Sign In',
+              style: linkStyle,
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  print('Terms of Service"');
+                }
+            ),
+          ],
+        )
+      ),
     );
   }
   @override
