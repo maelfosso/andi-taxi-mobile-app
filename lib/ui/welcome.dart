@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +17,17 @@ class Welcome extends StatefulWidget {
 
 class _WelcomeState extends State<Welcome> {
 
-  PageController _controller = PageController(
+  final _controller = PageController(
     initialPage: 0
   );
 
-  final List<PVStepContent> pagesContents = [
+  static const _kDuration = const Duration(milliseconds: 300);
+
+  static const _kCurve = Curves.ease;
+
+  final _kArrowColor = Colors.black.withOpacity(0.8);
+
+  final List<PVStepContent> _pagesContents = [
     new PVStepContent(
       "Set your location", 
       "Enable location sharing so that your driver can see where you are"
@@ -35,7 +43,7 @@ class _WelcomeState extends State<Welcome> {
   ];
 
   _buildPage(int index) {
-    var content = pagesContents[index];
+    var content = _pagesContents[index];
 
     // return ConstrainedBox(
     //   constraints: const BoxConstraints.expand(),
@@ -57,7 +65,7 @@ class _WelcomeState extends State<Welcome> {
         physics: new AlwaysScrollableScrollPhysics(),
         controller: _controller,
         itemBuilder: (BuildContext context, int index) {
-          return _buildPage(index % pagesContents.length);
+          return _buildPage(index % _pagesContents.length);
         },
       )
     );
@@ -65,10 +73,27 @@ class _WelcomeState extends State<Welcome> {
 
   _buildDot() {
     return Container(
-      child: Center(
-        child: Text("dot ..."),
+      color: Colors.grey[800].withOpacity(0.5),
+      padding: const EdgeInsets.all(20.0),
+      child: new Center(
+        child: new DotsIndicator(
+          controller: _controller,
+          itemCount: _pagesContents.length,
+          onPageSelected: (int page) {
+            _controller.animateToPage(
+              page,
+              duration: _kDuration,
+              curve: _kCurve,
+            );
+          },
+        ),
       ),
     );
+    // Container(
+    //   child: Center(
+    //     child: Text("dot ..."),
+    //   ),
+    // );
   }
 
   @override
@@ -92,6 +117,71 @@ class _WelcomeState extends State<Welcome> {
           ),
         )
       )
+    );
+  }
+}
+
+class DotsIndicator extends AnimatedWidget {
+  DotsIndicator({
+    this.controller,
+    this.itemCount,
+    this.onPageSelected,
+    this.color: Colors.white,
+  }) : super(listenable: controller);
+
+  /// The PageController that this DotsIndicator is representing.
+  final PageController controller;
+
+  /// The number of items managed by the PageController
+  final int itemCount;
+
+  /// Called when a dot is tapped
+  final ValueChanged<int> onPageSelected;
+
+  /// The color of the dots.
+  ///
+  /// Defaults to `Colors.white`.
+  final Color color;
+
+  // The base size of the dots
+  static const double _kDotSize = 8.0;
+
+  // The increase in the size of the selected dot
+  static const double _kMaxZoom = 2.0;
+
+  // The distance between the center of each dot
+  static const double _kDotSpacing = 25.0;
+
+  Widget _buildDot(int index) {
+    double selectedness = Curves.easeOut.transform(
+      max(
+        0.0,
+        1.0 - ((controller.page ?? controller.initialPage) - index).abs(),
+      ),
+    );
+    double zoom = 1.0 + (_kMaxZoom - 1.0) * selectedness;
+    return new Container(
+      width: _kDotSpacing,
+      child: new Center(
+        child: new Material(
+          color: color,
+          type: MaterialType.circle,
+          child: new Container(
+            width: _kDotSize * zoom,
+            height: _kDotSize * zoom,
+            child: new InkWell(
+              onTap: () => onPageSelected(index),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget build(BuildContext context) {
+    return new Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: new List<Widget>.generate(itemCount, _buildDot),
     );
   }
 }
