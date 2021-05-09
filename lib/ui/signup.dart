@@ -9,6 +9,32 @@ class SignUp extends StatelessWidget {
       flex: 1,
       child: Container(
         color: Colors.red,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+
+            ),
+            Container(
+              
+            ),
+            Container(
+
+            ),
+            Container(
+              child: ElevatedButton(
+                child: Text(
+                  "Sign Up",
+                  textAlign: TextAlign.center,
+                ),
+                onPressed: () {
+                  print('SignUp Button pressed');
+                },
+              ),
+            )
+          ],
+        ),
       )
     );
   }
