@@ -2,17 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
+  @override
+  _SignUpState createState() => _SignUpState();
+}
 
+class _SignUpState extends State<SignUp> {
+
+  bool _obscurePassword = true;
+  String password;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscurePassword = !_obscurePassword;
+    });
+  }
 
   _buildBody(BuildContext context) { 
     return Expanded(
       flex: 1,
       child: Container(
-        // color: Colors.red,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               margin: EdgeInsets.symmetric(vertical: 5.0),
@@ -101,7 +112,7 @@ class SignUp extends StatelessWidget {
                     ),
                   ),
                   TextField(
-                    obscureText: true,
+                    obscureText: _obscurePassword,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Color(0xFFF7F8F9),
@@ -112,8 +123,11 @@ class SignUp extends StatelessWidget {
                           width: 0.0
                         )
                       ),
-                      suffixIcon: Icon(
-                        Icons.visibility
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword ? Icons.visibility : Icons.visibility_off
+                        ),
+                        onPressed: _togglePasswordVisibility,
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15.0),
@@ -137,7 +151,6 @@ class SignUp extends StatelessWidget {
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
-                        // side: BorderSide(color: Colors.red)
                       )
                     )
                   ),
