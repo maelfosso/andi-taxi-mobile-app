@@ -73,8 +73,7 @@ class _WelcomeState extends State<Welcome> {
 
   _buildDot() {
     return Container(
-      color: Colors.grey[800].withOpacity(0.5),
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(25.0),
       child: new Center(
         child: new DotsIndicator(
           controller: _controller,
@@ -89,11 +88,6 @@ class _WelcomeState extends State<Welcome> {
         ),
       ),
     );
-    // Container(
-    //   child: Center(
-    //     child: Text("dot ..."),
-    //   ),
-    // );
   }
 
   @override
@@ -141,7 +135,7 @@ class DotsIndicator extends AnimatedWidget {
   /// The color of the dots.
   ///
   /// Defaults to `Colors.white`.
-  final Color color;
+  Color color;
 
   // The base size of the dots
   static const double _kDotSize = 8.0;
@@ -160,13 +154,22 @@ class DotsIndicator extends AnimatedWidget {
       ),
     );
     double zoom = 1.0 + (_kMaxZoom - 1.0) * selectedness;
+    bool current = (controller.page ?? controller.initialPage) == index;
+
     return new Container(
       width: _kDotSpacing,
       child: new Center(
         child: new Material(
-          color: color,
+          color: (current ? Colors.white : Colors.blue),
           type: MaterialType.circle,
+          shadowColor: Colors.red,
           child: new Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+              border: Border.all(
+                color: Colors.blue,
+              ),
+            ),
             width: _kDotSize * zoom,
             height: _kDotSize * zoom,
             child: new InkWell(
