@@ -25,8 +25,6 @@ class _WelcomeState extends State<Welcome> {
 
   static const _kCurve = Curves.ease;
 
-  final _kArrowColor = Colors.black.withOpacity(0.8);
-
   final List<PVStepContent> _pagesContents = [
     new PVStepContent(
       "Set your location", 
@@ -45,13 +43,25 @@ class _WelcomeState extends State<Welcome> {
   _buildPage(int index) {
     var content = _pagesContents[index];
 
-    // return ConstrainedBox(
-    //   constraints: const BoxConstraints.expand(),
-    return Center(
+    return Container(
+      padding: const EdgeInsets.all(75.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(content.title),
-          Text(content.description)
+          Image(image: AssetImage('assets/images/welcome.png')),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 15.0),
+            child:Text(
+            content.title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold
+            ),
+          )),
+          Text(
+            content.description,
+            textAlign: TextAlign.center,
+          ),
         ]
       ),
     );
@@ -64,8 +74,9 @@ class _WelcomeState extends State<Welcome> {
         scrollDirection: Axis.horizontal,
         physics: new AlwaysScrollableScrollPhysics(),
         controller: _controller,
+        itemCount: _pagesContents.length,
         itemBuilder: (BuildContext context, int index) {
-          return _buildPage(index % _pagesContents.length);
+          return _buildPage(index);
         },
       )
     );
@@ -104,7 +115,6 @@ class _WelcomeState extends State<Welcome> {
         child: Container(
           child: Column(
             children: [
-              Text('Welcome'),
               _buildPageView(),
               _buildDot()
             ],
@@ -120,7 +130,6 @@ class DotsIndicator extends AnimatedWidget {
     this.controller,
     this.itemCount,
     this.onPageSelected,
-    this.color: Colors.white,
   }) : super(listenable: controller);
 
   /// The PageController that this DotsIndicator is representing.
@@ -131,11 +140,6 @@ class DotsIndicator extends AnimatedWidget {
 
   /// Called when a dot is tapped
   final ValueChanged<int> onPageSelected;
-
-  /// The color of the dots.
-  ///
-  /// Defaults to `Colors.white`.
-  Color color;
 
   // The base size of the dots
   static const double _kDotSize = 8.0;
