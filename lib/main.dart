@@ -1,3 +1,4 @@
+import 'package:andi_taxi/ui/signup.dart';
 import 'package:andi_taxi/ui/welcome.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Welcome()
+      home: SignUp()
       // MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
