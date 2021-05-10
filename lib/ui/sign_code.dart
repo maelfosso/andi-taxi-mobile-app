@@ -10,6 +10,8 @@ class SignCode extends StatefulWidget {
 }
 
 class _SignCode extends State<SignCode> {
+  GlobalKey _keyboardKey = GlobalKey();
+
   Timer _timer;
   int _counter;
   bool _timeout;
@@ -116,9 +118,8 @@ class _SignCode extends State<SignCode> {
     );
 
     return Expanded(
-      flex: 2,
+      flex: 3,
       child: Container(
-        color: Colors.red,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -138,10 +139,76 @@ class _SignCode extends State<SignCode> {
   }
 
   Widget _buildKeyboard() {
-    return Expanded(
-      flex: 1,
+    List<Widget> keys = List.generate(4, (i) => Expanded(
       child: Container(
-        color: Colors.yellow
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: List.generate(3, (j) {
+            var index = i*3 + j;
+            print("$index, ${(index + 1) % 10}");
+
+            if (index == 11) {
+              return Expanded(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    enableFeedback: true,
+                    child: Center(
+                      child: Icon(
+                        Icons.backspace,
+                        color: Color(0xFF97ADB6),
+                      ),
+                    ),
+                  ),
+                )
+              );
+            }
+            if (index == 9) {
+              return Expanded(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    enableFeedback: true,
+                    child: Center(
+                      child: Icon(
+                        Icons.check_circle,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                )
+              );
+            }
+            return Expanded(
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  enableFeedback: true,
+                  child: Center(
+                    child: Text(
+                      "${(index == 10) ? 0 : index + 1}",
+                      style: Theme.of(context).textTheme.headline3.copyWith(
+                        fontWeight: FontWeight.bold
+                      )
+                    )
+                  ),
+                  onTap: () => print('key ${index+1}')
+                )
+              )
+            );
+          })
+        )
+        )
+      )
+    );
+
+    return Expanded(
+      flex: 2,
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: keys.toList(),
+        )
       )
     );
   }
