@@ -10,8 +10,32 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
 
+  Widget _buildSignInButtons() {
+    return Expanded(
+      child: Container(
+        color: Colors.yellow
+      )
+    );
+  }
+
+  Widget _buildForm() {
+    return Expanded(
+      child: Container(
+        color: Colors.red,
+      )
+    );
+  }
+
   Widget _buildBody() {
-    return Container();
+    return Expanded(
+      flex: 1,
+      child: Column(
+        children: [
+          _buildForm(),
+          _buildSignInButtons()
+        ],
+      ),
+    );
   }
 
   Widget _buildFooter() {
