@@ -34,7 +34,7 @@ class _SignCode extends State<SignCode> {
         backgroundColor: Colors.white,
         elevation: 0.0,
         title: Text(
-          "Code",
+          "Enter the code",
           style: TextStyle(
             color: Colors.black
           ),

@@ -1,4 +1,5 @@
-import 'package:andi_taxi/ui/signup.dart';
+import 'package:andi_taxi/ui/sign_code.dart';
+import 'package:andi_taxi/ui/sign_up.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,11 @@ class _SignInState extends State<SignIn> {
             )
           ),
           onPressed: () {
-            print('SignIn Button pressed');
+            Navigator
+              .of(context)
+              .pushReplacement(
+                MaterialPageRoute(builder: (BuildContext context) => new SignCode())
+              );
           },
         ),
       )
