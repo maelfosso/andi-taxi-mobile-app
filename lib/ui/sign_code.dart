@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class SignCode extends StatefulWidget {
@@ -8,7 +9,7 @@ class SignCode extends StatefulWidget {
 
 class _SignCode extends State<SignCode> {
 
-  var _inputs = List.filled(4, "X");
+  var _digits = List.filled(4, "X");
 
   Widget _buildCodeUI() {
     var textSentTo = Column(
@@ -32,12 +33,12 @@ class _SignCode extends State<SignCode> {
       ],
     );
 
-    var inputs = Container(
+    var digits = Container(
       padding: EdgeInsets.all(16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: List<Widget>.generate(_inputs.length, (index) => Container(
+        children: List<Widget>.generate(_digits.length, (index) => Container(
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
@@ -49,13 +50,29 @@ class _SignCode extends State<SignCode> {
           padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
           margin: EdgeInsets.all(5.0),
           child: Text(
-            _inputs[index],
+            _digits[index],
             style: Theme.of(context).textTheme.headline3.copyWith(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).primaryColor
             )
           ),
         ))
+      ),
+    );
+
+    var resentCode = Container(
+      child: RichText(
+        text: TextSpan(
+        text: "Re-sent the code (0:30)",
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            decoration: TextDecoration.underline
+          ),
+          recognizer: TapGestureRecognizer()
+            ..onTap = () {
+              print("Resent the code SMS");
+            }
+        )
       ),
     );
 
@@ -68,7 +85,13 @@ class _SignCode extends State<SignCode> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             textSentTo,
-            inputs
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                digits,
+                resentCode
+              ],
+            )
           ],
         ),
       )
