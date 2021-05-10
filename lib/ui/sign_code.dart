@@ -10,16 +10,15 @@ class SignCode extends StatefulWidget {
 }
 
 class _SignCode extends State<SignCode> {
-  GlobalKey _keyboardKey = GlobalKey();
-
   Timer _timer;
   int _counter;
   bool _timeout;
 
-  int MAX_DURATION = 5;
+  static const int MAX_DURATION = 5;
 
-  var _digits = List.filled(4, "X");
-  
+  var _digits = List.filled(4, "");
+  var _currentPosition = 0;
+
   void _startTimer() {
     const oneSec = const Duration(seconds: 1);
 
@@ -159,6 +158,14 @@ class _SignCode extends State<SignCode> {
                         color: Color(0xFF97ADB6),
                       ),
                     ),
+                    onTap: () {
+                      setState(() {
+                        if (_currentPosition > 0) {
+                          _currentPosition -= 1;
+                          _digits[_currentPosition] = "";
+                        }
+                      });
+                    },
                   ),
                 )
               );
@@ -175,6 +182,9 @@ class _SignCode extends State<SignCode> {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
+                    onTap: () {
+                      print("submit the code");
+                    },
                   ),
                 )
               );
@@ -192,7 +202,15 @@ class _SignCode extends State<SignCode> {
                       )
                     )
                   ),
-                  onTap: () => print('key ${index+1}')
+                  onTap: () {
+                    print('key ${index+1}');
+                    if (_currentPosition < 4) {
+                      setState(() {
+                        _digits[_currentPosition] = "${(index == 10) ? 0 : index + 1}";
+                        _currentPosition += 1;
+                      });
+                    }
+                  }
                 )
               )
             );
@@ -218,8 +236,9 @@ class _SignCode extends State<SignCode> {
     super.initState();
     _counter = MAX_DURATION;
     _timeout = false;
-
     _startTimer();
+
+    _currentPosition = 0;
   }
 
   @override
