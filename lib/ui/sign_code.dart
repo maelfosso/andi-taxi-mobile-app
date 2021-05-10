@@ -77,10 +77,11 @@ class _SignCode extends State<SignCode> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: List<Widget>.generate(_digits.length, (index) => Container(
+          width: 45.0,
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                width: 5.0,
+                width: 2.0,
                 color: Color(0xFFC6902E)
               )
             )
@@ -144,7 +145,6 @@ class _SignCode extends State<SignCode> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: List.generate(3, (j) {
             var index = i*3 + j;
-            print("$index, ${(index + 1) % 10}");
 
             if (index == 11) {
               return Expanded(
