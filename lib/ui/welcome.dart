@@ -112,13 +112,6 @@ class _WelcomeState extends State<Welcome> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              // style: ButtonStyle(
-              //   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              //     RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(18.0),
-              //     )
-              //   )
-              // ),
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0),
                 child: Text(
