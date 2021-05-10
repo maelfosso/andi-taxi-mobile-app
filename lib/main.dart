@@ -1,4 +1,4 @@
-import 'package:andi_taxi/ui/signup.dart';
+import 'package:andi_taxi/ui/sign_up.dart';
 import 'package:andi_taxi/ui/welcome.dart';
 import 'package:flutter/material.dart';
 

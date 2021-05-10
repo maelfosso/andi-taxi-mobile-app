@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:andi_taxi/ui/signin.dart';
-import 'package:andi_taxi/ui/signup.dart';
+import 'package:andi_taxi/ui/sign_in.dart';
+import 'package:andi_taxi/ui/sign_up.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
