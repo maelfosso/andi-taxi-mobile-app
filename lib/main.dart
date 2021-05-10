@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
     MaterialColor color = new MaterialColor(0xFFC6902E, colorCodes);
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'An Di Taxi',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
