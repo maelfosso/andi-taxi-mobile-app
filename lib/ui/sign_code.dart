@@ -9,10 +9,36 @@ class SignCode extends StatefulWidget {
 class _SignCode extends State<SignCode> {
 
   Widget _buildCodeUI() {
+    var textSentTo = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          "Code sent by SMS to",
+          style: TextStyle(
+            color: Theme.of(context).accentColor
+          ),
+        ),
+        Text(
+          "+33 234 556 7888",
+          style: TextStyle(
+            color: Theme.of(context).accentColor
+          ),
+        )
+      ],
+    );
+
     return Expanded(
       flex: 2,
       child: Container(
         color: Colors.red,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            textSentTo
+          ],
+        ),
       )
     );
   }
