@@ -37,12 +37,44 @@ class _SignInState extends State<SignIn> {
       )
     );
 
+    var divider = Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(
+              color: Theme.of(context).accentColor,
+              height: 1.0,
+            )
+          ),
+          Expanded(
+            child: Container(
+              child: Text(
+                "OR",
+                textAlign: TextAlign.center,
+              )
+            )
+          ),
+          Expanded(
+            child: Container(
+              color: Theme.of(context).accentColor,
+              height: 1.0,
+            )
+          ),
+        ],
+      ),
+    );
+
     return Expanded(
       child: Container(
         color: Colors.yellow,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             signInButton,
+            divider
           ],
         ),
       )
