@@ -120,6 +120,19 @@ class _WelcomeState extends State<Welcome> {
                 )
               ),
               onPressed: _signUp
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.transparent
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.0),
+                child: Text(
+                  "Sign In",
+                  textAlign: TextAlign.center,
+                )
+              ),
+              onPressed: _signUp
             )
           ],
         ),
