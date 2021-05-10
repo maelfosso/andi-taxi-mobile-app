@@ -19,7 +19,7 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  _buildBody(BuildContext context) { 
+  _buildBody() { 
     return Expanded(
       flex: 1,
       child: Container(
@@ -230,7 +230,7 @@ class _SignUpState extends State<SignUp> {
         padding: EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(
           children: [
-            _buildBody(context),
+            _buildBody(),
             _buildFooter()
           ],
         )
