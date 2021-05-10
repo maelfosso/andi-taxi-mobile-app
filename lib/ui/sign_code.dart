@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -8,29 +10,64 @@ class SignCode extends StatefulWidget {
 }
 
 class _SignCode extends State<SignCode> {
+  Timer _timer;
+  int _counter;
+  bool _timeout;
+
+  int MAX_DURATION = 5;
 
   var _digits = List.filled(4, "X");
+  
+  void _startTimer() {
+    const oneSec = const Duration(seconds: 1);
+
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_counter == 0) {
+          setState(() {
+            timer.cancel();
+            _timeout = true;
+          });
+        } else {
+          setState(() {
+            _counter--;
+          });
+        }
+      },
+    );
+  }
+
+  void _initTimer() {
+    setState(() {
+      _timeout = false;
+      _counter = MAX_DURATION;
+    });
+  }
 
   Widget _buildCodeUI() {
-    var textSentTo = Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          "Code sent by SMS to",
-          style: TextStyle(
-            color: Theme.of(context).accentColor,
-            fontSize: 18.0
+    var textSentTo = Container(
+      margin: EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Code sent by SMS to",
+            style: TextStyle(
+              color: Theme.of(context).accentColor,
+              fontSize: 18.0
+            ),
           ),
-        ),
-        Text(
-          "+33 234 556 7888",
-          style: TextStyle(
-            color: Theme.of(context).accentColor,
-            fontSize: 18.0
-          ),
-        )
-      ],
+          Text(
+            "+33 234 556 7888",
+            style: TextStyle(
+              color: Theme.of(context).accentColor,
+              fontSize: 18.0
+            ),
+          )
+        ],
+      )
     );
 
     var digits = Container(
@@ -63,14 +100,16 @@ class _SignCode extends State<SignCode> {
     var resentCode = Container(
       child: RichText(
         text: TextSpan(
-        text: "Re-sent the code (0:30)",
+        text: "Re-sent the code " + (_timeout ? "" : "(0:$_counter)"),
           style: TextStyle(
-            color: Theme.of(context).primaryColor,
+            color: _timeout ? Theme.of(context).accentColor : Theme.of(context).primaryColor,
             decoration: TextDecoration.underline
           ),
           recognizer: TapGestureRecognizer()
             ..onTap = () {
               print("Resent the code SMS");
+              _initTimer();
+              _startTimer();
             }
         )
       ),
@@ -81,7 +120,7 @@ class _SignCode extends State<SignCode> {
       child: Container(
         color: Colors.red,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             textSentTo,
@@ -107,6 +146,20 @@ class _SignCode extends State<SignCode> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _counter = MAX_DURATION;
+    _timeout = false;
+
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
