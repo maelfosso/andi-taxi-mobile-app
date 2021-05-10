@@ -21,8 +21,44 @@ class _SignInState extends State<SignIn> {
   Widget _buildForm() {
     return Expanded(
       child: Container(
-        color: Colors.red,
-      )
+        margin: EdgeInsets.symmetric(vertical: 5.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Phone number",
+              textAlign: TextAlign.left,
+              style: Theme.of(context).textTheme.subtitle1.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Color(0xFFF7F8F9),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                    width: 0.0
+                  )
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).primaryColor,
+                    width: 1.0
+                  )
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15.0),
+                isDense: true,
+              ),
+            )
+          ]
+        ),
+      ),   
     );
   }
 
