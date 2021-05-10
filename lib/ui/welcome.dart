@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:andi_taxi/ui/signin.dart';
 import 'package:andi_taxi/ui/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,14 @@ class _WelcomeState extends State<Welcome> {
       .of(context)
       .pushReplacement(
         MaterialPageRoute(builder: (BuildContext context) => new SignUp())
+      );
+  }
+
+  _signIn() {
+    Navigator
+      .of(context)
+      .pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => new SignIn())
       );
   }
 
@@ -109,16 +118,9 @@ class _WelcomeState extends State<Welcome> {
       padding: const EdgeInsets.all(25.0),
       child: Center(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ElevatedButton(
-              // style: ButtonStyle(
-              //   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              //     RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(18.0),
-              //     )
-              //   )
-              // ),
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0),
                 child: Text(
@@ -127,6 +129,16 @@ class _WelcomeState extends State<Welcome> {
                 )
               ),
               onPressed: _signUp
+            ),
+            TextButton(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.0),
+                child: Text(
+                  "Sign In",
+                  textAlign: TextAlign.center,
+                )
+              ),
+              onPressed: _signIn
             )
           ],
         ),
