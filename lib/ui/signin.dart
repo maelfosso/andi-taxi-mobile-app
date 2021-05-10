@@ -66,15 +66,63 @@ class _SignInState extends State<SignIn> {
       ),
     );
 
+    var snButtons = Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Material(
+            child: InkWell(
+              onTap: () {
+                print('clic on facebook icon');
+              },
+              child: Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.asset('assets/images/ic_facebook.png'),
+                ),
+              ),
+            )
+          ),
+          Material(
+            child: InkWell(
+              onTap: () {
+                print('clic on twitter icon');
+              },
+              child: Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.asset('assets/images/ic_twitter.png'),
+                ),
+              ),
+            )
+          ),
+          Material(
+            child: InkWell(
+              onTap: () {
+                print('clic on gmail icon');
+              },
+              child: Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.asset('assets/images/ic_gmail.png'),
+                ),
+              ),
+            )
+          )
+        ],
+      ),
+    );
+
     return Expanded(
       child: Container(
-        color: Colors.yellow,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             signInButton,
-            divider
+            divider,
+            snButtons
           ],
         ),
       )
