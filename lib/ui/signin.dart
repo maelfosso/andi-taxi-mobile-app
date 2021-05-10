@@ -11,9 +11,40 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
 
   Widget _buildSignInButtons() {
+    var signInButton = Container(
+      margin: EdgeInsets.symmetric(vertical: 15.0),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              )
+            )
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.0),
+            child: Text(
+              "Sign In",
+              textAlign: TextAlign.center,
+            )
+          ),
+          onPressed: () {
+            print('SignIn Button pressed');
+          },
+        ),
+      )
+    );
+
     return Expanded(
       child: Container(
-        color: Colors.yellow
+        color: Colors.yellow,
+        child: Column(
+          children: [
+            signInButton,
+          ],
+        ),
       )
     );
   }
