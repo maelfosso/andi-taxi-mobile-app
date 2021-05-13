@@ -22,8 +22,9 @@ class AuthenticationRepository {
   @visibleForTesting
   static const userCacheKey = '__user_cache_key__';
   
-  Stream<User> get user {
-    return 
+  // Stream<User>
+  User get user {
+    return User.empty;
   }
 
   User get currentUser {

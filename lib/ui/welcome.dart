@@ -200,9 +200,9 @@ class _WelcomeState extends State<Welcome> {
 
 class DotsIndicator extends AnimatedWidget {
   DotsIndicator({
-    this.controller,
-    this.itemCount,
-    this.onPageSelected,
+    required this.controller,
+    required this.itemCount,
+    required this.onPageSelected,
   }) : super(listenable: controller);
 
   /// The PageController that this DotsIndicator is representing.

@@ -1,3 +1,4 @@
+import 'package:andi_taxi/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
@@ -20,4 +21,19 @@ class User extends Equatable {
 
   @override
   List<Object?> get props => [id, name, phone];
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'] ?? '',
+      name: json['name'],
+      phone: json['phone']
+    );
+  }
+  
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'phone': phone
+    };
+  }
 }

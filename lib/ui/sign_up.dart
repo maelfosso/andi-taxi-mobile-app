@@ -12,7 +12,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
 
   bool _obscurePassword = true;
-  String password;
+  String? password;
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -35,7 +35,7 @@ class _SignUpState extends State<SignUp> {
                   Text(
                     "Name",
                     textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.subtitle1.copyWith(
+                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -73,7 +73,7 @@ class _SignUpState extends State<SignUp> {
                   Text(
                     "Phone number",
                     textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.subtitle1.copyWith(
+                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -110,7 +110,7 @@ class _SignUpState extends State<SignUp> {
                   Text(
                     "Password",
                     textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.subtitle1.copyWith(
+                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
