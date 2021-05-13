@@ -16,10 +16,10 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<UserCode> SignUp() async {
+  Future<UserCode> SignUp(name, phone) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
+    final _data = {'name': name, 'phone': phone};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<UserCode>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
@@ -31,10 +31,10 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<UserCode> SignIn() async {
+  Future<UserCode> SignIn(phone) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
+    final _data = {'phone': phone};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<UserCode>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
@@ -46,17 +46,17 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<UserCode> SignCode() async {
+  Future<UserToken> SignCode(phone, code) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
+    final _data = {'phone': phone, 'code': code};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<UserCode>(
+        _setStreamType<UserToken>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/auth/signcode',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = UserCode.fromJson(_result.data!);
+    final value = UserToken.fromJson(_result.data!);
     return value;
   }
 

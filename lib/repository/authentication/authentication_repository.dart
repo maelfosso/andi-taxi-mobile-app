@@ -1,3 +1,6 @@
+import 'package:andi_taxi/api/api.dart';
+import 'package:andi_taxi/api/response/user-code.dart';
+import 'package:andi_taxi/api/response/user-token.dart';
 import 'package:andi_taxi/cache/cache.dart';
 import 'package:andi_taxi/models/models.dart';
 import 'package:andi_taxi/ui/sign_code.dart';
@@ -13,10 +16,13 @@ class SignOutFailure implements Exception {}
 
 class AuthenticationRepository {
   AuthenticationRepository({
-    CacheClient? cache
-  }) : _cache = cache ?? CacheClient() ;
+    CacheClient? cache,
+    RestClient? api
+  }) :  _cache = cache ?? CacheClient(),
+        _api = api ?? APIs.getRestClient() ;
 
   final CacheClient _cache;
+  final RestClient _api;
 
 
   @visibleForTesting
@@ -31,33 +37,45 @@ class AuthenticationRepository {
     return _cache.read<User>(key: userCacheKey) ?? User.empty;
   }
 
-  Future<void> signUpCustomer({ required String name, required String phone }) async {
+  Future<UserCode> signUpCustomer({ required String name, required String phone }) async {
+    UserCode userCode;
+
     try {
-      
+      userCode = await _api.SignUp(name, phone);
     } on Exception {
       throw SignUpFailure();
     }
+
+    return userCode;
   }
 
-  Future<void> signIn({ required String phone }) async {
-    try {
+  Future<UserCode> signIn({ required String phone }) async {
+    UserCode userCode;
 
+    try {
+      userCode = await _api.SignIn(phone);
     } on Exception {
       throw SignInFailure();
     }
+
+    return userCode;
   }
 
-  Future<void> signCode({ required String phone, required String code }) async {
-    try {
+  Future<UserToken> signCode({ required String phone, required String code }) async {
+    UserToken userToken;
 
+    try {
+      userToken = await _api.SignCode(phone, code);
     } on Exception {
       throw SignCodeFailure();
     }
+
+    return userToken;
   }
 
   Future<void> signOut() async {
     try {
-
+      
     } on Exception {
       throw SignOutFailure();
     }
