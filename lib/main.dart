@@ -1,3 +1,4 @@
+import 'package:andi_taxi/blocs/app/app_bloc.dart';
 import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
 import 'package:andi_taxi/ui/welcome.dart';
 import 'package:bloc/bloc.dart';
