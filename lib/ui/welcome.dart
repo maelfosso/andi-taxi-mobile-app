@@ -18,6 +18,10 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
+  final mainKey = Key('main');
+  final pageViewKey = Key('pv');
+  final dotKey = Key('dot');
+  final signBtnKey = Key('sign-btn');
 
   final _controller = PageController(
     initialPage: 0
@@ -91,6 +95,7 @@ class _WelcomeState extends State<Welcome> {
   _buildPageView() {
     return Expanded(
       child: new PageView.builder(
+        key: pageViewKey,
         scrollDirection: Axis.horizontal,
         physics: new AlwaysScrollableScrollPhysics(),
         controller: _controller,
@@ -115,6 +120,7 @@ class _WelcomeState extends State<Welcome> {
     }
 
     return Container(
+      key: signBtnKey,
       padding: const EdgeInsets.all(25.0),
       child: Center(
         child: Row(
@@ -148,6 +154,7 @@ class _WelcomeState extends State<Welcome> {
 
   _buildDot() {
     return Container(
+      key: dotKey,
       padding: const EdgeInsets.all(25.0),
       child: new Center(
         child: new DotsIndicator(
@@ -177,6 +184,7 @@ class _WelcomeState extends State<Welcome> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
+          key: mainKey,
           child: Column(
             children: [
               _buildPageView(),
@@ -229,6 +237,7 @@ class DotsIndicator extends AnimatedWidget {
       width: _kDotSpacing,
       child: new Center(
         child: new Material(
+          key: Key('dot_$index'),
           color: (current ? Colors.white : Colors.blue),
           type: MaterialType.circle,
           shadowColor: Colors.red,
