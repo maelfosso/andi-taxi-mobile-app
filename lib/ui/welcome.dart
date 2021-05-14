@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:andi_taxi/pages/sign_in/view/sign_in_page.dart';
+import 'package:andi_taxi/pages/sign_up/view/sign_up_page.dart';
 import 'package:andi_taxi/ui/sign_in.dart';
 import 'package:andi_taxi/ui/sign_up.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +15,12 @@ class PVStepContent {
 }
 
 class Welcome extends StatefulWidget {
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => Welcome());
+  }
+
+  static Page page() => MaterialPage<void>(child: Welcome());
+
   @override
   _WelcomeState createState() => _WelcomeState();
 }
@@ -49,18 +57,28 @@ class _WelcomeState extends State<Welcome> {
   ];
 
   _signUp() {
+    print('Routing to SignUp');
+    // SignUpPage.route();
     Navigator
       .of(context)
-      .pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => new SignUp())
+      .pushAndRemoveUntil<void>(
+        SignUpPage.route(),
+        (route) => false,
       );
+    // Navigator
+    //   .of(context)
+    //   .pushReplacement(
+    //     MaterialPageRoute(builder: (BuildContext context) => new SignUp())
+    //   );
   }
 
   _signIn() {
+    print('Routing to SignUp');
+    // SignInPage.route();
     Navigator
       .of(context)
       .pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => new SignIn())
+        SignInPage.route()
       );
   }
 
@@ -200,9 +218,9 @@ class _WelcomeState extends State<Welcome> {
 
 class DotsIndicator extends AnimatedWidget {
   DotsIndicator({
-    this.controller,
-    this.itemCount,
-    this.onPageSelected,
+    required this.controller,
+    required this.itemCount,
+    required this.onPageSelected,
   }) : super(listenable: controller);
 
   /// The PageController that this DotsIndicator is representing.

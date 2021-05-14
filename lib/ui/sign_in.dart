@@ -145,7 +145,7 @@ class _SignInState extends State<SignIn> {
             Text(
               "Phone number",
               textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.subtitle1.copyWith(
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),

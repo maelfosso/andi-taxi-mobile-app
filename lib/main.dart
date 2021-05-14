@@ -1,14 +1,59 @@
-import 'package:andi_taxi/ui/sign_up.dart';
+import 'package:andi_taxi/blocs/app/app_bloc.dart';
+import 'package:andi_taxi/blocs/app/bloc_observer.dart';
+import 'package:andi_taxi/blocs/authentication/authentication_bloc.dart';
+import 'package:andi_taxi/pages/home/home_page.dart';
+import 'package:andi_taxi/pages/sign_code/view/sign_code_page.dart';
+import 'package:andi_taxi/pages/splash/splash_page.dart';
+import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
+import 'package:andi_taxi/routes.dart';
 import 'package:andi_taxi/ui/welcome.dart';
+import 'package:bloc/bloc.dart';
+import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(MyApp());
+  Bloc.observer = AppBlocObserver();
+  
+  runApp(App(
+    authenticationRepository: AuthenticationRepository(),
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  Map<int, Color> colorCodes = {
+class App extends StatelessWidget {
+  
+  App({
+    Key? key,
+    required AuthenticationRepository authenticationRepository
+  }): _authenticationRepository = authenticationRepository,
+      super(key: key);
+
+  final AuthenticationRepository _authenticationRepository;
+  
+  @override
+  Widget build(BuildContext context) {
+    return RepositoryProvider.value(
+      value: _authenticationRepository,
+      child: BlocProvider(
+        create: (_) => AuthenticationBloc(
+          authenticationRepository: _authenticationRepository
+        ),
+        child: AppView(),
+      ),
+    );
+  }
+}
+
+class AppView extends StatefulWidget {
+  @override
+  _AppViewState createState() => _AppViewState();
+}
+
+class _AppViewState extends State<AppView> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+  NavigatorState get _navigator => _navigatorKey.currentState!;
+
+  final Map<int, Color> colorCodes = {
     50: Color.fromRGBO(198, 144, 46, .1),
     100: Color.fromRGBO(198, 144, 46, .2),
     200: Color.fromRGBO(198, 144, 46, .3),
@@ -21,115 +66,58 @@ class MyApp extends StatelessWidget {
     900: Color.fromRGBO(198, 144, 46, 1),
   };
 
-  
+
   @override
   Widget build(BuildContext context) {
     MaterialColor color = new MaterialColor(0xFFC6902E, colorCodes);
 
     return MaterialApp(
-      title: 'An Di Taxi',
+      title: 'AnDi Taxi',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primaryColor: Color(0xFFC6902E),
         accentColor: Color(0xFF97ADB6),
         primarySwatch: color
       ),
-      home: Welcome()
-      // MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+      navigatorKey: _navigatorKey,
+      builder: (context, child) {
+        return BlocListener<AuthenticationBloc, AuthenticationState>(
+          listener: (context, state) {
+            switch (state.status) {
+              case AuthenticationStatus.authenticated:
+                _navigator.pushAndRemoveUntil<void>(
+                  HomePage.route(),
+                  (route) => false,
+                );
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+                break;
+              case AuthenticationStatus.known:
+                ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      SnackBar(content: Text('Code : ${state.userCode.code}'))
+                    ); 
+                _navigator.pushAndRemoveUntil<void>(
+                  SignCodePage.route(),
+                  (route) => false,
+                );
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+                break;
+              case AuthenticationStatus.unauthenticated:
+                _navigator.pushAndRemoveUntil<void>(
+                  Welcome.route(),
+                  (route) => false,
+                );
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+                break;
+              default:
+                break;
+            }
+          },
+          child: child,
+        );
+      },
+      onGenerateRoute: (_) => SplashPage.route(),
     );
   }
 }

@@ -10,9 +10,9 @@ class SignCode extends StatefulWidget {
 }
 
 class _SignCode extends State<SignCode> {
-  Timer _timer;
-  int _counter;
-  bool _timeout;
+  Timer? _timer;
+  int _counter = 0;
+  bool _timeout = false;
 
   static const int MAX_DURATION = 5;
 
@@ -90,7 +90,7 @@ class _SignCode extends State<SignCode> {
           margin: EdgeInsets.all(5.0),
           child: Text(
             _digits[index],
-            style: Theme.of(context).textTheme.headline3.copyWith(
+            style: Theme.of(context).textTheme.headline3?.copyWith(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).primaryColor
             )
@@ -197,7 +197,7 @@ class _SignCode extends State<SignCode> {
                   child: Center(
                     child: Text(
                       "${(index == 10) ? 0 : index + 1}",
-                      style: Theme.of(context).textTheme.headline3.copyWith(
+                      style: Theme.of(context).textTheme.headline3?.copyWith(
                         fontWeight: FontWeight.bold
                       )
                     )
@@ -243,9 +243,10 @@ class _SignCode extends State<SignCode> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
