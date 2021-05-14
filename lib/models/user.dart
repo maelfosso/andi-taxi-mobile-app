@@ -6,12 +6,12 @@ class User extends Equatable {
   const User({
     required this.id,
     this.name,
-    this.phone
+    this.phoneNumber
   });
   
   final String id;
   final String? name;
-  final String? phone;
+  final String? phoneNumber;
 
   static const empty = User(id: '');
 
@@ -20,20 +20,21 @@ class User extends Equatable {
   bool get isNotEmpty => this != User.empty;
 
   @override
-  List<Object?> get props => [id, name, phone];
+  List<Object?> get props => [id, name, phoneNumber];
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'] ?? '',
       name: json['name'],
-      phone: json['phone']
+      phoneNumber: json['phoneNumber']
     );
   }
   
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
-      'phone': phone
+      'phoneNumber': phoneNumber
     };
   }
 }

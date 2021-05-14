@@ -6,24 +6,24 @@ part 'user-code.g.dart';
 class UserCode {
 
   String code;
-  String phone;
+  String phoneNumber;
 
   UserCode({  
     required this.code,
-    required this.phone
+    required this.phoneNumber
   });
 
   factory UserCode.fromJson(Map<String, dynamic> json) {
     return UserCode(
       code: json['code'],
-      phone: json['phone']
+      phoneNumber: json['phoneNumber']
     );
   }
   
   Map<String, dynamic> toJson() {
     return {
       'code': code,
-      'phone': phone
+      'phoneNumber': phoneNumber
     };
   }
 }

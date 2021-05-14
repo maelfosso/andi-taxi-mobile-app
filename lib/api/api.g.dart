@@ -8,7 +8,7 @@ part of 'api.dart';
 
 class _RestClient implements RestClient {
   _RestClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://192.168.8.101:3000/api';
+    baseUrl ??= 'http://192.168.8.100:3000/api';
   }
 
   final Dio _dio;
@@ -19,7 +19,7 @@ class _RestClient implements RestClient {
   Future<UserCode> SignUp(name, phone) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = {'name': name, 'phone': phone};
+    final _data = {'name': name, 'phoneNumber': phone};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<UserCode>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)

@@ -29,7 +29,7 @@ abstract class RestClient {
   factory RestClient(Dio dio, { String baseUrl }) = _RestClient;
 
   @POST(APIs.signUp)
-  Future<UserCode> SignUp(@Field() String name, @Field() String phone);
+  Future<UserCode> SignUp(@Field() String name, @Field("phoneNumber") String phone);
 
   @POST(APIs.signIn)
   Future<UserCode> SignIn(@Field() String phone);

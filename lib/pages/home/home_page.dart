@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
           children: <Widget>[
             // Avatar(photo: user.photo),
             // const SizedBox(height: 4.0),
-            Text(user.phone ?? '', style: textTheme.headline6),
+            Text(user.phoneNumber ?? '', style: textTheme.headline6),
             const SizedBox(height: 4.0),
             Text(user.name ?? '', style: textTheme.headline5),
           ],

@@ -45,7 +45,8 @@ class SignUpCubit extends Cubit<SignUpState> {
         phone: state.phone.value,
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } on Exception {
+    } on Exception catch (e) {
+      print('signUpFormSubmitted : throw exception \n $e');
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }

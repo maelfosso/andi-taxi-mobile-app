@@ -198,7 +198,10 @@ class _SignUpButton extends StatelessWidget {
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
-            ? const CircularProgressIndicator()
+            ? LinearProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                semanticsLabel: 'Linear progress indicator',
+              ) // const CircularProgressIndicator()
             : Container(
               margin: EdgeInsets.symmetric(vertical: 15.0),
               child: SizedBox(
@@ -221,13 +224,6 @@ class _SignUpButton extends StatelessWidget {
                   onPressed: state.status.isValidated
                     ? () => context.read<SignUpCubit>().signUpFormSubmitted()
                     : null,
-                  // onPressed: () {
-                  //   Navigator
-                  //     .of(context)
-                  //     .pushReplacement(
-                  //       MaterialPageRoute(builder: (BuildContext context) => new SignCode())
-                  //     );
-                  // },
                 ),
               )
             );

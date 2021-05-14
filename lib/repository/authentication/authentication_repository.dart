@@ -52,10 +52,12 @@ class AuthenticationRepository {
 
   Future<UserCode> signUpCustomer({ required String name, required String phone }) async {
     UserCode userCode;
-
+    print('API signUpCustomer: $name - $phone');
     try {
       userCode = await _api.SignUp(name, phone);
-    } on Exception {
+    } on Exception catch (e) {
+      print('API Sign up throw execption');
+      print(e);
       throw SignUpFailure();
     }
 

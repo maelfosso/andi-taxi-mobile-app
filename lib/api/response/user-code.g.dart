@@ -9,11 +9,11 @@ part of 'user-code.dart';
 UserCode _$UserCodeFromJson(Map<String, dynamic> json) {
   return UserCode(
     code: json['code'] as String,
-    phone: json['phone'] as String,
+    phoneNumber: json['phoneNumber'] as String,
   );
 }
 
 Map<String, dynamic> _$UserCodeToJson(UserCode instance) => <String, dynamic>{
       'code': instance.code,
-      'phone': instance.phone,
+      'phoneNumber': instance.phoneNumber,
     };
