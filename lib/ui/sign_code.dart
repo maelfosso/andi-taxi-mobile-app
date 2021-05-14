@@ -246,6 +246,7 @@ class _SignCode extends State<SignCode> {
     _timer?.cancel();
     super.dispose();
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

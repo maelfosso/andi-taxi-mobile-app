@@ -31,10 +31,10 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<UserCode> SignIn(phone) async {
+  Future<UserCode> SignIn(phoneNumber) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = {'phone': phone};
+    final _data = {'phoneNumber': phoneNumber};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<UserCode>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
@@ -46,10 +46,10 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<UserToken> SignCode(phone, code) async {
+  Future<UserToken> SignCode(phoneNumber, code) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = {'phone': phone, 'code': code};
+    final _data = {'phoneNumber': phoneNumber, 'code': code};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<UserToken>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)

@@ -32,7 +32,6 @@ class SignCodePage extends StatelessWidget {
       ),
       body: Container(
         color: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: 32.0),
         child: BlocProvider(
           create: (_) => SignCodeCubit(context.read<AuthenticationRepository>()),
           child: SignCodeForm()

@@ -19,7 +19,7 @@ class SignCodeForm extends StatelessWidget {
   Widget build(BuildContext context) {
     theme = Theme.of(context);
 
-    userCode = context.select((AuthenticationBloc bloc) => bloc.state.userCode);
+    userCode = context.select((AuthenticationBloc bloc) => bloc.state.userCode);   
 
     return BlocListener<SignCodeCubit, SignCodeState>(
       listener: (context, state) {
@@ -30,12 +30,6 @@ class SignCodeForm extends StatelessWidget {
               const SnackBar(content: Text('Authentication Failure'))
             );    
         } 
-
-        ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text('Code : ${userCode?.code}'))
-            );    
       },
       child: Container(
         color: Colors.white,
@@ -90,7 +84,6 @@ class SignCodeForm extends StatelessWidget {
     );
   }
 
-
   Widget _buildKeyboard() {
     List<Widget> keys = List.generate(4, (i) => Expanded(
       child: Container(
@@ -103,7 +96,7 @@ class SignCodeForm extends StatelessWidget {
               return _BackspaceButton();
             }
             if (index == 9) {
-              return _SignUpButton();              
+              return _SignCodeButton();              
             }
             return _DigitButton(index);
           })
@@ -133,7 +126,7 @@ class _DigitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignCodeCubit, SignCodeState>(
-      buildWhen: (previous, current) => previous.status != current.status,
+      // buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return Expanded(
           child: Material(
@@ -172,16 +165,18 @@ class _CodeUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignCodeCubit, SignCodeState>(
-      buildWhen: (previous, current) => previous.code != current.code || previous.timeout != current.timeout,
+      buildWhen: (previous, current) => previous.code.value != current.code.value || previous.timeout != current.timeout,
       builder: (context, state) {
         final currentContext = context.read<SignCodeCubit>();
+        print('builder : $state');
+        final splittenCode = state.code.value.split("");
 
         var digits = Container(
           padding: EdgeInsets.all(16.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: List<Widget>.generate(state.code.value.split("").length, (index) => Container(
+            children: List<Widget>.generate(splittenCode.length, (index) => Container(
               width: 45.0,
               decoration: BoxDecoration(
                 border: Border(
@@ -194,7 +189,7 @@ class _CodeUI extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
               margin: EdgeInsets.all(5.0),
               child: Text(
-                currentContext.digits[index],
+                splittenCode[index] == 'x' ? ' ' : splittenCode[index],
                 style: Theme.of(context).textTheme.headline3?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).primaryColor
@@ -206,6 +201,7 @@ class _CodeUI extends StatelessWidget {
 
         var resentCode = Container(
           child: RichText(
+            textAlign: TextAlign.center,
             text: TextSpan(
             text: "Re-sent the code " + (state.timeout ? "" : "(0:${state.counter})"),
               style: TextStyle(
@@ -223,7 +219,7 @@ class _CodeUI extends StatelessWidget {
         );
         
         return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             digits,
@@ -251,7 +247,7 @@ class _BackspaceButton extends StatelessWidget {
                 enableFeedback: true,
                 child: Center(
                   child: Icon(
-                    Icons.check_circle,
+                    Icons.backspace,
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
@@ -291,20 +287,6 @@ class _SignCodeButton extends StatelessWidget {
             )
           );
       }
-    );
-  }
-}
-
-class _SignUpButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return TextButton(
-      onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
-      child: Text(
-        'CREATE ACCOUNT',
-        style: TextStyle(color: theme.primaryColor),
-      ),
     );
   }
 }

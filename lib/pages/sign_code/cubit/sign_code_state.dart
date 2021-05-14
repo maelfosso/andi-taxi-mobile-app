@@ -1,7 +1,5 @@
 part of 'sign_code_cubit.dart';
 
-
-
 class SignCodeState extends Equatable {
   static const int MAX_DURATION = 15;
   

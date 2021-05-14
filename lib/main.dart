@@ -92,6 +92,11 @@ class _AppViewState extends State<AppView> {
 
                 break;
               case AuthenticationStatus.known:
+                ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      SnackBar(content: Text('Code : ${state.userCode.code}'))
+                    ); 
                 _navigator.pushAndRemoveUntil<void>(
                   SignCodePage.route(),
                   (route) => false,

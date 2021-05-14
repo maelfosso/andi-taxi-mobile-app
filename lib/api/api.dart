@@ -32,8 +32,8 @@ abstract class RestClient {
   Future<UserCode> SignUp(@Field() String name, @Field("phoneNumber") String phone);
 
   @POST(APIs.signIn)
-  Future<UserCode> SignIn(@Field() String phone);
+  Future<UserCode> SignIn(@Field() String phoneNumber);
 
   @POST(APIs.signCode)
-  Future<UserToken> SignCode(@Field() String phone, @Field() String code);
+  Future<UserToken> SignCode(@Field() String phoneNumber, @Field() String code);
 }

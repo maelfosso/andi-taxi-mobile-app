@@ -10,7 +10,7 @@ import 'package:formz/formz.dart';
 part 'sign_code_state.dart';
 
 class SignCodeCubit extends Cubit<SignCodeState> {
-  var digits = List.filled(4, "");
+  var digits = List.filled(4, "x");
   var currentPosition = 0;
   int counter = 0;
 
@@ -18,6 +18,9 @@ class SignCodeCubit extends Cubit<SignCodeState> {
   bool _timeout = false;
 
   SignCodeCubit(this._authenticationRepository) : super(const SignCodeState()) {
+    emit(state.copyWith(
+      phoneNumber: Phone.dirty(_authenticationRepository.currentKnowUser.phoneNumber)
+    ));
     startTimer();
   }
 
@@ -35,43 +38,42 @@ class SignCodeCubit extends Cubit<SignCodeState> {
             counter: 0
           ));
           _timer.cancel();
-          // setState(() {
-          //   timer.cancel();
-          //   _timeout = true;
-          // });
         } else {
           counter--;
           emit(state.copyWith(
             counter: counter
           ));
-          // setState(() {
-          //   _counter--;
-          // });
         }
       },
     );
   }
 
   void digitRemoved() {
+    print('currentPosition $currentPosition');
     if (currentPosition > 0) {
       currentPosition -= 1;
-      digits[currentPosition] = "";
+      digits[currentPosition] = "x";
 
-      codeChanged(digits.join(""));
+      codeChanged(digits);
     }
+    print(state);
   }
 
   void digitAppend(int index) {
+    print('digitAppend ${index}');
+    print('currentPosition $currentPosition');
     if (currentPosition < 4) {
       digits[currentPosition] = "${(index == 10) ? 0 : index + 1}";
       currentPosition += 1;
 
-      codeChanged(digits.join(""));
+      codeChanged(digits);
     }
+    print(state);
   }
 
-  void codeChanged(String value) {
-    final code = Code.dirty(value);
+  void codeChanged(List<String> value) {
+    print('codeChanged $value');
+    final code = Code.dirty(value.join());
     emit(state.copyWith(
       code: code,
       status: Formz.validate([code])
@@ -85,7 +87,7 @@ class SignCodeCubit extends Cubit<SignCodeState> {
     try {
       await _authenticationRepository.signCode(
         phoneNumber: state.phoneNumber.value,
-        code: state.code.value,
+        code: state.code.value // .join(""),
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
