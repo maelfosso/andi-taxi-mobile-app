@@ -1,4 +1,5 @@
 import 'package:andi_taxi/blocs/app/app_bloc.dart';
+import 'package:andi_taxi/blocs/authentication/authentication_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,7 +15,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final user = context.select((AppBloc bloc) => bloc.state.user);
+    // final user = context.select((AppBloc bloc) => bloc.state.user);
+    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +25,8 @@ class HomePage extends StatelessWidget {
           IconButton(
             key: const Key('homePage_logout_iconButton'),
             icon: const Icon(Icons.exit_to_app),
-            onPressed: () => context.read<AppBloc>().add(AppSignOutRequested()),
+            onPressed: () => context.read<AuthenticationBloc>().add(AuthenticationLogoutRequested()),
+            // onPressed: () => context.read<AppBloc>().add(AppSignOutRequested()),
           )
         ],
       ),

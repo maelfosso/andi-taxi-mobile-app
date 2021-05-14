@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:andi_taxi/api/api.dart';
 import 'package:andi_taxi/api/response/user-code.dart';
 import 'package:andi_taxi/api/response/user-token.dart';
+import 'package:andi_taxi/blocs/authentication/authentication_bloc.dart';
 import 'package:andi_taxi/cache/cache.dart';
 import 'package:andi_taxi/models/models.dart';
 import 'package:andi_taxi/ui/sign_code.dart';
@@ -16,7 +17,7 @@ class SignCodeFailure implements Exception {}
 
 class SignOutFailure implements Exception {}
 
-enum AuthenticationStatus { unknown, authenticated, unauthenticated }
+enum AuthenticationStatus { unknown, known, authenticated, unauthenticated }
 
 class AuthenticationRepository {
   final _controller = StreamController<AuthenticationStatus>();
@@ -35,6 +36,9 @@ class AuthenticationRepository {
 
   @visibleForTesting
   static const tokenCacheKey = '__token_cache_key__';
+
+  @visibleForTesting
+  static const userCodeCacheKey = '__user_code_cache_key__';
   
   Stream<AuthenticationStatus> get status async* {
     await Future<void>.delayed(const Duration(seconds: 1));
@@ -50,11 +54,17 @@ class AuthenticationRepository {
     return _cache.read<User>(key: userCacheKey) ?? User.empty;
   }
 
+  UserCode get currentKnowUser {
+    return _cache.read<UserCode>(key: userCodeCacheKey)!;
+  }
+
   Future<UserCode> signUpCustomer({ required String name, required String phone }) async {
     UserCode userCode;
     print('API signUpCustomer: $name - $phone');
     try {
       userCode = await _api.SignUp(name, phone);
+      _cache.write<UserCode>(key: userCodeCacheKey, value: userCode);
+      _controller.add(AuthenticationStatus.known);
     } on Exception catch (e) {
       print('API Sign up throw execption');
       print(e);
@@ -64,12 +74,12 @@ class AuthenticationRepository {
     return userCode;
   }
 
-  Future<UserCode> signIn({ required String phone }) async {
+  Future<UserCode> signIn({ required String phoneNumber }) async {
     UserCode userCode;
 
     try {
-      userCode = await _api.SignIn(phone);
-      _controller.add(AuthenticationStatus.authenticated);
+      userCode = await _api.SignIn(phoneNumber);
+      _controller.add(AuthenticationStatus.known);
     } on Exception {
       throw SignInFailure();
     }
@@ -77,11 +87,11 @@ class AuthenticationRepository {
     return userCode;
   }
 
-  Future<UserToken> signCode({ required String phone, required String code }) async {
+  Future<UserToken> signCode({ required String phoneNumber, required String code }) async {
     UserToken userToken;
 
     try {
-      userToken = await _api.SignCode(phone, code);
+      userToken = await _api.SignCode(phoneNumber, code);
       _cache.write<User>(key: userCacheKey, value: userToken.user);
       _cache.write<String>(key: tokenCacheKey, value: userToken.token);
       _controller.add(AuthenticationStatus.authenticated);

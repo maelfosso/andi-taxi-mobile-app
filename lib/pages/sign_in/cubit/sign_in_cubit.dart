@@ -24,7 +24,7 @@ class SignInCubit extends Cubit<SignInState> {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       await _authenticationRepository.signIn(
-        phone: state.phone.value,
+        phoneNumber: state.phone.value,
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {

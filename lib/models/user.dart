@@ -1,4 +1,3 @@
-import 'package:andi_taxi/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {

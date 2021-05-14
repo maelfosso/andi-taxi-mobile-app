@@ -5,13 +5,15 @@ part 'user-code.g.dart';
 @JsonSerializable()
 class UserCode {
 
-  String code;
-  String phoneNumber;
+  final String code;
+  final String phoneNumber;
 
-  UserCode({  
+  const UserCode({  
     required this.code,
     required this.phoneNumber
   });
+
+  static const empty = UserCode(code: '', phoneNumber: '');
 
   factory UserCode.fromJson(Map<String, dynamic> json) {
     return UserCode(

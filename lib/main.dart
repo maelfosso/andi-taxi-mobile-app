@@ -2,6 +2,7 @@ import 'package:andi_taxi/blocs/app/app_bloc.dart';
 import 'package:andi_taxi/blocs/app/bloc_observer.dart';
 import 'package:andi_taxi/blocs/authentication/authentication_bloc.dart';
 import 'package:andi_taxi/pages/home/home_page.dart';
+import 'package:andi_taxi/pages/sign_code/view/sign_code_page.dart';
 import 'package:andi_taxi/pages/splash/splash_page.dart';
 import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
 import 'package:andi_taxi/routes.dart';
@@ -90,6 +91,13 @@ class _AppViewState extends State<AppView> {
                 );
 
                 break;
+              case AuthenticationStatus.known:
+                _navigator.pushAndRemoveUntil<void>(
+                  SignCodePage.route(),
+                  (route) => false,
+                );
+
+                break;
               case AuthenticationStatus.unauthenticated:
                 _navigator.pushAndRemoveUntil<void>(
                   Welcome.route(),
@@ -105,13 +113,6 @@ class _AppViewState extends State<AppView> {
         );
       },
       onGenerateRoute: (_) => SplashPage.route(),
-      // home: 
-      // FlowBuilder<AppStatus>(
-      //   state: context.select((AppBloc bloc) => bloc.state.status),
-      //   onGeneratePages: onGenerateAppViewPages
-      // ),
-      // home: Welcome()
-      // MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
