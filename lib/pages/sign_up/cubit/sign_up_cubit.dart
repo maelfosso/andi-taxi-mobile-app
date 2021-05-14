@@ -35,6 +35,8 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   Future<void> signUpFormSubmitted() async {
+    print('signUpSubmitted : ${state.name.value} - ${state.phone.value}');
+    print('signUpFormStatus : ${state.status.isValid}');
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {

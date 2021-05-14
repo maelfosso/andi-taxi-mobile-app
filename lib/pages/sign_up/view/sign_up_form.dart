@@ -159,10 +159,10 @@ class _PhoneInput extends StatelessWidget {
                 ),
               ),
               TextField(
-                keyboardType: TextInputType.number,
-                onChanged: (phone) =>
-                  context.read<SignUpCubit>().phoneChanged(phone),
+                keyboardType: TextInputType.phone,
+                onChanged: (phone) => context.read<SignUpCubit>().phoneChanged(phone),
                 decoration: InputDecoration(
+                  errorText: state.phone.invalid ? 'invalid phone number' : null,
                   filled: true,
                   fillColor: Color(0xFFF7F8F9),
                   enabledBorder: OutlineInputBorder(

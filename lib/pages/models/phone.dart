@@ -10,10 +10,10 @@ class Phone extends FormzInput<String, PhoneValidationError> {
     RegExp(r'^\+\d{1,}$');
 
   @override
-  validator(String? value) {
+  PhoneValidationError? validator(String? value) {
     return _phoneRegExp.hasMatch(value ?? '')
-      ? PhoneValidationError.invalid
-      : null
+      ? null 
+      : PhoneValidationError.invalid
     ;
   }
 }
