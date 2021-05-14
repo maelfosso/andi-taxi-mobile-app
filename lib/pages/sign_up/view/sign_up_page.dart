@@ -1,4 +1,5 @@
 import 'package:andi_taxi/pages/sign_up/cubit/sign_up_cubit.dart';
+import 'package:andi_taxi/pages/sign_up/view/sign_up_form.dart';
 import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

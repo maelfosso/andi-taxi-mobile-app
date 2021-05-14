@@ -1,7 +1,13 @@
 import 'package:andi_taxi/blocs/app/app_bloc.dart';
+import 'package:andi_taxi/blocs/app/bloc_observer.dart';
+import 'package:andi_taxi/blocs/authentication/authentication_bloc.dart';
+import 'package:andi_taxi/pages/home/home_page.dart';
+import 'package:andi_taxi/pages/splash/splash_page.dart';
 import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
+import 'package:andi_taxi/routes.dart';
 import 'package:andi_taxi/ui/welcome.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,7 +20,6 @@ void main() {
 }
 
 class App extends StatelessWidget {
-  // This widget is the root of your application.
   
   App({
     Key? key,
@@ -29,7 +34,7 @@ class App extends StatelessWidget {
     return RepositoryProvider.value(
       value: _authenticationRepository,
       child: BlocProvider(
-        create: (_) => AppBloc(
+        create: (_) => AuthenticationBloc(
           authenticationRepository: _authenticationRepository
         ),
         child: AppView(),
@@ -38,7 +43,15 @@ class App extends StatelessWidget {
   }
 }
 
-class AppView extends StatelessWidget {
+class AppView extends StatefulWidget {
+  @override
+  _AppViewState createState() => _AppViewState();
+}
+
+class _AppViewState extends State<AppView> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+  NavigatorState get _navigator => _navigatorKey.currentState!;
+
   final Map<int, Color> colorCodes = {
     50: Color.fromRGBO(198, 144, 46, .1),
     100: Color.fromRGBO(198, 144, 46, .2),
@@ -52,7 +65,6 @@ class AppView extends StatelessWidget {
     900: Color.fromRGBO(198, 144, 46, 1),
   };
 
-  AppView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +78,39 @@ class AppView extends StatelessWidget {
         accentColor: Color(0xFF97ADB6),
         primarySwatch: color
       ),
-      home: Welcome()
+      navigatorKey: _navigatorKey,
+      builder: (context, child) {
+        return BlocListener<AuthenticationBloc, AuthenticationState>(
+          listener: (context, state) {
+            switch (state.status) {
+              case AuthenticationStatus.authenticated:
+                _navigator.pushAndRemoveUntil<void>(
+                  HomePage.route(),
+                  (route) => false,
+                );
+
+                break;
+              case AuthenticationStatus.unauthenticated:
+                _navigator.pushAndRemoveUntil<void>(
+                  Welcome.route(),
+                  (route) => false,
+                );
+
+                break;
+              default:
+                break;
+            }
+          },
+          child: child,
+        );
+      },
+      onGenerateRoute: (_) => SplashPage.route(),
+      // home: 
+      // FlowBuilder<AppStatus>(
+      //   state: context.select((AppBloc bloc) => bloc.state.status),
+      //   onGeneratePages: onGenerateAppViewPages
+      // ),
+      // home: Welcome()
       // MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

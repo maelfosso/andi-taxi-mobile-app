@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:andi_taxi/api/api.dart';
 import 'package:andi_taxi/api/response/user-code.dart';
 import 'package:andi_taxi/api/response/user-token.dart';
@@ -14,7 +16,11 @@ class SignCodeFailure implements Exception {}
 
 class SignOutFailure implements Exception {}
 
+enum AuthenticationStatus { unknown, authenticated, unauthenticated }
+
 class AuthenticationRepository {
+  final _controller = StreamController<AuthenticationStatus>();
+
   AuthenticationRepository({
     CacheClient? cache,
     RestClient? api
@@ -24,11 +30,18 @@ class AuthenticationRepository {
   final CacheClient _cache;
   final RestClient _api;
 
-
   @visibleForTesting
   static const userCacheKey = '__user_cache_key__';
+
+  @visibleForTesting
+  static const tokenCacheKey = '__token_cache_key__';
   
-  // Stream<User>
+  Stream<AuthenticationStatus> get status async* {
+    await Future<void>.delayed(const Duration(seconds: 1));
+    yield AuthenticationStatus.unauthenticated;
+    yield* _controller.stream;
+  }
+
   User get user {
     return User.empty;
   }
@@ -54,6 +67,7 @@ class AuthenticationRepository {
 
     try {
       userCode = await _api.SignIn(phone);
+      _controller.add(AuthenticationStatus.authenticated);
     } on Exception {
       throw SignInFailure();
     }
@@ -66,6 +80,9 @@ class AuthenticationRepository {
 
     try {
       userToken = await _api.SignCode(phone, code);
+      _cache.write<User>(key: userCacheKey, value: userToken.user);
+      _cache.write<String>(key: tokenCacheKey, value: userToken.token);
+      _controller.add(AuthenticationStatus.authenticated);
     } on Exception {
       throw SignCodeFailure();
     }
@@ -75,10 +92,14 @@ class AuthenticationRepository {
 
   Future<void> signOut() async {
     try {
-      
+      _controller.add(AuthenticationStatus.unauthenticated);
     } on Exception {
       throw SignOutFailure();
     }
+  }
+
+  void dispose() {
+    _controller.close();
   }
 
 

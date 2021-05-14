@@ -19,10 +19,16 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           ? AppState.authenticated(authenticationRepository.currentUser)
           : const AppState.unauthenticated()
       ) {
+    // _authenticationStatusSubscription = _authenticationRepository.status.listen(
+    //   (status) => add(AppUserChanged(status)) //(AuthenticationStatusChanged(status)),
+    // );
     // _userSubscription = _authenticationRepository.user.listen
   }
 
   final AuthenticationRepository _authenticationRepository;
+  late StreamSubscription<AuthenticationStatus>
+      _authenticationStatusSubscription;
+
   // late final StreamSubscription<User> _userSubscription;
 
   @override
@@ -44,6 +50,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   @override
   Future<void> close() {
     // _userSubscription.cancel();
+    // _authenticationStatusSubscription.cancel();
+    _authenticationRepository.dispose();
     return super.close();
   }
 }

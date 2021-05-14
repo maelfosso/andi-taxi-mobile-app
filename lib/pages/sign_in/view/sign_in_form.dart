@@ -1,22 +1,26 @@
 import 'package:andi_taxi/pages/sign_in/cubit/sign_in_cubit.dart';
-import 'package:andi_taxi/ui/sign_in.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:andi_taxi/pages/sign_up/view/sign_up_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 
 class SignInForm extends StatelessWidget {
-  const SignInForm({Key? key}) : super(key: key);
+  SignInForm({Key? key}) : super(key: key);
+
+  ThemeData? theme;
 
   @override
   Widget build(BuildContext context) {
+    theme = Theme.of(context);
+
     return BlocListener<SignInCubit, SignInState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Authentication Failure'))
+              const SnackBar(content: Text('Sign In Failure'))
             );    
         }
       },
@@ -69,7 +73,7 @@ class SignInForm extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
-              color: Theme.of(context).accentColor,
+              color: theme?.accentColor,
               height: 1.0,
             )
           ),
@@ -83,7 +87,7 @@ class SignInForm extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              color: Theme.of(context).accentColor,
+              color: theme?.accentColor,
               height: 1.0,
             )
           ),
@@ -178,11 +182,12 @@ class SignInForm extends StatelessWidget {
               style: linkStyle,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  Navigator
-                    .of(context)
-                    .pushReplacement(
-                      MaterialPageRoute(builder: (BuildContext context) => new SignUp())
-                    );
+                  // Navigator
+                  //   .of(context)
+                  //   .pushReplacement(
+                  //     MaterialPageRoute(builder: (BuildContext context) => new SignUp())
+                  //   );
+                  SignUpPage.route();
                 }
             ),
           ],
@@ -216,6 +221,7 @@ class _PhoneInput extends StatelessWidget {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Color(0xFFF7F8F9),
+                errorText: state.phone.invalid ? 'invalid phone number' : null,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15.0),
                   borderSide: BorderSide(
@@ -242,6 +248,7 @@ class _PhoneInput extends StatelessWidget {
 }
 
 class _SignInButton extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignInCubit, SignInState>(
@@ -282,7 +289,7 @@ class _SignInButton extends StatelessWidget {
               )
             );
       }
-    )
+    );
   }
 }
 

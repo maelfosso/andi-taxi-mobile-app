@@ -24,7 +24,7 @@ class APIs {
   }
 }
 
-@RestApi(baseUrl: "http://192.168.8.101:3000/api")
+@RestApi(baseUrl: "http://192.168.8.100:3000/api")
 abstract class RestClient {
   factory RestClient(Dio dio, { String baseUrl }) = _RestClient;
 

@@ -5,6 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => HomePage());
+  }
+  
   static Page page() => const MaterialPage<void>(child: HomePage());
 
   @override

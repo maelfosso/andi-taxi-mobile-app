@@ -1,4 +1,5 @@
 import 'package:andi_taxi/pages/sign_up/cubit/sign_up_cubit.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -28,21 +29,6 @@ class SignUpForm extends StatelessWidget {
           ],
         )
       )
-      // Align(
-      //   alignment: const Alignment(0, -1 / 3),
-      //   child: Column(
-      //     mainAxisSize: MainAxisSize.min,
-      //     children: [
-      //       _EmailInput(),
-      //       const SizedBox(height: 8.0),
-      //       _PasswordInput(),
-      //       const SizedBox(height: 8.0),
-      //       _ConfirmPasswordInput(),
-      //       const SizedBox(height: 8.0),
-      //       _SignUpButton(),
-      //     ],
-      //   ),
-      // ),
     );
   }
 
@@ -65,7 +51,43 @@ class SignUpForm extends StatelessWidget {
     );
   }
 
+  _buildFooter() {
+    TextStyle defaultStyle = TextStyle(
+      color: Color(0xFF97ADB6)
+    );
+    TextStyle linkStyle = TextStyle(
+      color: Color(0xFFC6902E),
+      decoration: TextDecoration.underline
+    );
 
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 25.0),
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          style: defaultStyle,
+          children: <TextSpan>[
+            TextSpan(
+              text: 'Already have an account? '
+            ),
+            TextSpan(
+              text: 'Sign In',
+              style: linkStyle,
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  // Navigator
+                  //   .of(context)
+                  //   .pushReplacement(
+                  //     MaterialPageRoute(builder: (BuildContext context) => new SignIn())
+                  //   );
+                }
+            ),
+          ],
+        )
+      ),
+    );
+  }
+  
 }
 
 class _NameInput extends StatelessWidget {
