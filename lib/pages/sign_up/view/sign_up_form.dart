@@ -201,7 +201,7 @@ class _SignUpButton extends StatelessWidget {
             ? LinearProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
                 semanticsLabel: 'Linear progress indicator',
-              ) // const CircularProgressIndicator()
+              )
             : Container(
               margin: EdgeInsets.symmetric(vertical: 15.0),
               child: SizedBox(

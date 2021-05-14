@@ -35,12 +35,6 @@ class SignInPage extends StatelessWidget {
           create: (_) => SignInCubit(context.read<AuthenticationRepository>()),
           child: SignInForm()
         )
-        // Column(
-        //   children: [
-        //     _buildBody(),
-        //     _buildFooter()
-        //   ],
-        // )
       ),
     );
   }

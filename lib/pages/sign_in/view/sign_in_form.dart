@@ -182,11 +182,6 @@ class SignInForm extends StatelessWidget {
               style: linkStyle,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  // Navigator
-                  //   .of(context)
-                  //   .pushReplacement(
-                  //     MaterialPageRoute(builder: (BuildContext context) => new SignUp())
-                  //   );
                   SignUpPage.route();
                 }
             ),
@@ -255,7 +250,10 @@ class _SignInButton extends StatelessWidget {
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
-          ? const CircularProgressIndicator()
+          ? LinearProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+              semanticsLabel: 'Linear progress indicator',
+            )
           : Container(
               margin: EdgeInsets.symmetric(vertical: 15.0),
               child: SizedBox(
