@@ -1,8 +1,8 @@
-part of 'sign_up_cubit.dart';
+part of 'sign_up_customer_cubit.dart';
 
 
-class SignUpState extends Equatable {
-  const SignUpState({
+class SignUpCustomerState extends Equatable {
+  const SignUpCustomerState({
     this.name = const Name.pure(),
     this.phone = const Phone.pure(),
     this.status = FormzStatus.pure,
@@ -15,12 +15,12 @@ class SignUpState extends Equatable {
   @override
   List<Object> get props => [name, phone, status];
 
-  SignUpState copyWith({
+  SignUpCustomerState copyWith({
     Name? name,
     Phone? phone,
     FormzStatus? status,
   }) {
-    return SignUpState(
+    return SignUpCustomerState(
       name: name ?? this.name,
       phone: phone ?? this.phone,
       status: status ?? this.status,

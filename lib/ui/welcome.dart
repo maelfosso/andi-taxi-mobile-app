@@ -1,9 +1,7 @@
 import 'dart:math';
 
 import 'package:andi_taxi/pages/sign_in/view/sign_in_page.dart';
-import 'package:andi_taxi/pages/sign_up/view/sign_up_page.dart';
-import 'package:andi_taxi/ui/sign_in.dart';
-import 'package:andi_taxi/ui/sign_up.dart';
+import 'package:andi_taxi/pages/sign_up_customer/view/sign_up_customer_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -62,7 +60,7 @@ class _WelcomeState extends State<Welcome> {
     Navigator
       .of(context)
       .pushAndRemoveUntil<void>(
-        SignUpPage.route(),
+        SignUpCustomerPage.route(),
         (route) => false,
       );
     // Navigator

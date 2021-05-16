@@ -1,5 +1,5 @@
 import 'package:andi_taxi/pages/sign_in/cubit/sign_in_cubit.dart';
-import 'package:andi_taxi/pages/sign_up/view/sign_up_page.dart';
+import 'package:andi_taxi/pages/sign_up_customer/view/sign_up_customer_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -182,7 +182,7 @@ class SignInForm extends StatelessWidget {
               style: linkStyle,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  SignUpPage.route();
+                  SignUpCustomerPage.route();
                 }
             ),
           ],
@@ -276,13 +276,6 @@ class _SignInButton extends StatelessWidget {
                   onPressed: state.status.isValidated
                     ? () => context.read<SignInCubit>().signIn()
                     : null
-                  // {
-                  //   Navigator
-                  //     .of(context)
-                  //     .pushReplacement(
-                  //       MaterialPageRoute(builder: (BuildContext context) => new SignCode())
-                  //     );
-                  // },
                 ),
               )
             );
@@ -296,7 +289,7 @@ class _SignUpButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return TextButton(
-      onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
+      onPressed: () => Navigator.of(context).push<void>(SignUpCustomerPage.route()),
       child: Text(
         'CREATE ACCOUNT',
         style: TextStyle(color: theme.primaryColor),
