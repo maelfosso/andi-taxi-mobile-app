@@ -30,7 +30,7 @@ class SignUpDriverPage extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: BlocProvider<SignUpDriverCubit>(
           create: (_) => SignUpDriverCubit(context.read<AuthenticationRepository>()),
-          child: const SignUpDriverForm(),
+          child: SignUpDriverForm(),
         ),
       ),
     );

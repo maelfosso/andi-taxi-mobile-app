@@ -1,5 +1,6 @@
 import 'package:andi_taxi/api/response/user-code.dart';
 import 'package:andi_taxi/api/response/user-token.dart';
+import 'package:andi_taxi/models/car.dart';
 import 'package:andi_taxi/models/models.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
@@ -30,10 +31,14 @@ abstract class RestClient {
   factory RestClient(Dio dio, { String baseUrl }) = _RestClient;
 
   @POST(APIs.signUpClient)
-  Future<UserCode> SignUpCustomer(@Field() String name, @Field("phoneNumber") String phone);
+  Future<UserCode> SignUpClient(@Field() String name, @Field("phoneNumber") String phone);
   
   @POST(APIs.signUpDriver)
-  Future<UserCode> SignUpDriver(@Field() String name, @Field("phoneNumber") String phone);
+  Future<UserCode> SignUpDriver(
+    @Field() String name, @Field() String phoneNumber,
+    @Field() String rcIdentificationNumber, @Field() String residenceAddress, @Field() String realResidenceAddress,
+    @Field() Car car
+  );
 
   @POST(APIs.signIn)
   Future<UserCode> SignIn(@Field() String phoneNumber);

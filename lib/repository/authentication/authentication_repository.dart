@@ -5,6 +5,7 @@ import 'package:andi_taxi/api/response/user-code.dart';
 import 'package:andi_taxi/api/response/user-token.dart';
 import 'package:andi_taxi/blocs/authentication/authentication_bloc.dart';
 import 'package:andi_taxi/cache/cache.dart';
+import 'package:andi_taxi/models/car.dart';
 import 'package:andi_taxi/models/models.dart';
 import 'package:andi_taxi/ui/sign_code.dart';
 import 'package:meta/meta.dart';
@@ -62,7 +63,7 @@ class AuthenticationRepository {
     UserCode userCode;
     print('API signUpCustomer: $name - $phone');
     try {
-      userCode = await _api.SignClient(name, phone);
+      userCode = await _api.SignUpClient(name, phone);
       _cache.write<UserCode>(key: userCodeCacheKey, value: userCode);
       _controller.add(AuthenticationStatus.known);
     } on Exception catch (e) {
@@ -74,11 +75,19 @@ class AuthenticationRepository {
     return userCode;
   }
 
-  Future<UserCode> signUpDriver({ required String name, required String phone }) async {
+  Future<UserCode> signUpDriver({ 
+    required String name, required String phone,
+    required String rcIdentificationNumber, required String residenceAddress, required String realResidenceAddress,
+    required Car car
+  }) async {
     UserCode userCode;
     print('API signUpCustomer: $name - $phone');
     try {
-      userCode = await _api.SignUpDriver(name, phone);
+      userCode = await _api.SignUpDriver(
+        name, phone,
+        rcIdentificationNumber, residenceAddress, realResidenceAddress,
+        car
+      );
       _cache.write<UserCode>(key: userCodeCacheKey, value: userCode);
       _controller.add(AuthenticationStatus.known);
     } on Exception catch (e) {

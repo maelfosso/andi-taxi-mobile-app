@@ -1,5 +1,5 @@
 import 'package:andi_taxi/pages/sign_in/cubit/sign_in_cubit.dart';
-import 'package:andi_taxi/pages/sign_up_customer/view/sign_up_client_page.dart';
+import 'package:andi_taxi/pages/sign_up_client/view/sign_up_client_page.dart';
 import 'package:andi_taxi/ui/welcome.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -294,7 +294,7 @@ class _SignUpButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return TextButton(
-      onPressed: () => Navigator.of(context).push<void>(SignUpCustomerPage.route()),
+      onPressed: () => Navigator.of(context).push<void>(SignUpClientPage.route()),
       child: Text(
         'CREATE ACCOUNT',
         style: TextStyle(color: theme.primaryColor),

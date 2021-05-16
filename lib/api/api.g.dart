@@ -16,14 +16,37 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<UserCode> SignUp(name, phone) async {
+  Future<UserCode> SignUpClient(name, phone) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = {'name': name, 'phoneNumber': phone};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<UserCode>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, '/auth/signup',
+                .compose(_dio.options, '/auth/signup/client',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UserCode.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<UserCode> SignUpDriver(name, phoneNumber, rcIdentificationNumber,
+      residenceAddress, realResidenceAddress, car) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = {
+      'name': name,
+      'phoneNumber': phoneNumber,
+      'rcIdentificationNumber': rcIdentificationNumber,
+      'residenceAddress': residenceAddress,
+      'realResidenceAddress': realResidenceAddress,
+      'car': car
+    };
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<UserCode>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/auth/signup/driver',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = UserCode.fromJson(_result.data!);

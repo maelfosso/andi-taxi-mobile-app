@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:andi_taxi/pages/sign_in/view/sign_in_page.dart';
-import 'package:andi_taxi/pages/sign_up_customer/view/sign_up_customer_page.dart';
+import 'package:andi_taxi/pages/sign_up_client/view/sign_up_client_page.dart';
+import 'package:andi_taxi/pages/sign_up_driver/view/sign_up_driver_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +60,7 @@ class Welcome extends StatefulWidget {
                       Navigator
                       .of(context)
                       .pushAndRemoveUntil<void>(
-                        SignUpCustomerPage.route(),
+                        SignUpClientPage.route(),
                         (route) => false,
                       );
                     }, 
@@ -67,7 +68,12 @@ class Welcome extends StatefulWidget {
                   ),
                   TextButton(
                     onPressed: () {
-
+                      Navigator
+                      .of(context)
+                      .pushAndRemoveUntil<void>(
+                        SignUpDriverPage.route(),
+                        (route) => false,
+                      );
                     }, 
                     child: Text("DRIVER")
                   )
