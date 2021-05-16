@@ -1,16 +1,51 @@
-# andi_taxi
+[My Portfolio](https://maelfosso.github.io)
 
-A new Flutter project.
+# Andi Taxi
+
+> clone app of some Uber features
+
+![screenshot](./screenshots/2.jpg)
+![screenshot](./screenshots/4.jpg)
+![screenshot](./screenshots/8.jpg)
+
+Additional description about the project and its features.
+
+## Built With
+
+- Flutter
+- Dart
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Creates an `.env` file for adding the **BASE_URL** for the API
 
-A few resources to get you started if this is your first Flutter project:
+```.env
+BASE_URL=http://x.x.x.x/api
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Setup
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+After creating `.env` file
+
+- `cd andi-taxi-mobile-app`
+- `flutter pub get`
+- `flutter run`
+
+### Usage
+
+- Creates an account as client or driver
+- Sign in (keep the code displayed)
+- Enter the code. You have one minute.
+
+### Run tests
+
+
+## Authors
+
+- GitHub: [@maelfosso](https://github.com/maelfosso)
+- Twitter: [@maelfosso](https://twitter.com/maelfosso)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/mael-fosso-650b6346/)
+
+## 📝 License
+
+This project is [MIT](./MIT.md) licensed.
