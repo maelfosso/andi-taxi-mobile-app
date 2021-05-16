@@ -7,7 +7,8 @@ import 'package:retrofit/http.dart';
 part 'api.g.dart';
 
 class APIs {
-  static const String signUp = "/auth/signup";
+  static const String signUpClient = "/auth/signup/client";
+  static const String signUpDriver = "/auth/signup/driver";
   static const String signIn = "/auth/signin";
   static const String signCode = "/auth/signcode";
 
@@ -28,8 +29,11 @@ class APIs {
 abstract class RestClient {
   factory RestClient(Dio dio, { String baseUrl }) = _RestClient;
 
-  @POST(APIs.signUp)
-  Future<UserCode> SignUp(@Field() String name, @Field("phoneNumber") String phone);
+  @POST(APIs.signUpClient)
+  Future<UserCode> SignUpCustomer(@Field() String name, @Field("phoneNumber") String phone);
+  
+  @POST(APIs.signUpDriver)
+  Future<UserCode> SignUpDriver(@Field() String name, @Field("phoneNumber") String phone);
 
   @POST(APIs.signIn)
   Future<UserCode> SignIn(@Field() String phoneNumber);

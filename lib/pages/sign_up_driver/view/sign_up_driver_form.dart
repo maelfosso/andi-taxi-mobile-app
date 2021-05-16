@@ -1,15 +1,15 @@
-import 'package:andi_taxi/pages/sign_up_customer/cubit/sign_up_customer_cubit.dart';
+import 'package:andi_taxi/pages/sign_up_driver/cubit/sign_up_driver_cubit.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-class SignUpCustomerForm extends StatelessWidget {
-  const SignUpCustomerForm({Key? key}) : super(key: key);
+class SignUpDriverForm extends StatelessWidget {
+  const SignUpDriverForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SignUpCustomerCubit, SignUpCustomerState>(
+    return BlocListener<SignUpDriverCubit, SignUpDriverState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
           ScaffoldMessenger.of(context)
@@ -93,7 +93,7 @@ class SignUpCustomerForm extends StatelessWidget {
 class _NameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignUpCustomerCubit, SignUpCustomerState>(
+    return BlocBuilder<SignUpDriverCubit, SignUpDriverState>(
       buildWhen: (previous, current) => previous.name != current.name,
       builder: (context, state) {
         return Container(
@@ -109,7 +109,7 @@ class _NameInput extends StatelessWidget {
                 ),
               ),
               TextField(
-                onChanged: (name) => context.read<SignUpCustomerCubit>().nameChanged(name),
+                onChanged: (name) => context.read<SignUpDriverCubit>().nameChanged(name),
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Color(0xFFF7F8F9),
@@ -142,7 +142,7 @@ class _NameInput extends StatelessWidget {
 class _PhoneInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignUpCustomerCubit, SignUpCustomerState>(
+    return BlocBuilder<SignUpDriverCubit, SignUpDriverState>(
       buildWhen: (previous, current) => previous.phone != current.phone,
       builder: (context, state) {
         return Container(
@@ -160,7 +160,7 @@ class _PhoneInput extends StatelessWidget {
               ),
               TextField(
                 keyboardType: TextInputType.phone,
-                onChanged: (phone) => context.read<SignUpCustomerCubit>().phoneChanged(phone),
+                onChanged: (phone) => context.read<SignUpDriverCubit>().phoneChanged(phone),
                 decoration: InputDecoration(
                   errorText: state.phone.invalid ? 'invalid phone number' : null,
                   filled: true,
@@ -194,7 +194,7 @@ class _SignUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignUpCustomerCubit, SignUpCustomerState>(
+    return BlocBuilder<SignUpDriverCubit, SignUpDriverState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
@@ -222,7 +222,7 @@ class _SignUpButton extends StatelessWidget {
                     )
                   ),
                   onPressed: state.status.isValidated
-                    ? () => context.read<SignUpCustomerCubit>().signUpFormSubmitted()
+                    ? () => context.read<SignUpDriverCubit>().signUpFormSubmitted()
                     : null,
                 ),
               )

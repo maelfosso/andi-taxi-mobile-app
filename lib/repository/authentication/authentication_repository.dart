@@ -58,11 +58,27 @@ class AuthenticationRepository {
     return _cache.read<UserCode>(key: userCodeCacheKey)!;
   }
 
-  Future<UserCode> signUpCustomer({ required String name, required String phone }) async {
+  Future<UserCode> signUpClient({ required String name, required String phone }) async {
     UserCode userCode;
     print('API signUpCustomer: $name - $phone');
     try {
-      userCode = await _api.SignUp(name, phone);
+      userCode = await _api.SignClient(name, phone);
+      _cache.write<UserCode>(key: userCodeCacheKey, value: userCode);
+      _controller.add(AuthenticationStatus.known);
+    } on Exception catch (e) {
+      print('API Sign up throw execption');
+      print(e);
+      throw SignUpFailure();
+    }
+
+    return userCode;
+  }
+
+  Future<UserCode> signUpDriver({ required String name, required String phone }) async {
+    UserCode userCode;
+    print('API signUpCustomer: $name - $phone');
+    try {
+      userCode = await _api.SignUpDriver(name, phone);
       _cache.write<UserCode>(key: userCodeCacheKey, value: userCode);
       _controller.add(AuthenticationStatus.known);
     } on Exception catch (e) {

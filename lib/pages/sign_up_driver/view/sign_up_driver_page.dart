@@ -1,14 +1,14 @@
-import 'package:andi_taxi/pages/sign_up_customer/cubit/sign_up_customer_cubit.dart';
-import 'package:andi_taxi/pages/sign_up_customer/view/sign_up_customer_form.dart';
+import 'package:andi_taxi/pages/sign_up_driver/cubit/sign_up_driver_cubit.dart';
+import 'package:andi_taxi/pages/sign_up_driver/view/sign_up_driver_form.dart';
 import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignUpCustomerPage extends StatelessWidget {
-  const SignUpCustomerPage({Key? key}) : super(key: key);
+class SignUpDriverPage extends StatelessWidget {
+  const SignUpDriverPage({Key? key}) : super(key: key);
 
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => const SignUpCustomerPage());
+    return MaterialPageRoute<void>(builder: (_) => const SignUpDriverPage());
   }
 
   @override
@@ -19,7 +19,7 @@ class SignUpCustomerPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0.0,
         title: Text(
-          "Sign Up",
+          "Sign Up (Driver)",
           style: TextStyle(
             color: Colors.black
           ),
@@ -28,9 +28,9 @@ class SignUpCustomerPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocProvider<SignUpCustomerCubit>(
-          create: (_) => SignUpCustomerCubit(context.read<AuthenticationRepository>()),
-          child: const SignUpCustomerForm(),
+        child: BlocProvider<SignUpDriverCubit>(
+          create: (_) => SignUpDriverCubit(context.read<AuthenticationRepository>()),
+          child: const SignUpDriverForm(),
         ),
       ),
     );

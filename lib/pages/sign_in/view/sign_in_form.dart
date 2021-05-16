@@ -1,5 +1,5 @@
 import 'package:andi_taxi/pages/sign_in/cubit/sign_in_cubit.dart';
-import 'package:andi_taxi/pages/sign_up_customer/view/sign_up_customer_page.dart';
+import 'package:andi_taxi/pages/sign_up_customer/view/sign_up_client_page.dart';
 import 'package:andi_taxi/ui/welcome.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -197,6 +197,7 @@ class _Footer extends StatelessWidget {
     );
   }
 }
+
 class _PhoneInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

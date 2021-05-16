@@ -5,10 +5,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 
-part 'sign_up_customer_state.dart';
+part 'sign_up_driver_state.dart';
 
-class SignUpCustomerCubit extends Cubit<SignUpCustomerState> {
-  SignUpCustomerCubit(this._authenticationRepository) : super(const SignUpCustomerState());
+class SignUpDriverCubit extends Cubit<SignUpDriverState> {
+  SignUpDriverCubit(this._authenticationRepository) : super(const SignUpDriverState());
 
   final AuthenticationRepository _authenticationRepository;
 
@@ -35,18 +35,18 @@ class SignUpCustomerCubit extends Cubit<SignUpCustomerState> {
   }
 
   Future<void> signUpFormSubmitted() async {
-    print('SignUpCustomerSubmitted : ${state.name.value} - ${state.phone.value}');
-    print('SignUpCustomerFormStatus : ${state.status.isValid}');
+    print('SignUpDriverSubmitted : ${state.name.value} - ${state.phone.value}');
+    print('SignUpDriverFormStatus : ${state.status.isValid}');
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
-      await _authenticationRepository.signUpCustomer(
+      await _authenticationRepository.signUpDriver(
         name: state.name.value,
         phone: state.phone.value,
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception catch (e) {
-      print('SignUpCustomerFormSubmitted : throw exception \n $e');
+      print('SignUpDriverFormSubmitted : throw exception \n $e');
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }
