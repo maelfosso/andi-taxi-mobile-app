@@ -1,9 +1,9 @@
 import 'package:andi_taxi/api/response/user-code.dart';
 import 'package:andi_taxi/api/response/user-token.dart';
-import 'package:andi_taxi/models/car.dart';
 import 'package:andi_taxi/models/models.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 part 'api.g.dart';
 
@@ -18,7 +18,12 @@ class APIs {
   static RestClient getRestClient() {
     if (_restClient == null) {
       _restClient = RestClient(
-        Dio(BaseOptions(contentType: "application/json"))
+        Dio(
+          BaseOptions(
+            contentType: "application/json",
+            baseUrl: FlutterConfig.get("BASE_URL")
+          )
+        )
       );
     }
 
@@ -26,7 +31,7 @@ class APIs {
   }
 }
 
-@RestApi(baseUrl: "http://192.168.8.100:3000/api")
+@RestApi(baseUrl: "")
 abstract class RestClient {
   factory RestClient(Dio dio, { String baseUrl }) = _RestClient;
 

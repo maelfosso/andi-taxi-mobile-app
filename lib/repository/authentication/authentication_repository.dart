@@ -104,6 +104,7 @@ class AuthenticationRepository {
 
     try {
       userCode = await _api.SignIn(phoneNumber);
+      _cache.write<UserCode>(key: userCodeCacheKey, value: userCode);
       _controller.add(AuthenticationStatus.known);
     } on Exception {
       throw SignInFailure();
@@ -119,6 +120,7 @@ class AuthenticationRepository {
       userToken = await _api.SignCode(phoneNumber, code);
       _cache.write<User>(key: userCacheKey, value: userToken.user);
       _cache.write<String>(key: tokenCacheKey, value: userToken.token);
+      print("signCode : $userToken");
       _controller.add(AuthenticationStatus.authenticated);
     } on Exception {
       throw SignCodeFailure();

@@ -7,9 +7,7 @@ part of 'api.dart';
 // **************************************************************************
 
 class _RestClient implements RestClient {
-  _RestClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://192.168.8.100:3000/api';
-  }
+  _RestClient(this._dio, {this.baseUrl});
 
   final Dio _dio;
 

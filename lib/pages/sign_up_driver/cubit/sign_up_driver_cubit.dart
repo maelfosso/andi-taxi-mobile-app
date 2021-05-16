@@ -102,7 +102,7 @@ class SignUpDriverCubit extends Cubit<SignUpDriverState> {
         rcIdentificationNumber: state.rcIdentificationNumber.value,
         residenceAddress: state.residenceAddress.value,
         realResidenceAddress: state.realResidenceAddress.value,
-        car: Car(id: '', registrationNumber: state.realResidenceAddress.value, model: state.carModel.value)
+        car: Car(id: '', registrationNumber: state.carRegistrationNumber.value, model: state.carModel.value)
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception catch (e) {

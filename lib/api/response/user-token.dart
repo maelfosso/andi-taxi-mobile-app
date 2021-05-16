@@ -6,16 +6,19 @@ part 'user-token.g.dart';
 @JsonSerializable()
 class UserToken {
   User user;
+  Driver? driver;
   String token;
 
   UserToken({
     required this.user,
+    this.driver,
     required this.token
   });
 
   factory UserToken.fromJson(Map<String, dynamic> json) {
     return UserToken(
       user: User.fromJson(json['user']),
+      driver: Driver.fromJson(json['driver']),
       token: json['token']
     );
   }
@@ -23,6 +26,7 @@ class UserToken {
   Map<String, dynamic> toJson() {
     return {
       'user': user.toJson(),
+      'driver': driver?.toJson(),
       'token': token
     };
   }

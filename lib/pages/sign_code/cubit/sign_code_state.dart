@@ -1,7 +1,8 @@
 part of 'sign_code_cubit.dart';
 
+const int MAX_DURATION = 15;
+
 class SignCodeState extends Equatable {
-  static const int MAX_DURATION = 15;
   
   const SignCodeState({
     this.phoneNumber = const Phone.pure(),

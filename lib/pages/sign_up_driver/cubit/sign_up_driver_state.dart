@@ -22,7 +22,12 @@ class SignUpDriverState extends Equatable {
   final FormzStatus status;
 
   @override
-  List<Object> get props => [name, phone, status];
+  List<Object> get props => [
+    name, phone, 
+    rcIdentificationNumber, residenceAddress, realResidenceAddress, 
+    carRegistrationNumber, carModel, 
+    status
+  ];
 
   SignUpDriverState copyWith({
     Name? name,
@@ -39,9 +44,9 @@ class SignUpDriverState extends Equatable {
       phone: phone ?? this.phone,
       rcIdentificationNumber: rcIdentificationNumber ?? this.rcIdentificationNumber,
       residenceAddress: residenceAddress ?? this.residenceAddress,
-      realResidenceAddress: realResidenceAddress ?? this.residenceAddress,
+      realResidenceAddress: realResidenceAddress ?? this.realResidenceAddress,
       carRegistrationNumber: carRegistrationNumber ?? this.carRegistrationNumber,
-      carModel: carModel ?? this.carRegistrationNumber,
+      carModel: carModel ?? this.carModel,
       status: status ?? this.status,
     );
   }

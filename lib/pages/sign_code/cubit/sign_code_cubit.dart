@@ -12,7 +12,7 @@ part 'sign_code_state.dart';
 class SignCodeCubit extends Cubit<SignCodeState> {
   var digits = List.filled(4, "x");
   var currentPosition = 0;
-  int counter = 0;
+  int counter = MAX_DURATION;
 
   Timer? timer;
   bool _timeout = false;
@@ -35,13 +35,15 @@ class SignCodeCubit extends Cubit<SignCodeState> {
         if (counter == 0) {
           emit(state.copyWith(
             timeout: true,
-            counter: 0
+            counter: 0,
+            status: FormzStatus.submissionSuccess
           ));
           _timer.cancel();
         } else {
           counter--;
           emit(state.copyWith(
-            counter: counter
+            counter: counter,
+            status: FormzStatus.submissionSuccess
           ));
         }
       },
@@ -88,6 +90,25 @@ class SignCodeCubit extends Cubit<SignCodeState> {
       await _authenticationRepository.signCode(
         phoneNumber: state.phoneNumber.value,
         code: state.code.value // .join(""),
+      );
+      emit(state.copyWith(status: FormzStatus.submissionSuccess));
+    } on Exception {
+      emit(state.copyWith(status: FormzStatus.submissionFailure));
+    }
+  }
+
+  Future<void> signIn() async {
+    print('signIn');
+    if (!state.status.isValidated) return;
+    currentPosition = 0;
+    digits = List.filled(4, "x");
+    emit(state.copyWith(
+      code: Code.dirty(digits.join()), 
+      status: FormzStatus.submissionInProgress
+    ));
+    try {
+      await _authenticationRepository.signIn(
+        phoneNumber: state.phoneNumber.value,
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {

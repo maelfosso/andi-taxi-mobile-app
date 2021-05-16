@@ -210,7 +210,8 @@ class _CodeUI extends StatelessWidget {
                 ..onTap = () {
                   print("Resent the code SMS");
                   // _initTimer();
-                  currentContext.startTimer();
+                  currentContext.signIn();
+                  // currentContext.startTimer();
                 }
             )
           ),
@@ -236,23 +237,21 @@ class _BackspaceButton extends StatelessWidget {
     return BlocBuilder<SignCodeCubit, SignCodeState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
-        return state.status.isSubmissionInProgress
-          ? const CircularProgressIndicator()
-          : Expanded(
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                enableFeedback: true,
-                child: Center(
-                  child: Icon(
-                    Icons.backspace,
-                    color: Theme.of(context).primaryColor,
-                  ),
+        return Expanded(
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              enableFeedback: true,
+              child: Center(
+                child: Icon(
+                  Icons.backspace,
+                  color: Theme.of(context).primaryColor,
                 ),
-                onTap: () => context.read<SignCodeCubit>().digitRemoved()
               ),
-            )
-          );
+              onTap: () => context.read<SignCodeCubit>().digitRemoved()
+            ),
+          )
+        );
       }
     );
   }
