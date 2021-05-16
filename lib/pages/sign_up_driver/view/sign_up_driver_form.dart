@@ -103,6 +103,7 @@ class SignUpDriverForm extends StatelessWidget {
   }
   
 }
+
 class _Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

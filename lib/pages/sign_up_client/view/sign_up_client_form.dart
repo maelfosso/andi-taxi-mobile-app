@@ -70,17 +70,24 @@ class _Footer extends StatelessWidget {
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
-          style: defaultStyle,
           children: <TextSpan>[
             TextSpan(
-              text: 'Already have an account? '
+              text: 'Already have an account? ',
+              style: defaultStyle,
             ),
             TextSpan(
               text: 'Sign In',
               style: linkStyle,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  SignInPage.route();
+                  print('Sign In Tap');
+                  Navigator
+                      .of(context)
+                      .pushAndRemoveUntil<void>(
+                        SignInPage.route(),
+                        // SignUpDriverPage.route(),
+                        (route) => false,
+                      );
                 }
             ),
           ],
