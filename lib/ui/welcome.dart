@@ -17,6 +17,68 @@ class Welcome extends StatefulWidget {
     return MaterialPageRoute<void>(builder: (_) => Welcome());
   }
 
+  static void showSignUp(BuildContext context) async {
+    await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => Dialog(
+        elevation: 5.0,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: Text(
+                  "Sign Up",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22
+                  )
+                )
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  "As what do you want to sign up?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14
+                  )
+                )
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator
+                      .of(context)
+                      .pushAndRemoveUntil<void>(
+                        SignUpCustomerPage.route(),
+                        (route) => false,
+                      );
+                    }, 
+                    child: Text("CLIENT")
+                  ),
+                  TextButton(
+                    onPressed: () {
+
+                    }, 
+                    child: Text("DRIVER")
+                  )
+                ],
+              )
+            ],
+        ))
+      )
+    );
+  }
+
   static Page page() => MaterialPage<void>(child: Welcome());
 
   @override
@@ -55,24 +117,16 @@ class _WelcomeState extends State<Welcome> {
   ];
 
   _signUp() {
-    print('Routing to SignUp');
-    // SignUpPage.route();
-    Navigator
-      .of(context)
-      .pushAndRemoveUntil<void>(
-        SignUpCustomerPage.route(),
-        (route) => false,
-      );
     // Navigator
     //   .of(context)
-    //   .pushReplacement(
-    //     MaterialPageRoute(builder: (BuildContext context) => new SignUp())
+    //   .pushAndRemoveUntil<void>(
+    //     SignUpCustomerPage.route(),
+    //     (route) => false,
     //   );
+    Welcome.showSignUp(context);
   }
 
   _signIn() {
-    print('Routing to SignUp');
-    // SignInPage.route();
     Navigator
       .of(context)
       .pushReplacement(

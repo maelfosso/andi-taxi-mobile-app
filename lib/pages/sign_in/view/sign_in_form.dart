@@ -1,5 +1,6 @@
 import 'package:andi_taxi/pages/sign_in/cubit/sign_in_cubit.dart';
 import 'package:andi_taxi/pages/sign_up_customer/view/sign_up_customer_page.dart';
+import 'package:andi_taxi/ui/welcome.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +31,7 @@ class SignInForm extends StatelessWidget {
         child: Column(
           children: [
             _buildBody(),
-            _buildFooter()
+            _Footer()
           ],
         )
       ),
@@ -158,7 +159,11 @@ class SignInForm extends StatelessWidget {
     );
   }
 
-  Widget _buildFooter() {
+}
+
+class _Footer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     TextStyle defaultStyle = TextStyle(
       color: Color(0xFF97ADB6)
     );
@@ -182,7 +187,8 @@ class SignInForm extends StatelessWidget {
               style: linkStyle,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  SignUpCustomerPage.route();
+                  // SignUpCustomerPage.route();
+                  Welcome.showSignUp(context);
                 }
             ),
           ],
@@ -190,9 +196,7 @@ class SignInForm extends StatelessWidget {
       ),
     );
   }
-
 }
-
 class _PhoneInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
