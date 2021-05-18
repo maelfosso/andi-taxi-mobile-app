@@ -17,11 +17,21 @@ Additional description about the project and its features.
 
 ## Getting Started
 
-Creates an `.env` file for adding the **BASE_URL** for the API
+Before running the mobile application, you need to setup the API endpoints. The endpoint is available by running [https://github.com/maelfosso/andi-taxi-api](https://github.com/maelfosso/andi-taxi-api)
+
+Creates an `.env` file for adding the `**BASE_URL**` for the API
 
 ```.env
-BASE_URL=http://x.x.x.x/api
+BASE_URL=http://x.x.x.x:3000/api
 ```
+
+Add also your `**GOOGLE_MAPS_API_KEY**`
+```.env
+BASE_URL=
+GOOGLE_MAPS_API_KEY=
+```
+
+Without any of these variables, the application will not start.
 
 ### Setup
 
