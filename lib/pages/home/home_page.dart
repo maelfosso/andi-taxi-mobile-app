@@ -1,5 +1,6 @@
 import 'package:andi_taxi/blocs/app/app_bloc.dart';
 import 'package:andi_taxi/blocs/authentication/authentication_bloc.dart';
+import 'package:andi_taxi/pages/gmap/gmap_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,17 +29,18 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: Align(
-        alignment: const Alignment(0, -1 / 3),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(user.phoneNumber ?? '', style: textTheme.headline6),
-            const SizedBox(height: 4.0),
-            Text(user.name ?? '', style: textTheme.headline5),
-          ],
-        ),
-      ),
+      body: GMap()
+      // Align(
+      //   alignment: const Alignment(0, -1 / 3),
+      //   child: Column(
+      //     mainAxisSize: MainAxisSize.min,
+      //     children: <Widget>[
+      //       Text(user.phoneNumber ?? '', style: textTheme.headline6),
+      //       const SizedBox(height: 4.0),
+      //       Text(user.name ?? '', style: textTheme.headline5),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
