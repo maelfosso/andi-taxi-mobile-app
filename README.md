@@ -4,12 +4,6 @@
 
 > clone app of some Uber features
 
-![screenshot](./screenshots/2.jpg)
-![screenshot](./screenshots/4.jpg)
-![screenshot](./screenshots/8.jpg)
-
-Additional description about the project and its features.
-
 ## Built With
 
 - Flutter
@@ -59,3 +53,9 @@ After creating `.env` file
 ## 📝 License
 
 This project is [MIT](./MIT.md) licensed.
+
+## Screenshots
+
+![screenshot](./screenshots/2.png)
+![screenshot](./screenshots/4.png)
+![screenshot](./screenshots/8.png)
