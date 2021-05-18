@@ -21,11 +21,11 @@ class Car extends Equatable {
   @override
   List<Object?> get props => [id, registrationNumber, model];
 
-  factory Car.fromJson(Map<String, dynamic> json) {
+  factory Car.fromJson(Map<String, dynamic>? json) {
     return Car(
-      id: json['id'] ?? '',
-      registrationNumber: json['registrationNumber'],
-      model: json['model']
+      id: json?['id'] ?? '',
+      registrationNumber: json?['registrationNumber'],
+      model: json?['model']
     );
   }
   

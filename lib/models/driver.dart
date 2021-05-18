@@ -34,8 +34,8 @@ class Driver extends Equatable {
       rcIdentificationNumber: json['rcIdentificationNumber'],
       residenceAddress: json['residenceAddress'],
       realResidenceAddress: json['realResidenceAddress'],
-      car: Car.fromJson(json['car']),
-      user: json['user']
+      car: Car.fromJson(json['car']), 
+      user: json['user'] ?? ''
     );
   }
   
