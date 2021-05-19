@@ -9,39 +9,69 @@
 - Flutter
 - Dart
 
-## Getting Started
+## Requirements
 
-Before running the mobile application, you need to setup the API endpoints. The endpoint is available by running [https://github.com/maelfosso/andi-taxi-api](https://github.com/maelfosso/andi-taxi-api)
+To run this application, you must have installed
 
-Creates an `.env` file for adding the `**BASE_URL**` for the API
+- Flutter
+- Docker
+- Docker compose
 
+`docker` and `docker-compose` is for the backend available at [https://github.com/maelfosso/andi-taxi-api](https://github.com/maelfosso/andi-taxi-api)
+
+## Setup
+
+Follow these steps to launch the application
+
+### **Step 1**: Run the backend
+
+The backend is available at `https://github.com/maelfosso/andi-taxi-api`
+
+
+### **Step 2**: Get the IP address of the computer running the backend
+
+You can use `ifconfig` or `ip addr show` to get your IP address
+
+### **Step 3**: Clone the repository 
+
+`git clone https://github.com/maelfosso/andi-taxi-api`
+
+### **Step**: Change the directory 
+
+`cd andi-taxi-api`
+
+### **Step 4**: Create an `.env` file in the root directory of the project
+
+`touch .env`
+
+### **Step 5**: Add variables into the `.env` file
+
+The application depends on
+
+- The backend, so we need the IP address of the host running this one. Remember you wrote it down at **Step 2**. You refer to it in the `env` file with the `BASE_URL` variable.
+
+- Google Maps, so we need your Google maps API Key. You refer to it into the `env` file through the `GOOGLE_MAPS_API_KEY` variable.
+
+At the end, your `.env` file will look like this
 ```.env
 BASE_URL=http://x.x.x.x:3000/api
-```
-
-Add also your `**GOOGLE_MAPS_API_KEY**`
-```.env
-BASE_URL=
 GOOGLE_MAPS_API_KEY=
 ```
 
-Without any of these variables, the application will not start.
+### **Step 6**: Run the application
 
-### Setup
+`flutter run`
 
-After creating `.env` file
 
-- `cd andi-taxi-mobile-app`
-- `flutter pub get`
-- `flutter run`
 
-### Usage
+## Usage
 
 - Creates an account as client or driver
 - Sign in (keep the code displayed)
 - Enter the code. You have one minute.
 
-### Run tests
+
+## Run tests
 
 
 ## Authors
