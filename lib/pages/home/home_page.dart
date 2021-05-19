@@ -1,6 +1,6 @@
 import 'package:andi_taxi/blocs/app/app_bloc.dart';
 import 'package:andi_taxi/blocs/authentication/authentication_bloc.dart';
-import 'package:andi_taxi/pages/gmap/gmap_page.dart';
+import 'package:andi_taxi/pages/gmap/view/gmap_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
