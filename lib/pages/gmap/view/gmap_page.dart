@@ -1,5 +1,6 @@
 import 'package:andi_taxi/pages/gmap/cubit/gmap_cubit.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -11,12 +12,25 @@ class GMap extends StatelessWidget {
 
     return BlocProvider<GMapCubit>(
       create: (_) => GMapCubit(),
-      child: GoogleMap(
-        onMapCreated: (GoogleMapController controller) => context.read<GMapCubit>().mapCreated(controller),
-        initialCameraPosition: CameraPosition(
-          target: _center,
-          zoom: 11.0
-        ),
+      child: Stack(
+        alignment: AlignmentDirectional.bottomCenter,
+        children: [
+          GoogleMap(
+            onMapCreated: (GoogleMapController controller) => context.read<GMapCubit>().mapCreated(controller),
+            initialCameraPosition: CameraPosition(
+              target: _center,
+              zoom: 11.0
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 10.0),
+              color: Colors.white,
+              child: Text("Google MAP Content"),
+            )
+          )
+        ],
       )
     );
   }

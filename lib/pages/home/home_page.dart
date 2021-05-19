@@ -4,6 +4,11 @@ import 'package:andi_taxi/pages/gmap/view/gmap_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// Will have it's own state
+// GMap for Google Map
+// Chap for Chatting between two person (Driver or )
+// History for History of client transaction
+// Each state for each menu from Draw
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -29,18 +34,7 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: GMap()
-      // Align(
-      //   alignment: const Alignment(0, -1 / 3),
-      //   child: Column(
-      //     mainAxisSize: MainAxisSize.min,
-      //     children: <Widget>[
-      //       Text(user.phoneNumber ?? '', style: textTheme.headline6),
-      //       const SizedBox(height: 4.0),
-      //       Text(user.name ?? '', style: textTheme.headline5),
-      //     ],
-      //   ),
-      // ),
+      body: GMap() // Will change according to the State of Home
     );
   }
 }
