@@ -24,8 +24,10 @@ class HomePage extends StatelessWidget {
     final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Home'),
+        toolbarOpacity: 0.0,
         actions: <Widget>[
           IconButton(
             key: const Key('homePage_logout_iconButton'),
