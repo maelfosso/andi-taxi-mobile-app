@@ -17,7 +17,7 @@ To run this application, you must have installed
 - Docker
 - Docker compose
 
-`docker` and `docker-compose` is for the backend available at [https://github.com/maelfosso/andi-taxi-api](https://github.com/maelfosso/andi-taxi-api)
+`docker` and `docker-compose` are necessary for the backend available at [https://github.com/maelfosso/andi-taxi-api](https://github.com/maelfosso/andi-taxi-api)
 
 ## Setup
 
@@ -25,7 +25,7 @@ Follow these steps to launch the application
 
 ### **Step 1**: Run the backend
 
-The backend is available at `https://github.com/maelfosso/andi-taxi-api`
+The backend is available at `https://github.com/maelfosso/andi-taxi-api`. Follow the steps indicated there to run it.
 
 
 ### **Step 2**: Get the IP address of the computer running the backend
