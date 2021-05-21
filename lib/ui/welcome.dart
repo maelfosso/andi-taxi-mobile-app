@@ -55,7 +55,7 @@ class Welcome extends StatefulWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  TextButton(
+                  ElevatedButton(
                     onPressed: () {
                       Navigator
                       .of(context)
@@ -66,7 +66,7 @@ class Welcome extends StatefulWidget {
                     }, 
                     child: Text("CLIENT")
                   ),
-                  TextButton(
+                  ElevatedButton(
                     onPressed: () {
                       Navigator
                       .of(context)
@@ -212,7 +212,7 @@ class _WelcomeState extends State<Welcome> {
               ),
               onPressed: _signUp
             ),
-            TextButton(
+            ElevatedButton(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0),
                 child: Text(
@@ -248,6 +248,16 @@ class _WelcomeState extends State<Welcome> {
     );
   }
 
+  bool onWillPop() {
+    _controller.animateToPage(
+      0,
+      duration: Duration(milliseconds: 200),
+      curve: Curves.linear,
+    );
+    return false;
+  }
+
+
   @override
   void dispose() {
     _controller.dispose();
@@ -257,17 +267,20 @@ class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Container(
-          key: mainKey,
-          child: Column(
-            children: [
-              _buildPageView(),
-              _buildSignButtons(),
-              _buildDot()
-            ],
-          ),
+        backgroundColor: Colors.white,
+        body: WillPopScope(
+          onWillPop: () => Future.sync(onWillPop),
+          child: SafeArea(
+          child: Container(
+            key: mainKey,
+            child: Column(
+              children: [
+                _buildPageView(),
+                _buildSignButtons(),
+                _buildDot()
+              ],
+            ),
+          )
         )
       )
     );
