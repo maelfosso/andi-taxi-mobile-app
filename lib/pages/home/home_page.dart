@@ -25,17 +25,17 @@ class HomePage extends StatelessWidget {
     
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        title: const Text('Home'),
-        toolbarOpacity: 0.0,
-        actions: <Widget>[
-          IconButton(
-            key: const Key('homePage_logout_iconButton'),
-            icon: const Icon(Icons.exit_to_app),
-            onPressed: () => context.read<AuthenticationBloc>().add(AuthenticationLogoutRequested()),
-          )
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: const Text('Home'),
+      //   toolbarOpacity: 0.0,
+      //   actions: <Widget>[
+      //     IconButton(
+      //       key: const Key('homePage_logout_iconButton'),
+      //       icon: const Icon(Icons.exit_to_app),
+      //       onPressed: () => context.read<AuthenticationBloc>().add(AuthenticationLogoutRequested()),
+      //     )
+      //   ],
+      // ),
       body: GMap() // Will change according to the State of Home
     );
   }
