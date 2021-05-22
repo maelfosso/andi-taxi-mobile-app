@@ -1,6 +1,7 @@
 import 'package:andi_taxi/pages/sign_in/cubit/sign_in_cubit.dart';
 import 'package:andi_taxi/pages/sign_in/view/sign_in_form.dart';
 import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
+import 'package:andi_taxi/ui/welcome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,8 +12,6 @@ class SignInPage extends StatelessWidget {
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => const SignInPage());
   }
-
-  // static Page page() => const MaterialPage<void>(child: SignInPage());
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +27,26 @@ class SignInPage extends StatelessWidget {
           ),
         )
       ),
-      body: Container(
-        color: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: 32.0),
-        child: BlocProvider(
-          create: (_) => SignInCubit(context.read<AuthenticationRepository>()),
-          child: SignInForm()
-        )
-      ),
+      body: WillPopScope(
+        onWillPop: () async {
+          Navigator
+          .of(context)
+          .pushReplacement(
+            MaterialPageRoute<void>(builder: (_) => Welcome())
+          );
+          return false;
+        },
+        child: SafeArea(
+          child: Container(
+            color: Colors.white,
+            // padding: EdgeInsets.symmetric(horizontal: 32.0),
+            child: BlocProvider(
+              create: (_) => SignInCubit(context.read<AuthenticationRepository>()),
+              child: SignInForm()
+            )
+          )
+        ),
+      )
     );
   }
 }
