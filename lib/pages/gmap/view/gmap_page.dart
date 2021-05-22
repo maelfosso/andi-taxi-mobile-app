@@ -12,7 +12,8 @@ class GMap extends StatelessWidget {
 
     return BlocProvider<GMapCubit>(
       create: (_) => GMapCubit(),
-      child: Stack(
+      child: SafeArea( 
+        child: Stack(
         alignment: AlignmentDirectional.bottomCenter,
         children: [
           GoogleMap(
@@ -22,8 +23,7 @@ class GMap extends StatelessWidget {
               zoom: 11.0
             ),
           ),
-          SizedBox(
-            width: double.infinity,
+          Container(
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
               decoration: BoxDecoration(
@@ -115,33 +115,7 @@ class GMap extends StatelessWidget {
             )
           )
         ],
-      )
+      ))
     );
   }
 }
-
-// class GMap extends StatefulWidget {
-//   @override
-//   _GMapState createState() => _GMapState();
-// }
-
-// class _GMapState extends State<GMap> {
-//   late GoogleMapController mapController;
-
-//   final LatLng _center = const LatLng(45.521563, -122.677433);
-
-//   void _onMapCreated(GoogleMapController controller) {
-//     mapController = controller;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GoogleMap(
-//       onMapCreated: _onMapCreated,
-//       initialCameraPosition: CameraPosition(
-//         target: _center,
-//         zoom: 11.0,
-//       ),
-//     );
-//   }
-// }

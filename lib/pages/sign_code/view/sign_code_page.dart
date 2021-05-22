@@ -30,18 +30,11 @@ class SignCodePage extends StatelessWidget {
           ),
         )
       ),
-      body: Container(
-        color: Colors.white,
+      body: SafeArea(
         child: BlocProvider(
           create: (_) => SignCodeCubit(context.read<AuthenticationRepository>()),
           child: SignCodeForm()
         )
-        // Column(
-        //   children: [
-        //     _buildBody(),
-        //     _buildFooter()
-        //   ],
-        // )
       ),
     );
   }
