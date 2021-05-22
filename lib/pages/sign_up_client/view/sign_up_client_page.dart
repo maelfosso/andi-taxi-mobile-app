@@ -1,6 +1,7 @@
 import 'package:andi_taxi/pages/sign_up_client/cubit/sign_up_client_cubit.dart';
 import 'package:andi_taxi/pages/sign_up_client/view/sign_up_client_form.dart';
 import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
+import 'package:andi_taxi/ui/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,12 +27,21 @@ class SignUpClientPage extends StatelessWidget {
         ),
         
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: BlocProvider<SignUpClientCubit>(
-          create: (_) => SignUpClientCubit(context.read<AuthenticationRepository>()),
-          child: const SignUpClientForm(),
-        ),
+      body: WillPopScope(
+        onWillPop: () async {
+          Navigator
+          .of(context)
+          .pushReplacement(
+            MaterialPageRoute<void>(builder: (_) => Welcome())
+          );
+          return false;
+        },
+        child: SafeArea( 
+          child: BlocProvider<SignUpClientCubit>(
+            create: (_) => SignUpClientCubit(context.read<AuthenticationRepository>()),
+            child: const SignUpClientForm(),
+          ),
+        )
       ),
     );
   }

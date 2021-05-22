@@ -37,15 +37,11 @@ class SignInPage extends StatelessWidget {
           return false;
         },
         child: SafeArea(
-          child: Container(
-            color: Colors.white,
-            // padding: EdgeInsets.symmetric(horizontal: 32.0),
-            child: BlocProvider(
-              create: (_) => SignInCubit(context.read<AuthenticationRepository>()),
-              child: SignInForm()
-            )
+          child: BlocProvider(
+            create: (_) => SignInCubit(context.read<AuthenticationRepository>()),
+            child: SignInForm()
           )
-        ),
+        )
       )
     );
   }
