@@ -37,6 +37,7 @@ class SignInPage extends StatelessWidget {
           return false;
         },
         child: SafeArea(
+          
           child: BlocProvider(
             create: (_) => SignInCubit(context.read<AuthenticationRepository>()),
             child: SignInForm()
