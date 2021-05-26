@@ -70,9 +70,11 @@ class _GoogleMap extends StatelessWidget {
     print('CUSTOM GOOGLE MAP');
     return BlocBuilder<ui.GMapCubit, ui.GMapState>(
       builder: (context, state) {
+        print('GMAP VIEW STATE : $state');
         print('CUStom GMap : ${state.currentPosition} - ${state.error}');
         print('SET OF MARKERS : ${Set<Marker>.of(state.markers.values)}');
-
+        print("GEOLOCATION : ${state.currentPlace.locality}, ${state.currentPlace.street}, ${state.currentPlace.country}");
+        print(state.currentPlace.toJson());
         return GoogleMap(
           onMapCreated: (GoogleMapController controller) {
             print('ON MAP CREATED .. _GOOGLEMAP');

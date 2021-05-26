@@ -4,6 +4,7 @@ import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart';
 import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -43,22 +44,29 @@ class GMapCubit extends Cubit<GMapState> {
         markerId: GMapState.currentLocationId,
         position: latLng
       );
-      var newPosition = CameraPosition(
-        target: latLng,
-        zoom: 11
-      );
 
-      CameraUpdate update =CameraUpdate.newCameraPosition(newPosition);
+      CameraUpdate update = CameraUpdate.newLatLngZoom(latLng, 16);
 
       gMapController.moveCamera(update);      
 
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude
+      );
+      print('PLACEMARK FROM COORDINATES : ${placemarks.length}');
+      Placemark place = placemarks[0];
+      print("FIRST PALCEMARK : ${place.locality}, ${place.postalCode}, ${place.country}");
+
       state.markers[GMapState.currentLocationId] = marker;
+      // state.currentPlacemark = place;
       emit(
         state.copyWith(
           currentPosition: latLng,
-          markers: state.markers
+          // markers: state.markers,
+          currentPlace: Place.fromPlacemark(place)
         )
       );
+      
     } catch (e) {
       print("ON ERROR $e");
       if (e == 1) {
