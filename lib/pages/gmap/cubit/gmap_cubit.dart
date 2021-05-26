@@ -40,7 +40,7 @@ class GMapCubit extends Cubit<GMapState> {
       var position = await _geolocationRepository.determinePosition();
       print('POSITION $position');
 
-      var latLng = LatLng(position.latitude, position.longitude);
+      var latLng = LatLng(position.position.latitude, position.position.longitude);
       var marker = Marker(
         markerId: GMapState.currentLocationId,
         position: latLng
@@ -50,13 +50,13 @@ class GMapCubit extends Cubit<GMapState> {
 
       gMapController.moveCamera(update);      
 
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-        position.latitude,
-        position.longitude
-      );
-      print('PLACEMARK FROM COORDINATES : ${placemarks.length}');
-      Placemark place = placemarks[0];
-      print("FIRST PALCEMARK : ${place.locality}, ${place.postalCode}, ${place.country}");
+      // List<Placemark> placemarks = await placemarkFromCoordinates(
+      //   position.latitude,
+      //   position.longitude
+      // );
+      // print('PLACEMARK FROM COORDINATES : ${placemarks.length}');
+      // Placemark place = placemarks[0];
+      // print("FIRST PALCEMARK : ${place.locality}, ${place.postalCode}, ${place.country}");
 
       state.markers[GMapState.currentLocationId] = marker;
       // state.currentPlacemark = place;
@@ -64,7 +64,7 @@ class GMapCubit extends Cubit<GMapState> {
         state.copyWith(
           currentPosition: latLng,
           // markers: state.markers,
-          currentPlace: Place.fromPlacemark(place)
+          currentPlace: position.place // Place.fromPlacemark(place)
         )
       );
       

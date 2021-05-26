@@ -8,6 +8,9 @@ class GMapHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GMapBloc, GMapState>(
       builder: (context, state) {
+        print('GMAP HOME $state');
+        var place = state.location.place;
+
         return Container(
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
@@ -51,16 +54,16 @@ class GMapHome extends StatelessWidget {
                           children: [
                             Container(
                               child: Text(
-                                "Top",
+                                "${place.locality}, ${place.subLocality}, ${place.street}",
                                 style: TextStyle(
-                                  fontSize: 17.0,
+                                  // fontSize: 17.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
                             Container(
                               child: Text(
-                                "Bottom",
+                                place.country,
                                 style: TextStyle(
                                   color: Color(0xFF97ADB6),
                                 ),
@@ -85,7 +88,7 @@ class GMapHome extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 15.0),
                       child: Text(
-                        "Select a place",
+                        "Book a taxi",
                         textAlign: TextAlign.center,
                       )
                     ),

@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:andi_taxi/models/user_position.dart';
+import 'package:andi_taxi/models/user_position_place.dart';
 import 'package:andi_taxi/pages/gmap/view/gmap_page.dart';
 import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:bloc/bloc.dart';

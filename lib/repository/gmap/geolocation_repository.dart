@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart';
 import 'package:andi_taxi/cache/cache.dart';
+import 'package:andi_taxi/models/place.dart';
 import 'package:andi_taxi/models/user_position.dart';
+import 'package:andi_taxi/models/user_position_place.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GeolocationRepository {
@@ -17,8 +20,8 @@ class GeolocationRepository {
     CacheClient? cache
   }): _cache = cache ?? CacheClient();
 
-  UserPosition get currentPosition {
-    return _cache.read<UserPosition>(key: currentPositionCacheKey) ?? UserPosition.empty;
+  UserPositionPlace get currentPosition {
+    return _cache.read<UserPositionPlace>(key: currentPositionCacheKey) ?? UserPositionPlace.empty;
   }
 
   Stream<GMapStatus> get status async* {
@@ -36,7 +39,8 @@ class GeolocationRepository {
 
   }
 
-  Future<Position> determinePosition() async {
+  // Future<Position> determinePosition() async {
+  Future<UserPositionPlace> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -78,19 +82,32 @@ class GeolocationRepository {
     print('DETERMINE POSITION - RETURN RESULT');
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    var position;
+    // var position;
+    UserPositionPlace userPositionPlace = UserPositionPlace.empty;
     try {
-      position = await Geolocator.getCurrentPosition(); // (forceAndroidLocationManager: true);
+      var position = await Geolocator.getCurrentPosition(); // (forceAndroidLocationManager: true);
       print('SUCCESS IN GET CUPORR $position');
+
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude
+      );
+      print('PLACEMARK FROM COORDINATES : ${placemarks.length}');
+      Placemark place = placemarks[0];
+      
+      userPositionPlace = UserPositionPlace(
+        position: UserPosition.fromPosition(position),
+        place: Place.fromPlacemark(place)
+      );
     
-      _cache.write<UserPosition>(key: currentPositionCacheKey, value: UserPosition.fromPosition(position));
+      _cache.write<UserPositionPlace>(key: currentPositionCacheKey, value: userPositionPlace); // UserPosition.fromPosition(position));
       _controller.add(GMapStatus.home);
     } catch (e) {
       print('ERROR CALLED GET CURRENT POSITION $e');
     }
 
 
-    return position;
+    return userPositionPlace;
   }
 
 }
