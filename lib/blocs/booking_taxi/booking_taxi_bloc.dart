@@ -1,3 +1,5 @@
+import 'package:andi_taxi/models/user_position_place.dart';
+import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,7 +10,16 @@ enum BookingTaxiStatus { unknown, address, details, payment }
 
 class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
 
-  BookingTaxiBloc(): super(const BookingTaxiState.unknown());
+  BookingTaxiBloc({
+    required GeolocationRepository geolocationRepository
+  }): _geolocationRepository = geolocationRepository,
+      super(const BookingTaxiState.unknown()) {
+    
+    // var position = _geolocationRepository.determinePosition();
+    add(BookingTaxiStatusChanged(BookingTaxiStatus.address));
+  }
+
+  final GeolocationRepository _geolocationRepository;
 
   @override
   Stream<BookingTaxiState> mapEventToState(BookingTaxiEvent event) async* {
@@ -23,6 +34,10 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
     BookingTaxiStatusChanged event
   ) async {
     switch (event.status) {
+      case BookingTaxiStatus.address:
+        final position = _geolocationRepository.currentPosition;
+
+        return BookingTaxiState.address(from: position);
       default:
         return const BookingTaxiState.unknown();
     }

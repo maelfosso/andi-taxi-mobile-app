@@ -10,10 +10,7 @@ class GMapBookingView extends StatelessWidget {
       builder: (context, state) {
         switch(state.status) {
           case BookingTaxiStatus.address:
-            return Container(
-              color: Colors.blue,
-              width: 50.0,
-            );
+            return _BookingTaxiAddressWidget();
           case BookingTaxiStatus.details:
             return Container(
               color: Colors.blueAccent,
@@ -33,5 +30,31 @@ class GMapBookingView extends StatelessWidget {
         }
       }
     );
+  }
+}
+
+class _BookingTaxiAddressWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<BookingTaxiBloc, BookingTaxiState>(
+      builder: (context, state) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40.0),
+              topRight: Radius.circular(40.0)
+            )
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              
+            ]
+          )
+        );
+      }
+    );    
   }
 }
