@@ -1,3 +1,4 @@
+import 'package:andi_taxi/pages/gmap_home/gmp_home_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,10 +46,11 @@ class GMapView extends StatelessWidget {
                       color: Colors.blue,
                     );
                   case gbloc.GMapStatus.home:
-                    return Container(
-                      height: 30.0,
-                      color: Colors.redAccent,
-                    );
+                    return GMapHome();
+                    // Container(
+                    //   height: 30.0,
+                    //   color: Colors.redAccent,
+                    // );
                   default:
                     return Container(
                       height: 50.0,

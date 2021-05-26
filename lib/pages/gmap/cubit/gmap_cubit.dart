@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart';
+import 'package:andi_taxi/models/place.dart';
 import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
