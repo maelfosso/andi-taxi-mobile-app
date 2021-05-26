@@ -85,4 +85,8 @@ class GMapCubit extends Cubit<GMapState> {
       }
     }
   }
+
+  void bookATaxi() {
+    
+  }
 }

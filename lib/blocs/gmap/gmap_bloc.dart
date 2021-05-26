@@ -46,7 +46,9 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
         return GMapState.home(position);
 
       case GMapStatus.bookingTaxi:
-        return const GMapState.bookingTaxi();
+        final position = _geolocationRepository.currentPosition;
+
+        return GMapState.bookingTaxi(position);
 
       case GMapStatus.gotTaxi:
         return const GMapState.gotTaxi();

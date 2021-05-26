@@ -1,4 +1,5 @@
-import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart';
+import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart' as gbloc;
+import 'package:andi_taxi/pages/gmap/cubit/gmap_cubit.dart' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class GMapHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GMapBloc, GMapState>(
+    return BlocBuilder<gbloc.GMapBloc, gbloc.GMapState>(
       builder: (context, state) {
         print('GMAP HOME $state');
         var place = state.location.place;
@@ -92,10 +93,8 @@ class GMapHome extends StatelessWidget {
                         textAlign: TextAlign.center,
                       )
                     ),
-                    onPressed: (){}
-                    // state.status.isValidated
-                    //   ? () => context.read<SignUpDriverCubit>().signUpFormSubmitted()
-                    //   : null,
+                    // onPressed: () => context.read<ui.GMapCubit>().bookATaxi()
+                    onPressed: () => context.read<gbloc.GMapBloc>().add(gbloc.GMapStatusChanged(gbloc.GMapStatus.bookingTaxi)),
                   ),
                 )
               ]
@@ -104,8 +103,5 @@ class GMapHome extends StatelessWidget {
         );
       },
     );
-    // Container(
-
-    // );    
   }
 }

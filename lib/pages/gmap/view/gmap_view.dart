@@ -1,3 +1,4 @@
+import 'package:andi_taxi/pages/gmap_booking/gmap_booking_page.dart';
 import 'package:andi_taxi/pages/gmap_home/gmp_home_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,10 +48,10 @@ class GMapView extends StatelessWidget {
                     );
                   case gbloc.GMapStatus.home:
                     return GMapHome();
-                    // Container(
-                    //   height: 30.0,
-                    //   color: Colors.redAccent,
-                    // );
+                  
+                  case gbloc.GMapStatus.bookingTaxi:
+                    return GMapBookingPage();
+                    
                   default:
                     return Container(
                       height: 50.0,
