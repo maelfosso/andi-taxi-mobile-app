@@ -1,11 +1,31 @@
 import 'dart:async';
 
+import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart';
+import 'package:andi_taxi/cache/cache.dart';
+import 'package:andi_taxi/models/user_position.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GeolocationRepository {
-  final _controller = StreamController<Position>();
+  final _controller = StreamController<GMapStatus>();
+  final CacheClient _cache;
 
-  GeolocationRepository();
+  @visibleForTesting
+  static const currentPositionCacheKey = '__current_position_cache_key__';
+
+  GeolocationRepository({
+    CacheClient? cache
+  }): _cache = cache ?? CacheClient();
+
+  UserPosition get currentPosition {
+    return _cache.read<UserPosition>(key: currentPositionCacheKey) ?? UserPosition.empty;
+  }
+
+  Stream<GMapStatus> get status async* {
+    await Future<void>.delayed(const Duration(seconds:  1));
+    yield GMapStatus.unknown;
+    yield* _controller.stream;
+  }
 
   Stream<Position> get position {
     return Geolocator.getPositionStream();
@@ -62,9 +82,13 @@ class GeolocationRepository {
     try {
       position = await Geolocator.getCurrentPosition(); // (forceAndroidLocationManager: true);
       print('SUCCESS IN GET CUPORR $position');
+    
+      _cache.write<UserPosition>(key: currentPositionCacheKey, value: UserPosition.fromPosition(position));
+      _controller.add(GMapStatus.home);
     } catch (e) {
       print('ERROR CALLED GET CURRENT POSITION $e');
     }
+
 
     return position;
   }

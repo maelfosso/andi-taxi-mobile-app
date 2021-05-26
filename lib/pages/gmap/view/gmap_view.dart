@@ -39,7 +39,7 @@ class GMapView extends StatelessWidget {
                 
                 switch (state.status) {
                   case gbloc.GMapStatus.unknown:
-                    
+                    // Waiting for the current position
                     return Container(
                       height: 30.0,
                       color: Colors.blue,

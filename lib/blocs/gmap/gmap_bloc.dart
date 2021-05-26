@@ -1,7 +1,12 @@
 
+import 'dart:async';
+
+import 'package:andi_taxi/models/user_position.dart';
 import 'package:andi_taxi/pages/gmap/view/gmap_page.dart';
+import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:geolocator/geolocator.dart';
 
 part 'gmap_state.dart';
 part 'gmap_event.dart';
@@ -10,7 +15,17 @@ enum GMapStatus { unknown, home, bookingTaxi, searchingTaxi, gotTaxi }
 
 class GMapBloc extends Bloc<GMapEvent, GMapState> {
 
-  GMapBloc(): super(const GMapState.unknown());
+  GMapBloc({
+    required GeolocationRepository geolocationRepository,
+  }):  _geolocationRepository = geolocationRepository, 
+      super(const GMapState.unknown()) {
+    _gmapStatusSubscription = _geolocationRepository.status.listen(
+      (status) => add(GMapStatusChanged(status)),
+    );
+  }
+
+  final GeolocationRepository _geolocationRepository;
+  late StreamSubscription<GMapStatus> _gmapStatusSubscription;
 
   @override
   Stream<GMapState> mapEventToState(GMapEvent event) async* {
@@ -23,7 +38,24 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
   }
 
   Future<GMapState> _mapGMapStatusChangedToState(GMapStatusChanged event) async {
-    return GMapState.home();
+    switch (event.status) {      
+      case GMapStatus.home:
+        final position = _geolocationRepository.currentPosition;
+
+        return GMapState.home(position);
+
+      case GMapStatus.bookingTaxi:
+        return const GMapState.bookingTaxi();
+
+      case GMapStatus.gotTaxi:
+        return const GMapState.gotTaxi();
+      
+      case GMapStatus.searchingTaxi:
+        return const GMapState.searchingTaxi();
+
+      default:
+        return const GMapState.unknown();
+    }
   }
 
 

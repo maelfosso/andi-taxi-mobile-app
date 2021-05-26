@@ -26,7 +26,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
-    
+    final GeolocationRepository geolocationRepository = GeolocationRepository();
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       // appBar: AppBar(
@@ -40,10 +41,13 @@ class HomePage extends StatelessWidget {
       //     )
       //   ],
       // ),
-      body: RepositoryProvider(
-        create: (_) => GeolocationRepository(),
+      body: RepositoryProvider.value(
+        value: geolocationRepository,
+        // create: (_) => GeolocationRepository(),
         child: BlocProvider(
-          create: (context) => GMapBloc(),
+          create: (context) => GMapBloc(
+            geolocationRepository: geolocationRepository
+          ),
           child: HomeView()
         ) 
       )

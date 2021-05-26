@@ -3,13 +3,13 @@ part of 'gmap_bloc.dart';
 class GMapState extends Equatable {
   const GMapState._({
     this.status = GMapStatus.unknown,
-    // this.userCode = UserCode.empty,
+    this.userPosition = UserPosition.empty
     // this.user = User.empty,
   });
 
   const GMapState.unknown() : this._();
 
-  const GMapState.home() 
+  const GMapState.home(UserPosition position) 
     : this._(status: GMapStatus.home); // , userCode: userCode);
 
   const GMapState.bookingTaxi()
@@ -22,9 +22,9 @@ class GMapState extends Equatable {
     : this._(status: GMapStatus.gotTaxi); // unauthenticated);
 
   final GMapStatus status;
-  // final User user;
+  final UserPosition userPosition;
   // final UserCode userCode;
 
   @override
-  List<Object> get props => [status];
+  List<Object> get props => [status, userPosition];
 }
