@@ -12,8 +12,8 @@ class GMapState extends Equatable {
   const GMapState.home(UserPositionPlace location) 
     : this._(status: GMapStatus.home, location: location); // , userCode: userCode);
 
-  const GMapState.bookingTaxi()
-    : this._(status: GMapStatus.bookingTaxi); // authenticated, user: user);
+  const GMapState.bookingTaxi(UserPositionPlace location)
+    : this._(status: GMapStatus.bookingTaxi, location: location); // authenticated, user: user);
 
   const GMapState.searchingTaxi()
     : this._(status: GMapStatus.searchingTaxi); // unauthenticated);
