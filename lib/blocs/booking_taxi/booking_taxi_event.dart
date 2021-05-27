@@ -25,4 +25,17 @@ class DestinationAddressAdded extends BookingTaxiEvent {
   List<Object?> get props => [position];
 }
 
+class BookingAddressSetUp extends BookingTaxiEvent {}
+
+class BookingDetailsSetUp extends BookingTaxiEvent {}
+
+class BookingPaymentSetUp extends BookingTaxiEvent {
+  const BookingPaymentSetUp(this.method);
+  
+  final PaymentMethod method;
+
+  @override
+  List<Object?> get props => [method];
+}
+
 class BookingTaxiEnded extends BookingTaxiEvent {}

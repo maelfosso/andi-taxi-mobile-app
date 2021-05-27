@@ -13,6 +13,10 @@ part 'booking_taxi_state.dart';
 
 enum BookingTaxiStatus { unknown, address, details, payment }
 
+enum CarType { standard, vip, scooter, access, baby, electric, exec, van }
+
+enum PaymentMethod { cash, visa, mastercard }
+
 class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
 
   BookingTaxiBloc({
@@ -32,6 +36,10 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
       yield await _mapBookingTaxiStatusChangedToState(event);
     } else if (event is DestinationAddressAdded) {
       yield await _mapDestinationAddressAddedToState(event);
+    } else if (event is BookingAddressSetUp) {
+      yield await _mapBookingAddressSetUpToState(event);
+    } else if (event is BookingDetailsSetUp) {
+      yield await _mapBookingDetailsSetUpToState(event);
     } else if (event is BookingTaxiEnded) {
       yield await _mapBookingTaxiEndedToState(event);
     }
@@ -43,7 +51,7 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
     switch (event.status) {
       case BookingTaxiStatus.address:
         final position = _geolocationRepository.currentPosition;
-        print('[MAP BOOKING STATUS CHANGED] POSITION : $position');
+
         return BookingTaxiState.address(position);
       default:
         return const BookingTaxiState.unknown();
@@ -66,6 +74,32 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
     );
 
     return state.copyWith(to: userPositionPlace);
+  }
+
+  Future<BookingTaxiState> _mapBookingAddressSetUpToState(
+    BookingAddressSetUp event
+  ) async {
+    // From Google MAP, Calculate 
+    // - the distance
+    // - The time of travel
+
+    // From API, les Fetch
+    // - car (last car type used)
+    // - cost range 
+    // - payment method (last payment method used)
+
+    return state.copyWith(
+      status: BookingTaxiStatus.details
+    );
+  }
+
+  Future<BookingTaxiState> _mapBookingDetailsSetUpToState(
+    BookingTaxiEvent event
+  ) async {
+
+    return state.copyWith(
+      status: BookingTaxiStatus.payment
+    );
   }
 
   Future<BookingTaxiState> _mapBookingTaxiEndedToState(
