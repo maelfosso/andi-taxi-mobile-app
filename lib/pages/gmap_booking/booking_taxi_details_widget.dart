@@ -1,6 +1,17 @@
 part of 'gmap_booking_view.dart';
 
 class BookingTaxiDetailsWidget extends StatelessWidget {
+  
+  String carType(CarType type) {
+    switch (type) {
+      case CarType.standard:
+        return "Standard";
+      
+      default:
+        return "Standard";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BookingTaxiBloc, BookingTaxiState>(
@@ -18,7 +29,9 @@ class BookingTaxiDetailsWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(    
+              Container( 
+                padding: EdgeInsets.all(12.0),   
+                margin: EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   color: Colors.white,
@@ -38,29 +51,25 @@ class BookingTaxiDetailsWidget extends StatelessWidget {
                   ],
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       child: Column(
                         children: [
                           Container(
                             child: Material(
-                              child: 
-                              // AspectRatio(
-                              //   aspectRatio: 1,
-                              //   child:
-                                 Image(
-                                  image: AssetImage('assets/images/ic_car_standard.png'),
-                                  fit: BoxFit.scaleDown, // use this
-                                ),
+                              child: Image(
+                                image: AssetImage('assets/images/ic_car_standard.png'),
+                                fit: BoxFit.scaleDown, // use this
                               ),
-                            // )                      
+                            ),
                           ),
                           Container(
+                            margin: EdgeInsets.only(top: 5.0),
                             child: Text(
-                              "${state.car}",
+                              "${carType(state.car)}",
                               style: TextStyle(
-                                color: Color(0xFFC6902E),
-                                fontSize: 20.0
+                                fontSize: 18.0
                               ),
                             )
                           )
@@ -72,11 +81,25 @@ class BookingTaxiDetailsWidget extends StatelessWidget {
                         children: [
                           Container(
                             child: Text(
-                              "\$${state.cost[0]} - \$${state.cost[1]}"
+                              "\$${state.cost[0]} - \$${state.cost[1]}",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0
+                              ),
                             )                   
                           ),
                           Container(
-                            child: Text("${state.time} min"),
+                            padding: EdgeInsets.all(6.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(18.0),
+                              color: Color(0xFFD5DEE2),
+                            ),
+                            child: Text(
+                              "${state.time} min",
+                              style: TextStyle(
+                                color: Colors.white
+                              ),
+                            ),
                           )
                         ]
                       )
@@ -86,10 +109,15 @@ class BookingTaxiDetailsWidget extends StatelessWidget {
               ),
 
               Container(
+                padding: EdgeInsets.all(12.0),   
+                margin: EdgeInsets.all(5.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                             child: Text(
@@ -98,27 +126,42 @@ class BookingTaxiDetailsWidget extends StatelessWidget {
                           ),
                           Container(
                             child: Text(
-                              "${state.car}",
+                              "~${state.time} min",
                               style: TextStyle(
                                 color: Color(0xFFC6902E),
-                                // fontSize: 10.0
+                                fontSize: 14.0
                               ),
+                              textAlign: TextAlign.left,
                             )
                           )
                         ]
                       )
                     ),
                     Container(
-                      child: Column(
+                      child: Row(
                         children: [
                           Container(
-                            child: Text(
-                              "\$${state.cost[0]} - \$${state.cost[1]}"
-                            )                   
+                            child: Material(
+                              child: Image(
+                                image: AssetImage('assets/images/ic_mastercard.png'),
+                                fit: BoxFit.scaleDown, // use this
+                              ),
+                            )        
                           ),
                           Container(
-                            child: Text("${state.time} min"),
-                          )
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(
+                              "**** 8462"
+                            )
+                          ),
+                          // Container(
+                          //   child: Text(
+                          //     "\$${state.cost[0]} - \$${state.cost[1]}"
+                          //   )                   
+                          // ),
+                          // Container(
+                          //   child: Text("${state.time} min"),
+                          // )
                         ]
                       )
                     )

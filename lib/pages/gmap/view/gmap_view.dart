@@ -1,6 +1,7 @@
 import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
 import 'package:andi_taxi/pages/gmap_booking/gmap_booking_page.dart';
 import 'package:andi_taxi/pages/gmap_home/gmp_home_view.dart';
+import 'package:andi_taxi/pages/gmap_searching/gmap_searching_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +11,6 @@ import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart' as gbloc;
 import 'package:andi_taxi/pages/gmap/cubit/gmap_cubit.dart' as ui;
 
 class GMapView extends StatelessWidget {
-  
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +52,9 @@ class GMapView extends StatelessWidget {
                   
                   case gbloc.GMapStatus.bookingTaxi:
                     return GMapBookingPage();
+
+                  case gbloc.GMapStatus.searchingTaxi:
+                    return GMapSearchingPage();
                     
                   default:
                     return Container(

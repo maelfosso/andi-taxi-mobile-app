@@ -40,6 +40,8 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
       yield await _mapBookingAddressSetUpToState(event);
     } else if (event is BookingDetailsSetUp) {
       yield await _mapBookingDetailsSetUpToState(event);
+    } else if (event is BookingPaymentSetUp) {
+      yield await _mapBookingPaymentSetUpToState(event);
     } else if (event is BookingTaxiEnded) {
       yield await _mapBookingTaxiEndedToState(event);
     }
@@ -100,6 +102,13 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
     return state.copyWith(
       status: BookingTaxiStatus.payment
     );
+  }
+
+  Future<BookingTaxiState> _mapBookingPaymentSetUpToState(
+    BookingPaymentSetUp event
+  ) async {
+    // _geolocationRepository.status
+    return const BookingTaxiState.unknown();
   }
 
   Future<BookingTaxiState> _mapBookingTaxiEndedToState(
