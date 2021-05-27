@@ -142,65 +142,99 @@ class _BookingTaxiAddressWidget extends StatelessWidget {
                 )
                 ),
               ),
-              // Container(
-              //   color: Colors.yellowAccent,
-              //   width: 50.0,
-              //   child: Row(
-              //     children: [
-              //       ImageIcon(
-              //         AssetImage("assets/images/ic_setloc.png")
-              //       ),
-              //       Text("Display on the Map")
-              //     ],
-              //   ),
-              // ),
-              // Container(
-              //   color: Colors.yellow.shade700,
-              //   width: 50.0,
-              //   child: Column(
-              //     children: [
-              //       Text("Recent Addresses"),
-              //       Container(
-              //         padding: EdgeInsets.symmetric(vertical: 25.0),
-              //         child: Row(
-              //           children: [
-              //             Material(
-              //               child: ClipRRect(
-              //                 borderRadius: BorderRadius.circular(20.0),
-              //                 child: Image.asset('assets/images/ic_place.png'),
-              //               ),
-              //             ),
-              //             Container(
-              //               padding: EdgeInsets.only(left: 10.0),
-              //               child: Column(
-              //                 crossAxisAlignment: CrossAxisAlignment.start,
-              //                 children: [
-              //                   Container(
-              //                     child: Text(
-              //                       "Address",
-              //                       style: TextStyle(
-              //                         // fontSize: 17.0,
-              //                         fontWeight: FontWeight.w600,
-              //                       ),
-              //                     ),
-              //                   ),
-              //                   Container(
-              //                     child: Text(
-              //                       "Country",
-              //                       style: TextStyle(
-              //                         color: Color(0xFF97ADB6),
-              //                       ),
-              //                     ),
-              //                   )
-              //                 ],
-              //               ),
-              //             )
-              //           ],
-              //         ),
-              //       )
-              //     ]
-              //   ),
-              // )
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 20.0),
+                child: IntrinsicHeight(child: 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                        child: Material(
+                          child: 
+                          AspectRatio(
+                            aspectRatio: 5/3,
+                            child: Image(
+                              image: AssetImage('assets/images/ic_setloc.png'),
+                              fit: BoxFit.scaleDown, // use this
+                            ),
+                          ),
+                        )                      
+                      ),
+                      Text(
+                        "Display on the Map",
+                        style: TextStyle(
+                          color: Color(0xFFC6902E),
+                          fontSize: 20.0
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ),
+              Container(
+                // color: Colors.yellow.shade700,
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 20.0),
+                      child: Text(
+                        "Recent Addresses",
+                        style: TextStyle(
+                          color: Color(0xFFD5DDE0),
+                          fontSize: 20.0
+                        ),
+                      )
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 5.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Material(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20.0),
+                              child: Image.asset('assets/images/ic_place_grey.png'),
+                            ),
+                          ),
+                          Expanded(child: 
+                          Container(
+                            padding: EdgeInsets.only(left: 10.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  child: Text(
+                                    "Address",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Text(
+                                    "Country",
+                                    style: TextStyle(
+                                      color: Color(0xFF97ADB6),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  color: Color(0xFF97ADB6),
+                                  height: 1.0,
+                                  margin: EdgeInsets.only(top: 20.0),
+                                )
+                              ],
+                            ),
+                          ))
+                        ],
+                      ),
+                    )
+                  ]
+                ),
+              )
             ]
           )
         );
