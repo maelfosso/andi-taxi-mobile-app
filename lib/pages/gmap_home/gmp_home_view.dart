@@ -41,6 +41,7 @@ class GMapHome extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 25.0),
                   child: Row(
+                    mainAxisSize: MainAxisSize.max,
                     children: [
                       Material(
                         child: ClipRRect(
@@ -50,18 +51,31 @@ class GMapHome extends StatelessWidget {
                       ),
                       Container(
                         padding: EdgeInsets.only(left: 10.0),
-                        child: Column(
+                        child: 
+                            // Flexible(
+                            //   child:
+                        Column(
+                          // mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              child: Text(
+                              // SizedBox(
+                              //   width: double.infinity,
+                              //   child: 
+                                Container(
+                              child: 
+                              Text(
                                 "${place.locality}, ${place.subLocality}, ${place.street}",
                                 style: TextStyle(
                                   // fontSize: 17.0,
                                   fontWeight: FontWeight.w600,
                                 ),
+                                // softWrap: false,
+                                // maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              )
+                            // )
                               ),
-                            ),
+                            // ),
                             Container(
                               child: Text(
                                 place.country,
@@ -72,7 +86,8 @@ class GMapHome extends StatelessWidget {
                             )
                           ],
                         ),
-                      )
+                            )
+                      // )
                     ],
                   ),
                 ),

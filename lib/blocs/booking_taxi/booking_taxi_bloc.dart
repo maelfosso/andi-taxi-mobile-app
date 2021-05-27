@@ -37,7 +37,7 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
       case BookingTaxiStatus.address:
         final position = _geolocationRepository.currentPosition;
 
-        return BookingTaxiState.address(from: position);
+        return BookingTaxiState.address(position);
       default:
         return const BookingTaxiState.unknown();
     }

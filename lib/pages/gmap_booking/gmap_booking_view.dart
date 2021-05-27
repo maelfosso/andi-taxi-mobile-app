@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,8 +41,9 @@ class _BookingTaxiAddressWidget extends StatelessWidget {
     return BlocBuilder<BookingTaxiBloc, BookingTaxiState>(
       builder: (context, state) {
         return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
           decoration: BoxDecoration(
-            color: Colors.blue,
+            color: Colors.white,
             
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(40.0),
@@ -49,12 +52,210 @@ class _BookingTaxiAddressWidget extends StatelessWidget {
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFFD5DDE0),
+                      blurRadius: 2.0,
+                      spreadRadius: 0.0,
+                      offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                    ),
+                    BoxShadow(
+                      color: Color(0xFFD5DDE0),
+                      blurRadius: 2.0,
+                      spreadRadius: 0.0,
+                      offset: Offset(0, 0), // shadow direction: bottom right
+                    )
+                  ],
+                ),
+                child: IntrinsicHeight(child: 
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 8.0),
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(                  
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(40.0),
+                              ),
+                              color: Color(0xFFC6902E),
+                            ),
+                            width: 10.0,
+                            height: 10.0,
+                          ),
+                          Expanded(
+                            child: 
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 5.0),
+                              width: 1.0,
+                              color: Color(0xFFD5DDE0),
+                            )
+                          ),
+                          CustomPaint(
+                            size: Size(10.0, 10.0),
+                            painter: _ShapesPainter(Color(0xFFD5DDE0))
+                          )
+                        ],
+                      )
+                    ),
+                    Expanded(child: 
+                      Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                "Departure address",
+                                style: TextStyle(
+                                  fontSize: 17.0
+                                ),
+                              )
+                            ),
+                            Container(
+                              height: 1.0,
+                              margin: EdgeInsets.symmetric(vertical: 14.0),
+                              color: Color(0xFFD5DDE0),
+                            ),
+                            Container(
+                              child: Text(
+                                "Finish address",
+                                style: TextStyle(
+                                  fontSize: 17.0
+                                ),
+                              )
+                            )
+                          ],
+                        )
+                      )
+                    )
+                  ],
+                )
+                ),
+              ),
+              // Container(
+              //   color: Colors.yellowAccent,
+              //   width: 50.0,
+              //   child: Row(
+              //     children: [
+              //       ImageIcon(
+              //         AssetImage("assets/images/ic_setloc.png")
+              //       ),
+              //       Text("Display on the Map")
+              //     ],
+              //   ),
+              // ),
+              // Container(
+              //   color: Colors.yellow.shade700,
+              //   width: 50.0,
+              //   child: Column(
+              //     children: [
+              //       Text("Recent Addresses"),
+              //       Container(
+              //         padding: EdgeInsets.symmetric(vertical: 25.0),
+              //         child: Row(
+              //           children: [
+              //             Material(
+              //               child: ClipRRect(
+              //                 borderRadius: BorderRadius.circular(20.0),
+              //                 child: Image.asset('assets/images/ic_place.png'),
+              //               ),
+              //             ),
+              //             Container(
+              //               padding: EdgeInsets.only(left: 10.0),
+              //               child: Column(
+              //                 crossAxisAlignment: CrossAxisAlignment.start,
+              //                 children: [
+              //                   Container(
+              //                     child: Text(
+              //                       "Address",
+              //                       style: TextStyle(
+              //                         // fontSize: 17.0,
+              //                         fontWeight: FontWeight.w600,
+              //                       ),
+              //                     ),
+              //                   ),
+              //                   Container(
+              //                     child: Text(
+              //                       "Country",
+              //                       style: TextStyle(
+              //                         color: Color(0xFF97ADB6),
+              //                       ),
+              //                     ),
+              //                   )
+              //                 ],
+              //               ),
+              //             )
+              //           ],
+              //         ),
+              //       )
+              //     ]
+              //   ),
+              // )
             ]
           )
         );
       }
     );    
+  }
+}
+
+class _ShapesPainter extends CustomPainter {
+  final Color color;
+  _ShapesPainter(this.color);
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint();
+    paint.color = color;
+    var path = Path();
+ 
+    path.moveTo(0, 0);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width/2, size.height);
+    path.close();
+    
+    canvas.drawPath(path, paint);
+  }
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
+class _DrawTriangleShape extends CustomPainter {
+ 
+  late Paint painter;
+ 
+  DrawTriangleShape() {
+ 
+    painter = Paint()
+      ..color = Colors.purpleAccent
+      ..style = PaintingStyle.fill;
+ 
+  }
+  
+  @override
+  void paint(Canvas canvas, Size size) {
+ 
+    var path = Path();
+ 
+    path.moveTo(size.width/2, 0);
+    path.lineTo(0, size.height);
+    path.lineTo(size.height, size.width);
+    path.close();
+ 
+    canvas.drawPath(path, painter);
+  }
+ 
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
   }
 }
