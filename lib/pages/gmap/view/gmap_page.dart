@@ -1,3 +1,4 @@
+import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
 import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart' as gbloc;
 import 'package:andi_taxi/pages/gmap/cubit/gmap_cubit.dart' as ui;
 import 'package:andi_taxi/pages/gmap/view/gmap_view.dart';
@@ -12,10 +13,23 @@ class GMapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return BlocProvider(
-      create: (_) => ui.GMapCubit(context.read<GeolocationRepository>()),
+    // return BlocProvider(
+    //   create: (_) => ui.GMapCubit(context.read<GeolocationRepository>()),
+    //   child: GMapView()
+    // ); 
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ui.GMapCubit>(
+          create: (BuildContext context) => ui.GMapCubit(context.read<GeolocationRepository>()),
+        ),
+        BlocProvider<BookingTaxiBloc>(
+          create: (BuildContext context) => BookingTaxiBloc(
+            geolocationRepository: context.read<GeolocationRepository>()
+          ),
+        ),
+      ], 
       child: GMapView()
-    ); 
+    );
   }
 }
 

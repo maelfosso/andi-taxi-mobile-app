@@ -40,6 +40,10 @@ class _BookingTaxiAddressWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BookingTaxiBloc, BookingTaxiState>(
       builder: (context, state) {
+        print('BOKING ADDRESSS ${state.from}');
+        final fromPlace = state.from.place;
+        final toPlace = state.to.place;
+        
         return Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
           decoration: BoxDecoration(
@@ -115,7 +119,7 @@ class _BookingTaxiAddressWidget extends StatelessWidget {
                           children: [
                             Container(
                               child: Text(
-                                "Departure address",
+                                "${fromPlace.locality}, ${fromPlace.subLocality}, ${fromPlace.street}",
                                 style: TextStyle(
                                   fontSize: 17.0
                                 ),
@@ -128,7 +132,7 @@ class _BookingTaxiAddressWidget extends StatelessWidget {
                             ),
                             Container(
                               child: Text(
-                                "Finish address",
+                                "${toPlace.locality}, ${toPlace.subLocality}, ${toPlace.street}",
                                 style: TextStyle(
                                   fontSize: 17.0
                                 ),
@@ -173,9 +177,7 @@ class _BookingTaxiAddressWidget extends StatelessWidget {
                 )
               ),
               Container(
-                // color: Colors.yellow.shade700,
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
@@ -261,35 +263,4 @@ class _ShapesPainter extends CustomPainter {
   }
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
-}
-
-class _DrawTriangleShape extends CustomPainter {
- 
-  late Paint painter;
- 
-  DrawTriangleShape() {
- 
-    painter = Paint()
-      ..color = Colors.purpleAccent
-      ..style = PaintingStyle.fill;
- 
-  }
-  
-  @override
-  void paint(Canvas canvas, Size size) {
- 
-    var path = Path();
- 
-    path.moveTo(size.width/2, 0);
-    path.lineTo(0, size.height);
-    path.lineTo(size.height, size.width);
-    path.close();
- 
-    canvas.drawPath(path, painter);
-  }
- 
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
-  }
 }

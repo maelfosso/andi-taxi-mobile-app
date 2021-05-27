@@ -8,18 +8,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class GMapBookingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        title: const Text("Booking a taxi"),
-        centerTitle: true,
-      ),
-      body: BlocProvider(
-        create: (context) => BookingTaxiBloc(
-          geolocationRepository: context.read<GeolocationRepository>()
-        ),
-        child: GMapBookingView()
-      )
-    );
+    return GMapBookingView();
+    // Scaffold(
+    //   backgroundColor: Colors.transparent,
+    //   appBar: AppBar(
+    //     title: const Text("Booking a taxi"),
+    //     centerTitle: true,
+    //   ),
+    //   body: 
+      // BlocProvider(
+      //   create: (context) => BookingTaxiBloc(
+      //     geolocationRepository: context.read<GeolocationRepository>()
+      //   ),
+      //   child: GMapBookingView()
+      // // )
+    // );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
 import 'package:andi_taxi/pages/gmap_booking/gmap_booking_page.dart';
 import 'package:andi_taxi/pages/gmap_home/gmp_home_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -79,6 +80,21 @@ class _GoogleMap extends StatelessWidget {
         print("GEOLOCATION : ${state.currentPlace.locality}, ${state.currentPlace.street}, ${state.currentPlace.country}");
         print(state.currentPlace.toJson());
         return GoogleMap(
+          mapToolbarEnabled: true,
+          // onLongPress: null,
+          onTap: (LatLng latLng) {
+            print('TAPPEDD ---- ${context.read<gbloc.GMapBloc>().state.status} -- ${gbloc.GMapStatus.bookingTaxi}');
+            // final position = Position(latitude: latLng.latitude, longitude: latLng.longitude);
+            if (context.read<gbloc.GMapBloc>().state.status == gbloc.GMapStatus.bookingTaxi) {
+              print("Google Map TAPPED 00000000---------- $latLng");
+              context.read<BookingTaxiBloc>().add(DestinationAddressAdded(latLng));
+            } else {
+              print('NOTHING...');
+            }
+          },
+            // context.read<gbloc.GMapBloc>().state.status == gbloc.GMapStatus.bookingTaxi
+            // ? (LatLng latLng) { print("Google Map TAPPED 00000000---------- $latLng"); }
+            // : null,
           onMapCreated: (GoogleMapController controller) {
             print('ON MAP CREATED .. _GOOGLEMAP');
             context.read<ui.GMapCubit>().mapCreated(controller);

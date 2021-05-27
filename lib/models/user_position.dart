@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class UserPosition extends Equatable {
 
@@ -28,6 +29,13 @@ class UserPosition extends Equatable {
   }
 
   factory UserPosition.fromPosition(Position position) {
+    return UserPosition(
+      longitude: position.longitude,
+      latitude: position.latitude
+    );
+  }
+
+  factory UserPosition.fromLatLng(LatLng position) {
     return UserPosition(
       longitude: position.longitude,
       latitude: position.latitude

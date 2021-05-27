@@ -30,9 +30,13 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
 
   @override
   Stream<GMapState> mapEventToState(GMapEvent event) async* {
+    
     if (event is GMapStatusChanged) {
       yield await _mapGMapStatusChangedToState(event);
     } 
+    // else if (event is GMapTapped) {
+    //   yield await _mapGMapTappedToState(event);
+    // }
     // else if (event is GMapBookingTaxi) {
 
     // }
@@ -61,5 +65,10 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
     }
   }
 
+  // Future<GMapState> _mapGMapTappedToState(GMapTapped event) async {
+  //   if (currentState) {
 
+  //   }
+  //   return;
+  // }
 }

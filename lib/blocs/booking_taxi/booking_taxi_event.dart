@@ -16,4 +16,13 @@ class BookingTaxiStatusChanged extends BookingTaxiEvent {
   List<Object?> get props => [status];
 }
 
+class DestinationAddressAdded extends BookingTaxiEvent {
+  const DestinationAddressAdded(this.position);
+
+  final LatLng position;
+
+  @override
+  List<Object?> get props => [position];
+}
+
 class BookingTaxiEnded extends BookingTaxiEvent {}

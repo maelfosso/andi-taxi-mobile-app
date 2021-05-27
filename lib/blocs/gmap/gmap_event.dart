@@ -15,3 +15,12 @@ class GMapStatusChanged extends GMapEvent {
   @override
   List<Object> get props => [status];
 }
+
+class GMapTapped extends GMapEvent {
+  const GMapTapped(this.position);
+
+  final Position position;
+
+  @override
+  List<Object?> get props => [position];
+}

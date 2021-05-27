@@ -14,8 +14,14 @@ class BookingTaxiState extends Equatable {
   
   const BookingTaxiState.unknown(): this._();
 
-  const BookingTaxiState.address(UserPositionPlace location)
-    : this._(status: BookingTaxiStatus.address, from: location);
+  const BookingTaxiState.address(
+    UserPositionPlace position
+  //   {
+  //   UserPositionPlace from = UserPositionPlace.empty, 
+  //   UserPositionPlace to = UserPositionPlace.empty
+  // }
+  )
+    : this._(status: BookingTaxiStatus.address, from: position); //, to: to);
 
   const BookingTaxiState.details()
     : this._(status: BookingTaxiStatus.details);
@@ -23,6 +29,18 @@ class BookingTaxiState extends Equatable {
   const BookingTaxiState.payment()
     : this._(status: BookingTaxiStatus.payment);
 
+  BookingTaxiState copyWith({
+    BookingTaxiStatus? status,
+    UserPositionPlace? from,
+    UserPositionPlace? to
+  }) {
+    return BookingTaxiState._(
+      status: status ?? this.status,
+      from: from ?? this.from,
+      to: to ?? this.to
+    );
+  }
+
   @override
-  List<Object?> get props => [status];
+  List<Object?> get props => [status, from, to];
 }
