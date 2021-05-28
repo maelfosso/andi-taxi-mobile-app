@@ -18,10 +18,16 @@ class SignCodeCubit extends Cubit<SignCodeState> {
   bool _timeout = false;
 
   SignCodeCubit(this._authenticationRepository) : super(const SignCodeState()) {
-    emit(state.copyWith(
-      phoneNumber: Phone.dirty(_authenticationRepository.currentKnowUser.phoneNumber)
-    ));
+    init();
     startTimer();
+  }
+
+  void init() async {
+    emit(state.copyWith(
+      phoneNumber: Phone.dirty(
+        (await _authenticationRepository.currentKnowUser).phoneNumber
+      )
+    ));
   }
 
   final AuthenticationRepository _authenticationRepository;

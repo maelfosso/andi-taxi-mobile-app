@@ -50,27 +50,17 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       case AuthenticationStatus.unauthenticated:
         return const AuthenticationState.unauthenticated();
       case AuthenticationStatus.known:
-        final userCode = _authenticationRepository.currentKnowUser;
+        final userCode = await _authenticationRepository.currentKnowUser;
 
         return AuthenticationState.known(userCode);
       case AuthenticationStatus.authenticated:
-        final user = _authenticationRepository.currentUser;
-        // await _tryGetUser();
+        final user = await _authenticationRepository.currentUser;
+        
         return user != User.empty
             ? AuthenticationState.authenticated(user)
             : const AuthenticationState.unauthenticated();
       default:
         return const AuthenticationState.unknown();
-    }
-  }
-
-  Future<User?> _tryGetUser() async {
-    try {
-      // final user = await _userRepository.getUser();
-      // return user;
-      _authenticationRepository.user;
-    } on Exception {
-      return null;
     }
   }
 }
