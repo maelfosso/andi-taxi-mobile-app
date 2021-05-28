@@ -1,17 +1,30 @@
 import 'package:andi_taxi/api/response/user-code.dart';
 import 'package:andi_taxi/api/response/user-token.dart';
 import 'package:andi_taxi/models/models.dart';
+import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'api.g.dart';
+
+dynamic requestInterceptor(RequestOptions options) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString(AuthenticationRepository.tokenCacheKey) ?? '';
+
+  options.headers.addAll({"Authorization": "Bearer $token"});
+
+	return options;
+}
 
 class APIs {
   static const String signUpClient = "/auth/signup/client";
   static const String signUpDriver = "/auth/signup/driver";
   static const String signIn = "/auth/signin";
   static const String signCode = "/auth/signcode";
+
+  static const String lastLocations = "/booking-taxi/last-locations";
 
   static RestClient? _restClient;
 
@@ -23,7 +36,9 @@ class APIs {
             contentType: "application/json",
             baseUrl: FlutterConfig.get("BASE_URL")
           )
-        )
+        )..interceptors.add(InterceptorsWrapper(
+          onRequest: (options, handler) => requestInterceptor(options),
+        ))
       );
     }
 
