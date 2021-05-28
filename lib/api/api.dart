@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:andi_taxi/api/response/user-code.dart';
 import 'package:andi_taxi/api/response/user-token.dart';
+import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
 import 'package:andi_taxi/models/models.dart';
+import 'package:andi_taxi/models/payment-methods-used.dart';
 import 'package:andi_taxi/models/user_position.dart';
 import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
 import 'package:dio/dio.dart';
@@ -33,6 +35,7 @@ class APIs {
   static const String lastLocations = "/booking/last-locations";
   static const String taxiAround = "/booking/taxi-around";
   static const String calculateCostTime = "/booking/cost-time";
+  static const String paymentMethods = "/booking/payment-methods-used";
 
   static RestClient? _restClient;
 
@@ -86,6 +89,10 @@ abstract class RestClient {
     @Field("to") UserPosition to,
     @Field("distance") double distance,
   );
+
+  @GET(APIs.paymentMethods)
+  Future<List<PaymentMethodUsed>> GetPaymentMethodsUsed();
+
 }
 
 class AuthorizationInterceptor extends Interceptor {

@@ -1,3 +1,4 @@
+import 'package:andi_taxi/models/payment-methods-used.dart';
 import 'package:andi_taxi/models/place.dart';
 import 'package:andi_taxi/models/user_position.dart';
 import 'package:andi_taxi/models/user_position_place.dart';
@@ -119,9 +120,11 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
   Future<BookingTaxiState> _mapBookingDetailsSetUpToState(
     BookingTaxiEvent event
   ) async {
+    List<PaymentMethodUsed> methods = await _bookingTaxiRepository.paymentMethodsUsed();
 
     return state.copyWith(
-      status: BookingTaxiStatus.payment
+      status: BookingTaxiStatus.payment,
+      paymentMethodUsed: methods
     );
   }
 

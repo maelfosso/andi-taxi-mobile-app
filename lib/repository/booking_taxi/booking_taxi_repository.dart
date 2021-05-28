@@ -1,5 +1,7 @@
 import 'package:andi_taxi/api/api.dart';
+import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
 import 'package:andi_taxi/models/models.dart';
+import 'package:andi_taxi/models/payment-methods-used.dart';
 import 'package:andi_taxi/models/user_position.dart';
 
 class BookingTaxiFailure implements Exception {}
@@ -70,5 +72,17 @@ class BookingTaxiRepository {
     }
 
     return results;
+  }
+
+  Future<List<PaymentMethodUsed>> paymentMethodsUsed() async {
+    List<PaymentMethodUsed> methods = [];
+
+    try {
+      methods = await _api.GetPaymentMethodsUsed();
+    } on Exception catch (e) {
+      throw BookingTaxiFailure();
+    }
+
+    return methods;
   }
 }

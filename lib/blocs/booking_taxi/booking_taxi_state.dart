@@ -11,7 +11,8 @@ class BookingTaxiState extends Equatable {
     this.cost = const [0.0, 0.0],
     this.car = CarType.standard,
 
-    this.lastPositions = const []
+    this.lastPositions = const [],
+    this.paymentMethodUsed = const [],
   });
 
   final BookingTaxiStatus status;
@@ -23,6 +24,7 @@ class BookingTaxiState extends Equatable {
   final CarType car;
   
   final List<UserPosition> lastPositions;
+  final List<PaymentMethodUsed> paymentMethodUsed;
 
   const BookingTaxiState.unknown(): this._();
 
@@ -45,7 +47,9 @@ class BookingTaxiState extends Equatable {
     double? distance,
     int? time,
     List<double>? cost,
-    CarType? car
+    CarType? car,
+    List<UserPosition>? lastPositions,
+    List<PaymentMethodUsed>? paymentMethodUsed
   }) {
     return BookingTaxiState._(
       status: status ?? this.status,
@@ -54,10 +58,12 @@ class BookingTaxiState extends Equatable {
       distance: distance ?? this.distance,
       time: time ?? this.time,
       cost: cost ?? this.cost,
-      car: car ?? this.car
+      car: car ?? this.car,
+      lastPositions: lastPositions ?? this.lastPositions,
+      paymentMethodUsed: paymentMethodUsed ?? this.paymentMethodUsed
     );
   }
 
   @override
-  List<Object?> get props => [status, from, to, distance, time, cost, car, lastPositions];
+  List<Object?> get props => [status, from, to, distance, time, cost, car, lastPositions, paymentMethodUsed];
 }

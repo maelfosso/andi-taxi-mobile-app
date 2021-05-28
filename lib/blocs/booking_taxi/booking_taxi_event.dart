@@ -32,7 +32,7 @@ class BookingDetailsSetUp extends BookingTaxiEvent {}
 class BookingPaymentSetUp extends BookingTaxiEvent {
   const BookingPaymentSetUp(this.method);
   
-  final PaymentMethod method;
+  final PaymentMethodUsed method;
 
   @override
   List<Object?> get props => [method];

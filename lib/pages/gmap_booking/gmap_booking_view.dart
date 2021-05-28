@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
+import 'package:andi_taxi/models/payment-methods-used.dart';
 import 'package:andi_taxi/models/user_position_place.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
