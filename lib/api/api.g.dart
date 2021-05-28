@@ -114,6 +114,21 @@ class _RestClient implements RestClient {
     return value;
   }
 
+  @override
+  Future<List<double>> CalculateCostTime(from, to, distance) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = {'from': from, 'to': to, 'distance': distance};
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<double>>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/booking/cost-time',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!.cast<double>();
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

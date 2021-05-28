@@ -49,4 +49,26 @@ class BookingTaxiRepository {
 
     return cars;
   }
+
+  Future<List<double>> calculateCostTime(
+    UserPosition from,
+    UserPosition to,
+    double distance
+  ) async {
+    print("CALCULATE COST TIME");
+    List<double> results = [];
+    
+    try {
+      print('CALCULATE : $from --- $to --- $distance');
+      results = await _api.CalculateCostTime(from, to, distance);
+      print('AFTER GETTINGS : $results');
+    } on Exception catch (e) {
+      print('API CALCULATE error');
+      print(e);
+
+      throw BookingTaxiFailure();
+    }
+
+    return results;
+  }
 }

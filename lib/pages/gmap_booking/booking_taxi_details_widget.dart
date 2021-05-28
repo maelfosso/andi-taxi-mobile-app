@@ -81,7 +81,7 @@ class BookingTaxiDetailsWidget extends StatelessWidget {
                         children: [
                           Container(
                             child: Text(
-                              "\$${state.cost[0]} - \$${state.cost[1]}",
+                              "\$${state.cost[0].toStringAsFixed(2)} - \$${state.cost[1].toStringAsFixed(2)}",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18.0
@@ -95,7 +95,7 @@ class BookingTaxiDetailsWidget extends StatelessWidget {
                               color: Color(0xFFD5DEE2),
                             ),
                             child: Text(
-                              "${state.time} min",
+                              "${(state.distance/1000).toStringAsFixed(2)} Km",
                               style: TextStyle(
                                 color: Colors.white
                               ),

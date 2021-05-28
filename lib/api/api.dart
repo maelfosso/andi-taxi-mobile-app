@@ -32,6 +32,7 @@ class APIs {
 
   static const String lastLocations = "/booking/last-locations";
   static const String taxiAround = "/booking/taxi-around";
+  static const String calculateCostTime = "/booking/cost-time";
 
   static RestClient? _restClient;
 
@@ -44,21 +45,8 @@ class APIs {
         )
       );
       dio.interceptors.clear();
-      dio.interceptors.add(LoggingInterceptor());
-      // dio.interceptors.add(InterceptorsWrapper(
-      //   onRequest: (options, handler) async {
-      //     SharedPreferences prefs = await SharedPreferences.getInstance();
-      //     String token = prefs.getString(AuthenticationRepository.tokenCacheKey) ?? '';
-      //     print('TOKEN EXTRACTED : $token');
-      //     // options.headers.addAll({"Authorization": "Bearer $token"});
-      //     options.headers[HttpHeaders.authorizationHeader] = "Bearer $token";
-      //     print('AFTER HEADERS ... ${options.headers}');
-
-      //     // return options;
-      //   },
-      //   onResponse: (response, handler) => response,
-      //   onError: (dioError, handler) => dioError
-      // ));
+      dio.interceptors.add(AuthorizationInterceptor());
+      
       _restClient = RestClient(dio);
     }
 
@@ -91,11 +79,16 @@ abstract class RestClient {
 
   @POST(APIs.taxiAround)
   Future<List<Car>> GetTaxiAround(@Field("position") UserPosition position);
+
+  @POST(APIs.calculateCostTime)
+  Future<List<double>> CalculateCostTime(
+    @Field("from") UserPosition from,
+    @Field("to") UserPosition to,
+    @Field("distance") double distance,
+  );
 }
 
-class LoggingInterceptor extends Interceptor {
-
-  int _maxCharactersPerLine = 200;
+class AuthorizationInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {

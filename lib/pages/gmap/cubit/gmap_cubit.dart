@@ -43,11 +43,8 @@ class GMapCubit extends Cubit<GMapState> {
   Future<void> mapCreated(GoogleMapController controller) async {
     gMapController = controller;
 
-    print('MAP CREATED ...');
-
     try {
       var position = await _geolocationRepository.determinePosition();
-      print('POSITION $position');
 
       var latLng = LatLng(position.position.latitude, position.position.longitude);
       var marker = Marker(
@@ -56,24 +53,14 @@ class GMapCubit extends Cubit<GMapState> {
         icon: currentLocationIcon
       );
 
-      CameraUpdate update = CameraUpdate.newLatLngZoom(latLng, 16);
+      CameraUpdate update = CameraUpdate.newLatLngZoom(latLng, 13);
 
       gMapController.moveCamera(update);      
 
-      // List<Placemark> placemarks = await placemarkFromCoordinates(
-      //   position.latitude,
-      //   position.longitude
-      // );
-      // print('PLACEMARK FROM COORDINATES : ${placemarks.length}');
-      // Placemark place = placemarks[0];
-      // print("FIRST PALCEMARK : ${place.locality}, ${place.postalCode}, ${place.country}");
-
       state.markers[GMapState.currentLocationId] = marker;
-      // state.currentPlacemark = place;
       emit(
         state.copyWith(
           currentPosition: latLng,
-          // markers: state.markers,
           currentPlace: position.place // Place.fromPlacemark(place)
         )
       );

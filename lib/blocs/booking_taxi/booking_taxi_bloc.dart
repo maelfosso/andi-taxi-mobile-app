@@ -96,6 +96,13 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
     // From Google MAP, Calculate 
     // - the distance
     // - The time of travel
+    double distance = _geolocationRepository.distanceBetween(state.from.position, state.to.position);
+
+    List<double> results = await _bookingTaxiRepository.calculateCostTime(
+      state.from.position, 
+      state.to.position, 
+      distance
+    );
 
     // From API, les Fetch
     // - car (last car type used)
@@ -103,7 +110,9 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
     // - payment method (last payment method used)
 
     return state.copyWith(
-      status: BookingTaxiStatus.details
+      status: BookingTaxiStatus.details,
+      cost: results.getRange(0, 2).toList(),
+      time: results[2].toInt()
     );
   }
 
