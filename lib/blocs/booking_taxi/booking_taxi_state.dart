@@ -9,7 +9,9 @@ class BookingTaxiState extends Equatable {
     this.distance = 0.0,
     this.time = 0,
     this.cost = const [0.0, 0.0],
-    this.car = CarType.standard
+    this.car = CarType.standard,
+
+    this.lastPositions = const []
   });
 
   final BookingTaxiStatus status;
@@ -20,12 +22,15 @@ class BookingTaxiState extends Equatable {
   final List<double> cost;
   final CarType car;
   
+  final List<UserPosition> lastPositions;
+
   const BookingTaxiState.unknown(): this._();
 
   const BookingTaxiState.address(
-    UserPositionPlace position
+    UserPositionPlace currentPosition,
+    List<UserPosition> positions
   )
-    : this._(status: BookingTaxiStatus.address, from: position); //, to: to);
+    : this._(status: BookingTaxiStatus.address, from: currentPosition, lastPositions: positions); //, to: to);
 
   const BookingTaxiState.details()
     : this._(status: BookingTaxiStatus.details);
@@ -54,5 +59,5 @@ class BookingTaxiState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [status, from, to, distance, time, cost, car];
+  List<Object?> get props => [status, from, to, distance, time, cost, car, lastPositions];
 }

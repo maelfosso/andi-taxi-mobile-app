@@ -4,6 +4,7 @@ import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart';
 import 'package:andi_taxi/pages/gmap/cubit/gmap_cubit.dart';
 import 'package:andi_taxi/pages/gmap/view/gmap_page.dart';
 import 'package:andi_taxi/pages/home/home_view.dart';
+import 'package:andi_taxi/repository/booking_taxi/booking_taxi_repository.dart';
 import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,9 +25,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     final GeolocationRepository geolocationRepository = GeolocationRepository();
+    final BookingTaxiRepository bookingTaxiRepository = BookingTaxiRepository();
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -41,16 +41,23 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: RepositoryProvider.value(
-        value: geolocationRepository,
-        // create: (_) => GeolocationRepository(),
-        child: BlocProvider(
-          create: (context) => GMapBloc(
-            geolocationRepository: geolocationRepository
-          ),
-          child: HomeView()
-        ) 
+      body: MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider<GeolocationRepository>(create: (context) => GeolocationRepository()),
+          RepositoryProvider<BookingTaxiRepository>(create: (context) => BookingTaxiRepository()),
+        ],
+        child: HomeView(),
       )
+      //  RepositoryProvider.value(
+      //   value: geolocationRepository,
+      //   // create: (_) => GeolocationRepository(),
+        // child: BlocProvider(
+        //   create: (context) => GMapBloc(
+        //     geolocationRepository: geolocationRepository
+        //   ),
+        //   child: HomeView()
+      //   ) 
+      // )
     );
   }
 }

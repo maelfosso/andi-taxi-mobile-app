@@ -1,6 +1,7 @@
 import 'package:andi_taxi/api/response/user-code.dart';
 import 'package:andi_taxi/api/response/user-token.dart';
 import 'package:andi_taxi/models/models.dart';
+import 'package:andi_taxi/models/user_position.dart';
 import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
@@ -65,4 +66,8 @@ abstract class RestClient {
 
   @POST(APIs.signCode)
   Future<UserToken> SignCode(@Field() String phoneNumber, @Field() String code);
+
+  @GET(APIs.lastLocations)
+  Future<List<UserPosition>> GetLastLocations();
+
 }

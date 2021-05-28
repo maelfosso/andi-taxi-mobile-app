@@ -2,6 +2,7 @@ import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
 import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart' as gbloc;
 import 'package:andi_taxi/pages/gmap/cubit/gmap_cubit.dart' as ui;
 import 'package:andi_taxi/pages/gmap/view/gmap_view.dart';
+import 'package:andi_taxi/repository/booking_taxi/booking_taxi_repository.dart';
 import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,8 @@ class GMapPage extends StatelessWidget {
         ),
         BlocProvider<BookingTaxiBloc>(
           create: (BuildContext context) => BookingTaxiBloc(
-            geolocationRepository: context.read<GeolocationRepository>()
+            geolocationRepository: context.read<GeolocationRepository>(),
+            bookingTaxiRepository: context.read<BookingTaxiRepository>()
           ),
         ),
       ], 

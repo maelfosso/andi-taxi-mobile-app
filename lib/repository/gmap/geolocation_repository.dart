@@ -21,6 +21,7 @@ class GeolocationRepository {
   }): _cache = cache ?? CacheClient();
 
   UserPositionPlace get currentPosition {
+    print('GET CURRENT POSITION');
     return _cache.read<UserPositionPlace>(key: currentPositionCacheKey) ?? UserPositionPlace.empty;
   }
 

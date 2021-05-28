@@ -1,6 +1,7 @@
 import 'package:andi_taxi/models/place.dart';
 import 'package:andi_taxi/models/user_position.dart';
 import 'package:andi_taxi/models/user_position_place.dart';
+import 'package:andi_taxi/repository/booking_taxi/booking_taxi_repository.dart';
 import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -20,8 +21,10 @@ enum PaymentMethod { cash, visa, mastercard }
 class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
 
   BookingTaxiBloc({
-    required GeolocationRepository geolocationRepository
+    required GeolocationRepository geolocationRepository,
+    required BookingTaxiRepository bookingTaxiRepository
   }): _geolocationRepository = geolocationRepository,
+      _bookingTaxiRepository = bookingTaxiRepository,
       super(const BookingTaxiState.unknown()) {
     
     // var position = _geolocationRepository.determinePosition();
@@ -29,6 +32,7 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
   }
 
   final GeolocationRepository _geolocationRepository;
+  final BookingTaxiRepository _bookingTaxiRepository;
 
   @override
   Stream<BookingTaxiState> mapEventToState(BookingTaxiEvent event) async* {
@@ -50,11 +54,19 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
   Future<BookingTaxiState> _mapBookingTaxiStatusChangedToState(
     BookingTaxiStatusChanged event
   ) async {
+    print('_mapBOKING STATUS CHANGED : ${event.status}');
+    
     switch (event.status) {
       case BookingTaxiStatus.address:
-        final position = _geolocationRepository.currentPosition;
 
-        return BookingTaxiState.address(position);
+        final currentPosition = _geolocationRepository.currentPosition;
+        // List<UserPosition> lastPositions = await _bookingTaxiRepository.lastLocations();
+        List<UserPosition> lastPositions = [];
+
+        print('CURRENT POSITION $currentPosition');
+        print('LAST POSITION $lastPositions');
+
+        return BookingTaxiState.address(currentPosition, lastPositions);
       default:
         return const BookingTaxiState.unknown();
     }
