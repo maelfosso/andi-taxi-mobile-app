@@ -1,4 +1,5 @@
 import 'package:andi_taxi/api/api.dart';
+import 'package:andi_taxi/models/models.dart';
 import 'package:andi_taxi/models/user_position.dart';
 
 class BookingTaxiFailure implements Exception {}
@@ -16,7 +17,9 @@ class BookingTaxiRepository {
     List<UserPosition> positions = [];
 
     try {
+      print('BEFORE GETTING API');
       positions = await _api.GetLastLocations();
+      print('AFTER GETTING : $positions');
     } on Exception catch (e) {
       print('API GetLastLocations error');
       print(e);
@@ -24,6 +27,26 @@ class BookingTaxiRepository {
       throw BookingTaxiFailure();
     }
 
+    print('RETURN RESULTS ... $positions');
+
     return positions;
+  }
+
+  Future<List<Car>> taxiAround(UserPosition position) async {
+    print("GET TAXI AROUND");
+    List<Car> cars = [];
+    
+    try {
+      print('BEFORE GETING API : $position');
+      cars = await _api.GetTaxiAround(position);
+      print('AFTER GETTINGS : $cars');
+    } on Exception catch (e) {
+      print('API GET TAXI ARROUND error');
+      print(e);
+
+      throw BookingTaxiFailure();
+    }
+
+    return cars;
   }
 }

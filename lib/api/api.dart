@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:andi_taxi/api/response/user-code.dart';
 import 'package:andi_taxi/api/response/user-token.dart';
 import 'package:andi_taxi/models/models.dart';
@@ -11,10 +13,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'api.g.dart';
 
 dynamic requestInterceptor(RequestOptions options) async {
+  print('[REQUEST INTERCEPTOR]');
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString(AuthenticationRepository.tokenCacheKey) ?? '';
-
-  options.headers.addAll({"Authorization": "Bearer $token"});
+  print('TOKEN EXTRACTED : $token');
+  // options.headers.addAll({"Authorization": "Bearer $token"});
+  options.headers[HttpHeaders.authorizationHeader] = "Bearer $token";
+  print('AFTER HEADERS ... ${options.headers}');
 
 	return options;
 }
@@ -25,22 +30,36 @@ class APIs {
   static const String signIn = "/auth/signin";
   static const String signCode = "/auth/signcode";
 
-  static const String lastLocations = "/booking-taxi/last-locations";
+  static const String lastLocations = "/booking/last-locations";
+  static const String taxiAround = "/booking/taxi-around";
 
   static RestClient? _restClient;
 
   static RestClient getRestClient() {
     if (_restClient == null) {
-      _restClient = RestClient(
-        Dio(
-          BaseOptions(
-            contentType: "application/json",
-            baseUrl: FlutterConfig.get("BASE_URL")
-          )
-        )..interceptors.add(InterceptorsWrapper(
-          onRequest: (options, handler) => requestInterceptor(options),
-        ))
+      Dio dio = Dio(
+        BaseOptions(
+          contentType: "application/json",
+          baseUrl: FlutterConfig.get("BASE_URL")
+        )
       );
+      dio.interceptors.clear();
+      dio.interceptors.add(LoggingInterceptor());
+      // dio.interceptors.add(InterceptorsWrapper(
+      //   onRequest: (options, handler) async {
+      //     SharedPreferences prefs = await SharedPreferences.getInstance();
+      //     String token = prefs.getString(AuthenticationRepository.tokenCacheKey) ?? '';
+      //     print('TOKEN EXTRACTED : $token');
+      //     // options.headers.addAll({"Authorization": "Bearer $token"});
+      //     options.headers[HttpHeaders.authorizationHeader] = "Bearer $token";
+      //     print('AFTER HEADERS ... ${options.headers}');
+
+      //     // return options;
+      //   },
+      //   onResponse: (response, handler) => response,
+      //   onError: (dioError, handler) => dioError
+      // ));
+      _restClient = RestClient(dio);
     }
 
     return _restClient!;
@@ -69,5 +88,68 @@ abstract class RestClient {
 
   @GET(APIs.lastLocations)
   Future<List<UserPosition>> GetLastLocations();
+
+  @POST(APIs.taxiAround)
+  Future<List<Car>> GetTaxiAround(@Field("position") UserPosition position);
+}
+
+class LoggingInterceptor extends Interceptor {
+
+  int _maxCharactersPerLine = 200;
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    print("--> ${options.method} ${options.path}");
+    print("Content type: ${options.contentType}");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString(AuthenticationRepository.tokenCacheKey) ?? '';
+    print('TOKEN EXTRACTED : $token');
+    // options.headers.addAll({"Authorization": "Bearer $token"});
+    options.headers[HttpHeaders.authorizationHeader] = "Bearer $token";
+    print('AFTER HEADERS ... ${options.headers}');
+    print("<-- END HTTP");
+    // return options; // super.onRequest(options);
+    super.onRequest(options, handler);
+  }
+  
+  // @override
+  // Future<dynamic> onRequest(RequestOptions options) {
+  //   print("--> ${options.method} ${options.path}");
+  //   print("Content type: ${options.contentType}");
+  //   print("<-- END HTTP");
+  //   return options; // super.onRequest(options);
+  // }
+
+  // @override
+  // Future onResponse(Response response) {
+  //   print(
+  //       "<-- ${response.statusCode} ${response.request.method} ${response.request.path}");
+  //   String responseAsString = response.data.toString();
+  //   if (responseAsString.length > _maxCharactersPerLine) {
+  //     int iterations =
+  //     (responseAsString.length / _maxCharactersPerLine).floor();
+  //     for (int i = 0; i <= iterations; i++) {
+  //       int endingIndex = i * _maxCharactersPerLine + _maxCharactersPerLine;
+  //       if (endingIndex > responseAsString.length) {
+  //         endingIndex = responseAsString.length;
+  //       }
+  //       print(responseAsString.substring(
+  //           i * _maxCharactersPerLine, endingIndex));
+  //     }
+  //   } else {
+  //     print(response.data);
+  //   }
+  //   print("<-- END HTTP");
+
+  //   return super.onResponse(response);
+  // }
+
+  // @override
+  // Future onError(DioError err) {
+  //   print("<-- Error -->");
+  //   print(err.error);
+  //   print(err.message);
+  //   return super.onError(err);
+  // }
 
 }

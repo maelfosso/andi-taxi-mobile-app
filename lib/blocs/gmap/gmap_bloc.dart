@@ -1,9 +1,11 @@
 
 import 'dart:async';
 
+import 'package:andi_taxi/models/models.dart';
 import 'package:andi_taxi/models/user_position.dart';
 import 'package:andi_taxi/models/user_position_place.dart';
 import 'package:andi_taxi/pages/gmap/view/gmap_page.dart';
+import 'package:andi_taxi/repository/booking_taxi/booking_taxi_repository.dart';
 import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -26,6 +28,7 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
   }
 
   final GeolocationRepository _geolocationRepository;
+  final BookingTaxiRepository _bookingTaxiRepository = BookingTaxiRepository();
   late StreamSubscription<GMapStatus> _gmapStatusSubscription;
 
   @override
@@ -46,6 +49,9 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
     switch (event.status) {      
       case GMapStatus.home:
         final position = _geolocationRepository.currentPosition;
+        List<Car> cars = await _bookingTaxiRepository.taxiAround(position.position);
+        print('GMAP STATUS ... HOME ... CAR GETTING');
+        print(cars);
 
         return GMapState.home(position);
 
