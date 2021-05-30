@@ -1,6 +1,19 @@
 {
-    "helloWorld": "Hello World!",
-    "@helloWorld": {
-      "description": "The conventional newborn programmer greeting"
-    }
+  "signUp": "Sign Up",
+  "signIn": "Sign In",
+
+  "signUpChoice": "As what do you want to sign up?",
+  "signUpChoiceClient": "CLIENT",
+  "signUpChoiceDriver": "DRIVER",
+
+  "pvStep1Title": "Set your location",
+  "pvStep1Description": "Enable location sharing so that your driver can see where you are",
+  "pvStep2Title": "Set your location",
+  "pvStep2Description": "Enable location sharing so that your driver can see where you are",
+  "pvStep3Title": "Set your location",
+  "pvStep3Description": "Enable location sharing so that your driver can see where you are",
+
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  }
 }

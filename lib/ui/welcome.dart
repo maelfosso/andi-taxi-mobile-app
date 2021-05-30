@@ -5,6 +5,8 @@ import 'package:andi_taxi/pages/sign_up_client/view/sign_up_client_page.dart';
 import 'package:andi_taxi/pages/sign_up_driver/view/sign_up_driver_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class PVStepContent {
   final String title;
@@ -33,7 +35,8 @@ class Welcome extends StatefulWidget {
               Container(
                 padding: EdgeInsets.symmetric(vertical: 16.0),
                 child: Text(
-                  "Sign Up",
+                  // "Sign Up",
+                  AppLocalizations.of(context)!.signUp,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -44,7 +47,7 @@ class Welcome extends StatefulWidget {
               Container(
                 padding: EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  "As what do you want to sign up?",
+                  AppLocalizations.of(context)!.signUpChoice,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14
@@ -64,7 +67,7 @@ class Welcome extends StatefulWidget {
                         (route) => false,
                       );
                     }, 
-                    child: Text("CLIENT")
+                    child: Text(AppLocalizations.of(context)!.signUpChoiceClient)
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -75,7 +78,7 @@ class Welcome extends StatefulWidget {
                         (route) => false,
                       );
                     }, 
-                    child: Text("DRIVER")
+                    child: Text(AppLocalizations.of(context)!.signUpChoiceDriver)
                   )
                 ],
               )
@@ -107,20 +110,7 @@ class _WelcomeState extends State<Welcome> {
 
   static const _kCurve = Curves.ease;
 
-  final List<PVStepContent> _pagesContents = [
-    new PVStepContent(
-      "Set your location", 
-      "Enable location sharing so that your driver can see where you are"
-    ),
-    new PVStepContent(
-      "Set your location", 
-      "Enable location sharing so that your driver can see where you are"
-    ),
-    new PVStepContent(
-      "Set your location", 
-      "Enable location sharing so that your driver can see where you are"
-    )
-  ];
+  List<PVStepContent> _pagesContents = [];
 
   _signUp() {
     // Navigator
@@ -206,7 +196,7 @@ class _WelcomeState extends State<Welcome> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0),
                 child: Text(
-                  "Sign Up",
+                  AppLocalizations.of(context)!.signUp,
                   textAlign: TextAlign.center,
                 )
               ),
@@ -216,7 +206,7 @@ class _WelcomeState extends State<Welcome> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0),
                 child: Text(
-                  "Sign In",
+                  AppLocalizations.of(context)!.signIn,
                   textAlign: TextAlign.center,
                 )
               ),
@@ -266,6 +256,21 @@ class _WelcomeState extends State<Welcome> {
 
   @override
   Widget build(BuildContext context) {
+    _pagesContents = [
+      new PVStepContent(
+        AppLocalizations.of(context)!.pvStep1Title, 
+        AppLocalizations.of(context)!.pvStep1Description,
+      ),
+      new PVStepContent(
+        AppLocalizations.of(context)!.pvStep2Title, 
+        AppLocalizations.of(context)!.pvStep2Description,
+      ),
+      new PVStepContent(
+        AppLocalizations.of(context)!.pvStep3Title, 
+        AppLocalizations.of(context)!.pvStep3Description
+      )
+    ];  
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: WillPopScope(
