@@ -43,6 +43,7 @@ dependencies:
 
   geolocator: ^7.0.3  
   geocoding: ^2.0.0
+  shared_preferences: ^2.0.6
 
 
 

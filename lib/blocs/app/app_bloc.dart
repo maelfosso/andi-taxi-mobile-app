@@ -14,11 +14,13 @@ part 'app_state.dart';
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({ required AuthenticationRepository authenticationRepository })
     : _authenticationRepository = authenticationRepository,
-      super(
-        authenticationRepository.currentUser.isNotEmpty
-          ? AppState.authenticated(authenticationRepository.currentUser)
-          : const AppState.unauthenticated()
-      ) {
+      super(const AppState.unauthenticated())
+      // super(
+      //   (await authenticationRepository.currentUser).isNotEmpty
+      //     ? AppState.authenticated(authenticationRepository.currentUser)
+      //     : const AppState.unauthenticated()
+      // ) 
+  {
     // _authenticationStatusSubscription = _authenticationRepository.status.listen(
     //   (status) => add(AppUserChanged(status)) //(AuthenticationStatusChanged(status)),
     // );

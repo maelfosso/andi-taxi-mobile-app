@@ -1,6 +1,8 @@
+import 'package:andi_taxi/models/payment-methods-used.dart';
 import 'package:andi_taxi/models/place.dart';
 import 'package:andi_taxi/models/user_position.dart';
 import 'package:andi_taxi/models/user_position_place.dart';
+import 'package:andi_taxi/repository/booking_taxi/booking_taxi_repository.dart';
 import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -11,7 +13,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 part 'booking_taxi_event.dart';
 part 'booking_taxi_state.dart';
 
-enum BookingTaxiStatus { unknown, address, details, payment }
+enum BookingTaxiStatus { unknown, address, details, payment, ended }
 
 enum CarType { standard, vip, scooter, access, baby, electric, exec, van }
 
@@ -20,15 +22,19 @@ enum PaymentMethod { cash, visa, mastercard }
 class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
 
   BookingTaxiBloc({
-    required GeolocationRepository geolocationRepository
+    required GeolocationRepository geolocationRepository,
+    required BookingTaxiRepository bookingTaxiRepository
   }): _geolocationRepository = geolocationRepository,
+      _bookingTaxiRepository = bookingTaxiRepository,
       super(const BookingTaxiState.unknown()) {
     
     // var position = _geolocationRepository.determinePosition();
-    add(BookingTaxiStatusChanged(BookingTaxiStatus.address));
+    print('INIT BOOKING TAXI BLOC $state');
+    // add(BookingTaxiStatusChanged(BookingTaxiStatus.address));
   }
 
   final GeolocationRepository _geolocationRepository;
+  final BookingTaxiRepository _bookingTaxiRepository;
 
   @override
   Stream<BookingTaxiState> mapEventToState(BookingTaxiEvent event) async* {
@@ -50,11 +56,19 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
   Future<BookingTaxiState> _mapBookingTaxiStatusChangedToState(
     BookingTaxiStatusChanged event
   ) async {
+    print('_mapBOKING STATUS CHANGED : ${event.status}');
+    
     switch (event.status) {
       case BookingTaxiStatus.address:
-        final position = _geolocationRepository.currentPosition;
 
-        return BookingTaxiState.address(position);
+        final currentPosition = _geolocationRepository.currentPosition;
+        List<UserPosition> lastPositions = await _bookingTaxiRepository.lastLocations();
+        // List<UserPosition> lastPositions = [];
+
+        print('CURRENT POSITION $currentPosition');
+        print('LAST POSITION $lastPositions');
+
+        return BookingTaxiState.address(currentPosition, lastPositions);
       default:
         return const BookingTaxiState.unknown();
     }
@@ -84,6 +98,13 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
     // From Google MAP, Calculate 
     // - the distance
     // - The time of travel
+    double distance = _geolocationRepository.distanceBetween(state.from.position, state.to.position);
+
+    List<double> results = await _bookingTaxiRepository.calculateCostTime(
+      state.from.position, 
+      state.to.position, 
+      distance
+    );
 
     // From API, les Fetch
     // - car (last car type used)
@@ -91,16 +112,22 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
     // - payment method (last payment method used)
 
     return state.copyWith(
-      status: BookingTaxiStatus.details
+      status: BookingTaxiStatus.details,
+      cost: results.getRange(0, 2).toList(),
+      time: results[2].toInt()
     );
   }
 
   Future<BookingTaxiState> _mapBookingDetailsSetUpToState(
     BookingTaxiEvent event
   ) async {
+    // Create the Travel in a Unpaid state. Return the id of the travel
+    List<PaymentMethodUsed> methods = await _bookingTaxiRepository.paymentMethodsUsed();
 
     return state.copyWith(
-      status: BookingTaxiStatus.payment
+      status: BookingTaxiStatus.payment,
+      paymentMethodUsed: methods,
+      // travelId: travelId
     );
   }
 
@@ -108,7 +135,9 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
     BookingPaymentSetUp event
   ) async {
     // _geolocationRepository.status
-    return const BookingTaxiState.unknown();
+    print('BOOKING BLOC - MAP PAYMENT SETUP TO... ${event.method}');
+    _bookingTaxiRepository.payTravel("travelId", event.method);
+    return const BookingTaxiState.ended();
   }
 
   Future<BookingTaxiState> _mapBookingTaxiEndedToState(

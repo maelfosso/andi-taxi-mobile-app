@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart';
 import 'package:andi_taxi/cache/cache.dart';
 import 'package:andi_taxi/models/place.dart';
+import 'package:andi_taxi/models/user.dart';
 import 'package:andi_taxi/models/user_position.dart';
 import 'package:andi_taxi/models/user_position_place.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,6 +22,7 @@ class GeolocationRepository {
   }): _cache = cache ?? CacheClient();
 
   UserPositionPlace get currentPosition {
+    print('GET CURRENT POSITION');
     return _cache.read<UserPositionPlace>(key: currentPositionCacheKey) ?? UserPositionPlace.empty;
   }
 
@@ -110,4 +112,8 @@ class GeolocationRepository {
     return userPositionPlace;
   }
 
+  double distanceBetween(UserPosition p1, UserPosition p2) {
+    double distanceInMeters = Geolocator.distanceBetween(p1.latitude, p1.longitude, p2.latitude, p2.longitude);
+    return distanceInMeters;
+  }
 }

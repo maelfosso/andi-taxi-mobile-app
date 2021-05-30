@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
+import 'package:andi_taxi/models/payment-methods-used.dart';
 import 'package:andi_taxi/models/user_position_place.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ class GMapBookingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BookingTaxiBloc, BookingTaxiState>(
       builder: (context, state) {
+        print('[GMAP BOOKING VIEW] $state');
+
         switch(state.status) {
           case BookingTaxiStatus.address:
             return BookingTaxiAddressWidget();
@@ -24,8 +27,9 @@ class GMapBookingView extends StatelessWidget {
             return BookingTaxiPaymentWidget();
           // case BookingTaxiStatus.unknown
           default:
+            print('[GMAP BOOKING VIEW] STATE STATUS : DEFAULT');
             return Container(
-              color: Colors.lightBlue,
+              color: Colors.deepOrange,
               width: 50.0,
             );
         }

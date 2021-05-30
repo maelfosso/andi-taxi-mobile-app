@@ -145,6 +145,7 @@ class BookingTaxiAddressWidget extends StatelessWidget {
               ),
               Container(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
@@ -155,51 +156,56 @@ class BookingTaxiAddressWidget extends StatelessWidget {
                           color: Color(0xFFD5DDE0),
                           fontSize: 20.0
                         ),
+                        textAlign: TextAlign.left,
                       )
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 5.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Material(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20.0),
-                              child: Image.asset('assets/images/ic_place_grey.png'),
-                            ),
-                          ),
-                          Expanded(child: 
-                          Container(
-                            padding: EdgeInsets.only(left: 10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    "Address",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
+                      child: Column(
+                        children: state.lastPositions.map((e) {
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Material(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  child: Image.asset('assets/images/ic_place_grey.png'),
                                 ),
-                                Container(
-                                  child: Text(
-                                    "Country",
-                                    style: TextStyle(
+                              ),
+                              Expanded(child: 
+                              Container(
+                                padding: EdgeInsets.only(left: 10.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Text(
+                                        "Address",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        "Country",
+                                        style: TextStyle(
+                                          color: Color(0xFF97ADB6),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
                                       color: Color(0xFF97ADB6),
-                                    ),
-                                  ),
+                                      height: 1.0,
+                                      margin: EdgeInsets.only(top: 15.0),
+                                    )
+                                  ],
                                 ),
-                                Container(
-                                  color: Color(0xFF97ADB6),
-                                  height: 1.0,
-                                  margin: EdgeInsets.only(top: 20.0),
-                                )
-                              ],
-                            ),
-                          ))
-                        ],
-                      ),
+                              ))
+                            ],
+                          );
+                        }).toList(),
+                      )
                     )
                   ]
                 ),

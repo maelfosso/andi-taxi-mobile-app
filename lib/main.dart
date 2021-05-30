@@ -1,4 +1,3 @@
-import 'package:andi_taxi/blocs/app/app_bloc.dart';
 import 'package:andi_taxi/blocs/app/bloc_observer.dart';
 import 'package:andi_taxi/blocs/authentication/authentication_bloc.dart';
 import 'package:andi_taxi/pages/home/home_page.dart';
