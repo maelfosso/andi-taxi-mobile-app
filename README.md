@@ -70,6 +70,37 @@ GOOGLE_MAPS_API_KEY=
 - Sign in (keep the code displayed)
 - Enter the code. You have one minute.
 
+## Internationalization
+
+The default language of the application is the **English**. It's possible for you to add a new language.
+
+If you want to add the **Russian** language for example, here is the process
+
+### **Step 1**: Find the code of the language
+
+The code of the Russian language is `**ru**`
+
+### **Step 2**: Add the language
+
+Open the `lib/main.dart` file.
+In the `_AppViewState` class, localise the line with
+```dart
+const Locale('en', '')
+```
+Add this line below directly after
+```dart
+const Locale('ru', '')
+```
+
+### **Step 3**: Add the language file
+
+Into the folder `lib/l10n`, create a new file called `app_ru.arb`. 
+
+Copy the content of `app_en.arb` and modify it with the good content.
+
+### Run the app
+
+Just run the app like usual with `flutter run`
 
 ## Run tests
 
