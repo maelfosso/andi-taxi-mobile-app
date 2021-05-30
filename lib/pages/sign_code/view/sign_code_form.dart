@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignCodeForm extends StatelessWidget {
   SignCodeForm({Key? key}) : super(key: key);
@@ -25,7 +26,9 @@ class SignCodeForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Authentication Failure'))
+              SnackBar(content: Text(
+                AppLocalizations.of(context)!.signCodeFailure,
+              ))
             );    
         } 
       },
@@ -34,7 +37,7 @@ class SignCodeForm extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(
           children: [
-            _buildCodeUI(),
+            _buildCodeUI(context),
             _buildKeyboard()
           ],
         )
@@ -42,7 +45,7 @@ class SignCodeForm extends StatelessWidget {
     );
   }
 
-  Widget _buildCodeUI() {
+  Widget _buildCodeUI(BuildContext context) {
     var textSentTo = Container(
       margin: EdgeInsets.all(16.0),
       child: Column(
@@ -50,7 +53,7 @@ class SignCodeForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "Code sent by SMS to",
+            AppLocalizations.of(context)!.codeSentBySMS,
             style: TextStyle(
               color: theme?.accentColor,
               fontSize: 18.0
@@ -201,7 +204,7 @@ class _CodeUI extends StatelessWidget {
           child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-            text: "Re-sent the code " + (state.timeout ? "" : "(0:${state.counter})"),
+            text: AppLocalizations.of(context)!.resentCode + (state.timeout ? "" : "(0:${state.counter})"),
               style: TextStyle(
                 color: state.timeout ? Theme.of(context).accentColor : Theme.of(context).primaryColor,
                 decoration: TextDecoration.underline

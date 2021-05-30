@@ -1,4 +1,8 @@
 {
+  "@welcome": {
+    "description": "Welcome UI : lib/ui/welcome.dart"
+  },
+
   "signUp": "Sign Up",
   "signIn": "Sign In",
 
@@ -13,7 +17,23 @@
   "pvStep3Title": "Set your location",
   "pvStep3Description": "Enable location sharing so that your driver can see where you are",
 
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  }
+  "@signIn": {
+    "description": "Sign In UI : lib/pages/sign_in/sign_in_form.dart , lib/pages/sign_in/sign_in_page.dart"
+  },
+
+  "signInFailure": "Sign In Failure",
+  "or": "OR",
+  "dontHaveAccount": "Don't have an account ? ",
+  "phoneNumber": "Phone number",
+  "invalidPhoneNumber": "invalid phone number",
+
+  "@signCode": {
+    "description": "Sign Code UI : lib/pages/sign_code/sign_code_form.dart , lib/pages/sign_code/sign_code_page.dart"
+  },
+  
+  "signCode": "Code",
+  "signCodeFailure": "Authentication Failure",
+  "codeSentBySMS": "Code sent by SMS to",
+  "resentCode": "Re-sent the code "
+
 }

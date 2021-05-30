@@ -5,6 +5,7 @@ import 'package:andi_taxi/ui/welcome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({Key? key}): super(key: key);
@@ -21,7 +22,7 @@ class SignInPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0.0,
         title: Text(
-          "Sign In",
+          AppLocalizations.of(context)!.signIn,
           style: TextStyle(
             color: Colors.black
           ),

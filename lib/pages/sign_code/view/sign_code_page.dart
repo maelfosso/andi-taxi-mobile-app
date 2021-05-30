@@ -6,6 +6,7 @@ import 'package:andi_taxi/repository/authentication/authentication_repository.da
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignCodePage extends StatelessWidget {
   const SignCodePage({Key? key}): super(key: key);
@@ -24,7 +25,7 @@ class SignCodePage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0.0,
         title: Text(
-          "Sign In",
+          AppLocalizations.of(context)!.signCode,
           style: TextStyle(
             color: Colors.black
           ),

@@ -1,10 +1,10 @@
 import 'package:andi_taxi/pages/sign_in/cubit/sign_in_cubit.dart';
-import 'package:andi_taxi/pages/sign_up_client/view/sign_up_client_page.dart';
 import 'package:andi_taxi/ui/welcome.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignInForm extends StatelessWidget {
   SignInForm({Key? key}) : super(key: key);
@@ -21,7 +21,9 @@ class SignInForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Sign In Failure'))
+              SnackBar(content: Text(
+                AppLocalizations.of(context)!.signInFailure
+              ))
             );    
         }
       },
@@ -30,7 +32,7 @@ class SignInForm extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(
           children: [
-            _buildBody(),
+            _buildBody(context),
             _Footer()
           ],
         )
@@ -38,13 +40,13 @@ class SignInForm extends StatelessWidget {
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     return Expanded(
       flex: 1,
       child: Column(
         children: [
           _buildForm(),
-          _buildSignInButtons()
+          _buildSignInButtons(context)
         ],
       ),
     );
@@ -65,7 +67,7 @@ class SignInForm extends StatelessWidget {
     );
   }
 
-  Widget _buildSignInButtons() {
+  Widget _buildSignInButtons(BuildContext context) {
     
     var divider = Container(
       child: Row(
@@ -81,7 +83,7 @@ class SignInForm extends StatelessWidget {
           Expanded(
             child: Container(
               child: Text(
-                "OR",
+                AppLocalizations.of(context)!.or,
                 textAlign: TextAlign.center,
               )
             )
@@ -180,10 +182,10 @@ class _Footer extends StatelessWidget {
           style: defaultStyle,
           children: <TextSpan>[
             TextSpan(
-              text: 'Don\'t have an account ? '
+              text: AppLocalizations.of(context)!.dontHaveAccount
             ),
             TextSpan(
-              text: 'Sign Up',
+              text: AppLocalizations.of(context)!.signUp,
               style: linkStyle,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
@@ -209,7 +211,7 @@ class _PhoneInput extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Phone number",
+              AppLocalizations.of(context)!.phoneNumber,
               textAlign: TextAlign.left,
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                 fontWeight: FontWeight.bold,
@@ -221,7 +223,7 @@ class _PhoneInput extends StatelessWidget {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Color(0xFFF7F8F9),
-                errorText: state.phone.invalid ? 'invalid phone number' : null,
+                errorText: state.phone.invalid ? AppLocalizations.of(context)!.invalidPhoneNumber : null,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15.0),
                   borderSide: BorderSide(
@@ -274,7 +276,7 @@ class _SignInButton extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 15.0),
                     child: Text(
-                      "Sign In",
+                      AppLocalizations.of(context)!.signIn,
                       textAlign: TextAlign.center,
                     )
                   ),
@@ -285,20 +287,6 @@ class _SignInButton extends StatelessWidget {
               )
             );
       }
-    );
-  }
-}
-
-class _SignUpButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return TextButton(
-      onPressed: () => Navigator.of(context).push<void>(SignUpClientPage.route()),
-      child: Text(
-        'CREATE ACCOUNT',
-        style: TextStyle(color: theme.primaryColor),
-      ),
     );
   }
 }
