@@ -23,12 +23,12 @@ class GMapPage extends StatelessWidget {
         BlocProvider<ui.GMapCubit>(
           create: (BuildContext context) => ui.GMapCubit(context.read<GeolocationRepository>()),
         ),
-        BlocProvider<BookingTaxiBloc>(
-          create: (BuildContext context) => BookingTaxiBloc(
-            geolocationRepository: context.read<GeolocationRepository>(),
-            bookingTaxiRepository: context.read<BookingTaxiRepository>()
-          ),
-        ),
+        // BlocProvider<BookingTaxiBloc>(
+        //   create: (BuildContext context) => BookingTaxiBloc(
+        //     geolocationRepository: context.read<GeolocationRepository>(),
+        //     bookingTaxiRepository: context.read<BookingTaxiRepository>()
+        //   ),
+        // ),
       ], 
       child: GMapView()
     );

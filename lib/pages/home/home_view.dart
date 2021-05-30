@@ -1,3 +1,4 @@
+import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
 import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart';
 import 'package:andi_taxi/pages/gmap/cubit/gmap_cubit.dart';
 import 'package:andi_taxi/pages/gmap/view/gmap_page.dart';
@@ -11,7 +12,8 @@ class HomeView extends StatelessWidget {
     // return GMapPage();
     return BlocProvider(
       create: (context) => GMapBloc(
-        geolocationRepository: context.read<GeolocationRepository>()
+        geolocationRepository: context.read<GeolocationRepository>(),
+        bookingTaxiBloc: context.read<BookingTaxiBloc>()
       ),
       child: GMapPage()
     );

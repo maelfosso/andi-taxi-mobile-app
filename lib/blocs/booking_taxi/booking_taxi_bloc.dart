@@ -13,7 +13,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 part 'booking_taxi_event.dart';
 part 'booking_taxi_state.dart';
 
-enum BookingTaxiStatus { unknown, address, details, payment }
+enum BookingTaxiStatus { unknown, address, details, payment, ended }
 
 enum CarType { standard, vip, scooter, access, baby, electric, exec, van }
 
@@ -29,7 +29,8 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
       super(const BookingTaxiState.unknown()) {
     
     // var position = _geolocationRepository.determinePosition();
-    add(BookingTaxiStatusChanged(BookingTaxiStatus.address));
+    print('INIT BOOKING TAXI BLOC $state');
+    // add(BookingTaxiStatusChanged(BookingTaxiStatus.address));
   }
 
   final GeolocationRepository _geolocationRepository;
@@ -120,11 +121,13 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
   Future<BookingTaxiState> _mapBookingDetailsSetUpToState(
     BookingTaxiEvent event
   ) async {
+    // Create the Travel in a Unpaid state. Return the id of the travel
     List<PaymentMethodUsed> methods = await _bookingTaxiRepository.paymentMethodsUsed();
 
     return state.copyWith(
       status: BookingTaxiStatus.payment,
-      paymentMethodUsed: methods
+      paymentMethodUsed: methods,
+      // travelId: travelId
     );
   }
 
@@ -132,7 +135,9 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
     BookingPaymentSetUp event
   ) async {
     // _geolocationRepository.status
-    return const BookingTaxiState.unknown();
+    print('BOOKING BLOC - MAP PAYMENT SETUP TO... ${event.method}');
+    _bookingTaxiRepository.payTravel("travelId", event.method);
+    return const BookingTaxiState.ended();
   }
 
   Future<BookingTaxiState> _mapBookingTaxiEndedToState(

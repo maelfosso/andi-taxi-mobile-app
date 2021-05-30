@@ -1,5 +1,6 @@
 import 'package:andi_taxi/blocs/app/app_bloc.dart';
 import 'package:andi_taxi/blocs/authentication/authentication_bloc.dart';
+import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
 import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart';
 import 'package:andi_taxi/pages/gmap/cubit/gmap_cubit.dart';
 import 'package:andi_taxi/pages/gmap/view/gmap_page.dart';
@@ -43,10 +44,22 @@ class HomePage extends StatelessWidget {
       ),
       body: MultiRepositoryProvider(
         providers: [
-          RepositoryProvider<GeolocationRepository>(create: (context) => GeolocationRepository()),
-          RepositoryProvider<BookingTaxiRepository>(create: (context) => BookingTaxiRepository()),
+          // RepositoryProvider<GeolocationRepository>(create: (context) => GeolocationRepository()),
+          // RepositoryProvider<BookingTaxiRepository>(create: (context) => BookingTaxiRepository()),
+          RepositoryProvider<GeolocationRepository>.value(value: geolocationRepository),
+          RepositoryProvider<BookingTaxiRepository>.value(value: bookingTaxiRepository)
         ],
-        child: HomeView(),
+        child: BlocProvider<BookingTaxiBloc>(
+          create: (BuildContext context) => BookingTaxiBloc(
+            geolocationRepository: geolocationRepository, // context.read<GeolocationRepository>(),
+            bookingTaxiRepository: bookingTaxiRepository, // context.read<BookingTaxiRepository>()
+          ),
+          child: HomeView(),
+        ),
+        // BlocProvider(
+        //   create: ,
+        //   child: HomeView(),
+        // ) 
       )
       //  RepositoryProvider.value(
       //   value: geolocationRepository,

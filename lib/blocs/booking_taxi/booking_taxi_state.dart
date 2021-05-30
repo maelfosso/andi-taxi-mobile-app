@@ -40,6 +40,9 @@ class BookingTaxiState extends Equatable {
   const BookingTaxiState.payment()
     : this._(status: BookingTaxiStatus.payment);
 
+  const BookingTaxiState.ended()
+    : this._(status: BookingTaxiStatus.ended);
+
   BookingTaxiState copyWith({
     BookingTaxiStatus? status,
     UserPositionPlace? from,

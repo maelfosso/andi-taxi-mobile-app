@@ -1,10 +1,12 @@
 
 import 'dart:async';
 
+import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
 import 'package:andi_taxi/models/models.dart';
 import 'package:andi_taxi/models/user_position.dart';
 import 'package:andi_taxi/models/user_position_place.dart';
 import 'package:andi_taxi/pages/gmap/view/gmap_page.dart';
+import 'package:andi_taxi/pages/gmap_booking/gmap_booking_view.dart';
 import 'package:andi_taxi/repository/booking_taxi/booking_taxi_repository.dart';
 import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -20,16 +22,36 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
 
   GMapBloc({
     required GeolocationRepository geolocationRepository,
+    required BookingTaxiBloc bookingTaxiBloc
   }):  _geolocationRepository = geolocationRepository, 
       super(const GMapState.unknown()) {
+    _bookingTaxiBloc = bookingTaxiBloc;  // BookingTaxiBloc(geolocationRepository: geolocationRepository, bookingTaxiRepository: this._bookingTaxiRepository);
+    
+    _bookingTaxiBloc.stream.listen((event) {
+      print('[GMAP BLOC] - Booking Taxi Bloc STream - $event');
+      if (event.status == BookingTaxiStatus.ended) {
+        print('[GMAP BLOC] BOOKING STATUS IS ENDED');
+        add(GMapStatusChanged(GMapStatus.searchingTaxi));
+      }
+    });
+
     _gmapStatusSubscription = _geolocationRepository.status.listen(
       (status) => add(GMapStatusChanged(status)),
     );
+    // _bookingTaxiStatusSubscription = _bookingTaxiRepository.status.listen(
+    //   (status) {
+    //     print('GMAP BLOC - BOOKING STATUS CHANGED - $status');
+    //     add(GMapStatusChanged(status));
+    //   },
+    // );
   }
+
+  late BookingTaxiBloc _bookingTaxiBloc;
 
   final GeolocationRepository _geolocationRepository;
   final BookingTaxiRepository _bookingTaxiRepository = BookingTaxiRepository();
   late StreamSubscription<GMapStatus> _gmapStatusSubscription;
+  late StreamSubscription<GMapStatus> _bookingTaxiStatusSubscription;
 
   @override
   Stream<GMapState> mapEventToState(GMapEvent event) async* {
@@ -57,6 +79,8 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
 
       case GMapStatus.bookingTaxi:
         final position = _geolocationRepository.currentPosition;
+        // _bookingTaxiBloc.emit(BookingTaxiState.address(position, positions))
+        _bookingTaxiBloc.add(BookingTaxiStatusChanged(BookingTaxiStatus.address));
 
         return GMapState.bookingTaxi(position);
 

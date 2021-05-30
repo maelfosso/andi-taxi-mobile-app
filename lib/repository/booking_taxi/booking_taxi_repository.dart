@@ -1,5 +1,7 @@
+import 'dart:async';
+
 import 'package:andi_taxi/api/api.dart';
-import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
+import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart';
 import 'package:andi_taxi/models/models.dart';
 import 'package:andi_taxi/models/payment-methods-used.dart';
 import 'package:andi_taxi/models/user_position.dart';
@@ -7,6 +9,7 @@ import 'package:andi_taxi/models/user_position.dart';
 class BookingTaxiFailure implements Exception {}
 
 class BookingTaxiRepository {
+  final _controller = StreamController<GMapStatus>();
 
   BookingTaxiRepository({
     RestClient? api
@@ -14,38 +17,32 @@ class BookingTaxiRepository {
 
   final RestClient _api;
 
+  Stream<GMapStatus> get status async* {
+    // await Future<void>.delayed(const Duration(seconds: 1));
+    // yield GMapStatus.unknown; // instead of unauthenticated
+    yield* _controller.stream;
+  }
+
   Future<List<UserPosition>> lastLocations() async {
-    print('GET LAST LOCATIONS...');
     List<UserPosition> positions = [];
 
     try {
-      print('BEFORE GETTING API');
       positions = await _api.GetLastLocations();
-      print('AFTER GETTING : $positions');
     } on Exception catch (e) {
-      print('API GetLastLocations error');
-      print(e);
-      
       throw BookingTaxiFailure();
     }
-
-    print('RETURN RESULTS ... $positions');
 
     return positions;
   }
 
   Future<List<Car>> taxiAround(UserPosition position) async {
-    print("GET TAXI AROUND");
     List<Car> cars = [];
     
     try {
-      print('BEFORE GETING API : $position');
       cars = await _api.GetTaxiAround(position);
-      print('AFTER GETTINGS : $cars');
     } on Exception catch (e) {
-      print('API GET TAXI ARROUND error');
+      print('TAXI ARROUND ERROR ');
       print(e);
-
       throw BookingTaxiFailure();
     }
 
@@ -57,17 +54,13 @@ class BookingTaxiRepository {
     UserPosition to,
     double distance
   ) async {
-    print("CALCULATE COST TIME");
     List<double> results = [];
     
     try {
-      print('CALCULATE : $from --- $to --- $distance');
       results = await _api.CalculateCostTime(from, to, distance);
-      print('AFTER GETTINGS : $results');
     } on Exception catch (e) {
-      print('API CALCULATE error');
+      print('CACULATE COST TIME ');
       print(e);
-
       throw BookingTaxiFailure();
     }
 
@@ -84,5 +77,14 @@ class BookingTaxiRepository {
     }
 
     return methods;
+  }
+
+  void payTravel(String travelId, PaymentMethodUsed method) async {
+    print('PAYTRAVEL AFTER ... ');
+    try {
+      _controller.add(GMapStatus.searchingTaxi);
+    } on Exception catch (e) {
+      throw BookingTaxiFailure();
+    }
   }
 }

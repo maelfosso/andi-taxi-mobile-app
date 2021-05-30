@@ -76,16 +76,12 @@ class AuthenticationRepository {
     final SharedPreferences prefs = await _prefs;
 
     UserCode userCode;
-    print('API signUpCustomer: $name - $phone');
     try {
       userCode = await _api.SignUpClient(name, phone);
-      // _cache.write<UserCode>(key: userCodeCacheKey, value: userCode);
       prefs.setString(userCodeCacheKey, json.encode(userCode));
 
       _controller.add(AuthenticationStatus.known);
     } on Exception catch (e) {
-      print('API Sign up throw execption');
-      print(e);
       throw SignUpFailure();
     }
 
@@ -100,20 +96,16 @@ class AuthenticationRepository {
     final SharedPreferences prefs = await _prefs;
     
     UserCode userCode;
-    print('API signUpCustomer: $name - $phone');
     try {
       userCode = await _api.SignUpDriver(
         name, phone,
         rcIdentificationNumber, residenceAddress, realResidenceAddress,
         car
       );
-      // _cache.write<UserCode>(key: userCodeCacheKey, value: userCode);
       prefs.setString(userCodeCacheKey, json.encode(userCode));
       
       _controller.add(AuthenticationStatus.known);
     } on Exception catch (e) {
-      print('API Sign up throw execption');
-      print(e);
       throw SignUpFailure();
     }
 
@@ -127,7 +119,6 @@ class AuthenticationRepository {
 
     try {
       userCode = await _api.SignIn(phoneNumber);
-      //_cache.write<UserCode>(key: userCodeCacheKey, value: userCode);
       prefs.setString(userCodeCacheKey, json.encode(userCode));
       
       _controller.add(AuthenticationStatus.known);
@@ -145,12 +136,9 @@ class AuthenticationRepository {
 
     try {
       userToken = await _api.SignCode(phoneNumber, code);
-      // _cache.write<User>(key: userCacheKey, value: userToken.user);
-      // _cache.write<String>(key: tokenCacheKey, value: userToken.token);
       prefs.setString(userCacheKey, json.encode(userToken.user));
       prefs.setString(tokenCacheKey, userToken.token);
       
-      print("signCode : $userToken");
       _controller.add(AuthenticationStatus.authenticated);
     } on Exception {
       throw SignCodeFailure();
