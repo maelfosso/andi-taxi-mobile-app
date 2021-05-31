@@ -133,7 +133,7 @@ class BookingTaxiAddressWidget extends StatelessWidget {
                         )                      
                       ),
                       Text(
-                        "Display on the Map",
+                        AppLocalizations.of(context)!.displayOnMap,
                         style: TextStyle(
                           color: Color(0xFFC6902E),
                           fontSize: 20.0
@@ -151,7 +151,7 @@ class BookingTaxiAddressWidget extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 20.0),
                       child: Text(
-                        "Recent Addresses",
+                        AppLocalizations.of(context)!.recentAddresses,
                         style: TextStyle(
                           color: Color(0xFFD5DDE0),
                           fontSize: 20.0
@@ -180,7 +180,7 @@ class BookingTaxiAddressWidget extends StatelessWidget {
                                   children: [
                                     Container(
                                       child: Text(
-                                        "Address",
+                                        AppLocalizations.of(context)!.address,
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -188,7 +188,7 @@ class BookingTaxiAddressWidget extends StatelessWidget {
                                     ),
                                     Container(
                                       child: Text(
-                                        "Country",
+                                        AppLocalizations.of(context)!.country,
                                         style: TextStyle(
                                           color: Color(0xFF97ADB6),
                                         ),
@@ -224,7 +224,7 @@ class BookingTaxiAddressWidget extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 15.0),
                       child: Text(
-                        "Next: Booking details",
+                        AppLocalizations.of(context)!.nextBookingDetails,
                         textAlign: TextAlign.center,
                       )
                     ),

@@ -70,4 +70,22 @@
   "actualPosition": "Actual Position",
   "bookTaxi": "Book a taxi",
 
+  "@gmapBookingTaxi": {
+    "description": "GMap Booking Taxi : lib/pages/gmap_booking_taxi/gmap_booking_taxi.dart"
+  },
+
+  "paymentMethods": "Payment Methods",
+  "cash": "Cash",
+
+  "carStandard": "Standard",
+  "duration": "Duration",
+  "bookTrip": "Book a Trip",
+
+  "displayOnMap": "Display on the Map",
+  "recentAddresses": "Recent Addresses",
+
+  "address": "Address",
+  "country": "Country",
+  "nextBookingDetails": "Next: Booking details",
+  
 }

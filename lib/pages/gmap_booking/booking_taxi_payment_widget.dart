@@ -22,7 +22,7 @@ class BookingTaxiPaymentWidget extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  "Payment Methods",
+                  AppLocalizations.of(context)!.paymentMethods,
                   style: Theme.of(context).textTheme.headline5?.copyWith(
                     fontWeight: FontWeight.bold
                   ),
@@ -125,7 +125,7 @@ class BookingTaxiPaymentWidget extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
-                          "Cash"
+                          AppLocalizations.of(context)!.cash,
                         ),
                       ),
                     ),

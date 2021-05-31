@@ -5,10 +5,10 @@ class BookingTaxiDetailsWidget extends StatelessWidget {
   String carType(CarType type) {
     switch (type) {
       case CarType.standard:
-        return "Standard";
+        return AppLocalizations.of(context)!.carStandard;
       
       default:
-        return "Standard";
+        return AppLocalizations.of(context)!.carStandard;
     }
   }
 
@@ -121,7 +121,7 @@ class BookingTaxiDetailsWidget extends StatelessWidget {
                         children: [
                           Container(
                             child: Text(
-                              "Duration"
+                              AppLocalizations.of(context)!.duration
                             )                 
                           ),
                           Container(
@@ -182,7 +182,7 @@ class BookingTaxiDetailsWidget extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 15.0),
                       child: Text(
-                        "Book a Trip",
+                        AppLocalizations.of(context)!.bookTrip,
                         textAlign: TextAlign.center,
                       )
                     ),
