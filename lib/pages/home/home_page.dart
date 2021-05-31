@@ -9,6 +9,7 @@ import 'package:andi_taxi/repository/booking_taxi/booking_taxi_repository.dart';
 import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Will have it's own state
 // GMap for Google Map
@@ -32,7 +33,9 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text(
+          AppLocalizations.of(context)!.home,
+        ),
         toolbarOpacity: 0.0,
         actions: <Widget>[
           IconButton(

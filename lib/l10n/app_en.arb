@@ -56,5 +56,10 @@
   "realResidenceAddress": "Real Residence Address",
   "registrationNumber": "Registration Number",
   "model": "Model",
-  
+
+  "@home": {
+    "description": "Home UI : lib/pages/home/home_page.dart"
+  },
+
+  "home": "Home",
 }
