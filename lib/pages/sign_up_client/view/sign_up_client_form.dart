@@ -17,7 +17,7 @@ class SignUpClientForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text(
+              SnackBar(content: Text(
                 AppLocalizations.of(context)!.signUpFailure
               )),
             );

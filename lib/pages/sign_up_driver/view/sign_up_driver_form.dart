@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:andi_taxi/pages/sign_in/view/sign_in_page.dart';
 import 'package:andi_taxi/pages/sign_up_driver/cubit/sign_up_driver_cubit.dart';
 import 'package:flutter/gestures.dart';
@@ -24,7 +22,7 @@ class SignUpDriverForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text(
+              SnackBar(content: Text(
                 AppLocalizations.of(context)!.signUpFailure
               )),
             );
@@ -35,7 +33,7 @@ class SignUpDriverForm extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(
           children: [
-            _buildBody(),
+            _buildBody(context),
           ],
         )
       )
@@ -43,7 +41,7 @@ class SignUpDriverForm extends StatelessWidget {
   }
 
 
-  _buildBody() { 
+  _buildBody(BuildContext context) { 
     return Expanded(
       flex: 1,
       child: SingleChildScrollView(

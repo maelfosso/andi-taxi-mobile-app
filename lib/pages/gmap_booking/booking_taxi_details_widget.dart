@@ -2,7 +2,7 @@ part of 'gmap_booking_view.dart';
 
 class BookingTaxiDetailsWidget extends StatelessWidget {
   
-  String carType(CarType type) {
+  String carType(BuildContext context, CarType type) {
     switch (type) {
       case CarType.standard:
         return AppLocalizations.of(context)!.carStandard;
@@ -67,7 +67,7 @@ class BookingTaxiDetailsWidget extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.only(top: 5.0),
                             child: Text(
-                              "${carType(state.car)}",
+                              "${carType(context, state.car)}",
                               style: TextStyle(
                                 fontSize: 18.0
                               ),

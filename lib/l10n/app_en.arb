@@ -34,7 +34,7 @@
   "signCode": "Code",
   "signCodeFailure": "Authentication Failure",
   "codeSentBySMS": "Code sent by SMS to",
-  "resentCode": "Re-sent the code "
+  "resentCode": "Re-sent the code ",
 
   "@signUpClient": {
     "description": "Sign Up Client UI : lib/pages/sign_up_client/sign_up_client.dart, lib/pages/sign_up_client_page.dart"
@@ -86,6 +86,6 @@
 
   "address": "Address",
   "country": "Country",
-  "nextBookingDetails": "Next: Booking details",
-  
+  "nextBookingDetails": "Next: Booking details"
+
 }

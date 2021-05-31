@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           AppLocalizations.of(context)!.home,
         ),
         toolbarOpacity: 0.0,
