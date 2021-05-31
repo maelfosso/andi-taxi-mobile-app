@@ -36,4 +36,25 @@
   "codeSentBySMS": "Code sent by SMS to",
   "resentCode": "Re-sent the code "
 
+  "@signUpClient": {
+    "description": "Sign Up Client UI : lib/pages/sign_up_client/sign_up_client.dart, lib/pages/sign_up_client_page.dart"
+  },
+
+  "signUpFailure": "Sign Up Failure",
+  "alreadyHaveAccount": "Already have an account? ",
+  "name": "Name",
+
+  "@signUpDriver": {
+    "description": "Sign Up Driver UI : lib/pages/sign_up_client/sign_up_driver_form.dart, lib/pages/sign_up_driver_page.dart"
+  },
+
+  "personalInformations": "Personal Informations",
+  "driverInformations": "Driver Informations",
+  "carInformations": "Car Informations",
+  "rcIdentificationNumber": "RC Identification Number",
+  "residenceAddress": "Residence Address",
+  "realResidenceAddress": "Real Residence Address",
+  "registrationNumber": "Registration Number",
+  "model": "Model",
+  
 }

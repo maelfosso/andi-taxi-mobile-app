@@ -1,9 +1,12 @@
+import 'dart:js';
+
 import 'package:andi_taxi/pages/sign_in/view/sign_in_page.dart';
 import 'package:andi_taxi/pages/sign_up_driver/cubit/sign_up_driver_cubit.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUpDriverForm extends StatelessWidget {
   
@@ -21,7 +24,9 @@ class SignUpDriverForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Sign Up Failure')),
+              const SnackBar(content: Text(
+                AppLocalizations.of(context)!.signUpFailure
+              )),
             );
         }
       },
@@ -57,7 +62,9 @@ class SignUpDriverForm extends StatelessWidget {
                     )
                   )
                 ),
-                child: Text("Personal Informations"),
+                child: Text(
+                  AppLocalizations.of(context)!.personalInformations
+                ),
               ),
               _NameInput(),
               _PhoneInput(),
@@ -72,7 +79,9 @@ class SignUpDriverForm extends StatelessWidget {
                     )
                   )
                 ),
-                child: Text("Driver Informations"),
+                child: Text(
+                  AppLocalizations.of(context)!.driverInformations
+                ),
               ),
               _RcIdentificationNumberInput(),
               _ResidenceAddressInput(),
@@ -88,7 +97,9 @@ class SignUpDriverForm extends StatelessWidget {
                     )
                   )
                 ),
-                child: Text("Car Informations"),
+                child: Text(
+                  AppLocalizations.of(context)!.carInformations
+                ),
               ),
               _CarRegistrationNumberInput(),
               _CarModelInput(),
@@ -122,11 +133,11 @@ class _Footer extends StatelessWidget {
         text: TextSpan(
           children: <TextSpan>[
             TextSpan(
-              text: 'Already have an account? ',
+              text: AppLocalizations.of(context)!.alreadyHaveAccount,
               style: defaultStyle,
             ),
             TextSpan(
-              text: 'Sign In',
+              text: AppLocalizations.of(context)!.signIn,
               style: linkStyle,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
@@ -159,7 +170,7 @@ class _NameInput extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Name",
+                AppLocalizations.of(context)!.name,
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -209,7 +220,7 @@ class _PhoneInput extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Phone number",
+                AppLocalizations.of(context)!.phoneNumber,
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -219,7 +230,7 @@ class _PhoneInput extends StatelessWidget {
                 keyboardType: TextInputType.phone,
                 onChanged: (phone) => context.read<SignUpDriverCubit>().phoneChanged(phone),
                 decoration: InputDecoration(
-                  errorText: state.phone.invalid ? 'invalid phone number' : null,
+                  errorText: state.phone.invalid ? AppLocalizations.of(context)!.invalidPhoneNumber : null,
                   filled: true,
                   fillColor: Color(0xFFF7F8F9),
                   enabledBorder: OutlineInputBorder(
@@ -259,7 +270,7 @@ class _RcIdentificationNumberInput extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "RC Identification Number",
+                AppLocalizations.of(context)!.rcIdentificationNumber,
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -308,7 +319,7 @@ class _ResidenceAddressInput extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Residence Address",
+                AppLocalizations.of(context)!.residenceAddress,
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -357,7 +368,7 @@ class _RealResidenceAddressInput extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Real Residence Address",
+                AppLocalizations.of(context)!.realResidenceAddress,
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -406,7 +417,7 @@ class _CarRegistrationNumberInput extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Registration Number",
+                AppLocalizations.of(context)!.registrationNumber,
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -455,7 +466,7 @@ class _CarModelInput extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Model",
+                AppLocalizations.of(context)!.model,
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -542,7 +553,7 @@ class _SignUpButton extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 15.0),
                     child: Text(
-                      "Sign Up",
+                      AppLocalizations.of(context)!.signUp,
                       textAlign: TextAlign.center,
                     )
                   ),

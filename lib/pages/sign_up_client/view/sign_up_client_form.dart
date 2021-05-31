@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUpClientForm extends StatelessWidget {
   const SignUpClientForm({Key? key}) : super(key: key);
@@ -16,7 +17,9 @@ class SignUpClientForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Sign Up Failure')),
+              const SnackBar(content: Text(
+                AppLocalizations.of(context)!.signUpFailure
+              )),
             );
         }
       },
@@ -72,7 +75,7 @@ class _Footer extends StatelessWidget {
         text: TextSpan(
           children: <TextSpan>[
             TextSpan(
-              text: 'Already have an account? ',
+              text: AppLocalizations.of(context)!.alreadyHaveAccount, 
               style: defaultStyle,
             ),
             TextSpan(
@@ -109,7 +112,7 @@ class _NameInput extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Name",
+                AppLocalizations.of(context)!.name,
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -159,7 +162,7 @@ class _PhoneInput extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Phone number",
+                AppLocalizations.of(context)!.phoneNumber,
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -169,7 +172,7 @@ class _PhoneInput extends StatelessWidget {
                 keyboardType: TextInputType.phone,
                 onChanged: (phone) => context.read<SignUpClientCubit>().phoneChanged(phone),
                 decoration: InputDecoration(
-                  errorText: state.phone.invalid ? 'invalid phone number' : null,
+                  errorText: state.phone.invalid ? AppLocalizations.of(context)!.invalidPhoneNumber : null,
                   filled: true,
                   fillColor: Color(0xFFF7F8F9),
                   enabledBorder: OutlineInputBorder(
@@ -224,7 +227,7 @@ class _SignUpButton extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 15.0),
                     child: Text(
-                      "Sign Up",
+                      AppLocalizations.of(context)!.signUp,
                       textAlign: TextAlign.center,
                     )
                   ),
