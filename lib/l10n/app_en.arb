@@ -62,4 +62,12 @@
   },
 
   "home": "Home",
+
+  "@gmapHome": {
+    "description": "GMap Home UI : lib/pages/gmap_home/gmap_home_page.dart"
+  },
+
+  "actualPosition": "Actual Position",
+  "bookTaxi": "Book a taxi",
+
 }

@@ -3,6 +3,7 @@ import 'package:andi_taxi/pages/gmap/cubit/gmap_cubit.dart' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GMapHome extends StatelessWidget {
   @override
@@ -30,7 +31,7 @@ class GMapHome extends StatelessWidget {
                 Container(
                   // margin: EdgeInsets.only(bottom: 20.0),
                   child: Text(
-                    "Actual position",
+                    AppLocalizations.of(context)!.actualPosition,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -104,7 +105,7 @@ class GMapHome extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 15.0),
                       child: Text(
-                        "Book a taxi",
+                        AppLocalizations.of(context)!.bookTaxi,
                         textAlign: TextAlign.center,
                       )
                     ),
