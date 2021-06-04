@@ -33,34 +33,59 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
+      
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.home,
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold
-          ),
-        ),
-        centerTitle: true,
-        actions: <Widget>[
-          ConstrainedBox(
-            constraints: BoxConstraints.tightFor(width: 40, height: 40),
-            child: Ink(
-              decoration: ShapeDecoration(
-                shape: CircleBorder(), 
-                color: Colors.white
-              ),
-              child: IconButton(
-                icon: Icon(Icons.exit_to_app),
-                color: Color(0xFFC6902E),
+        automaticallyImplyLeading: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ConstrainedBox(
+              constraints: BoxConstraints.tightFor(width: 40, height: 40),
+              child: ElevatedButton(
                 onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  // padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                  padding: EdgeInsets.all(0.0),
+                  primary: Colors.white,
+                  shape: CircleBorder(),
+                  elevation: 8.0
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.sort),
+                  color: Color(0xFFC6902E),
+                  onPressed: () {},
+                )
+              )
+            ),
+            Text(
+              AppLocalizations.of(context)!.home,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold
               ),
+            ),
+            ConstrainedBox(
+              constraints: BoxConstraints.tightFor(width: 40, height: 40),
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  // padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                  padding: EdgeInsets.all(0.0),
+                  primary: Colors.white,
+                  shape: CircleBorder(),
+                  elevation: 8.0
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.exit_to_app),
+                  color: Color(0xFFC6902E),
+                  onPressed: () {},
+                )
+              )
             )
-          )
-        ],
+          ],
+        ),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        // extend
       ),
       body: MultiRepositoryProvider(
         providers: [
