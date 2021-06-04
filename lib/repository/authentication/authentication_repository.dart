@@ -122,7 +122,9 @@ class AuthenticationRepository {
       prefs.setString(userCodeCacheKey, json.encode(userCode));
       
       _controller.add(AuthenticationStatus.known);
-    } on Exception {
+    } on Exception catch (e) {
+      print('Sign In Exception');
+      print(e);
       throw SignInFailure();
     }
 

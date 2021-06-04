@@ -14,58 +14,56 @@ class GMapView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea( 
-      child: BlocListener<ui.GMapCubit, ui.GMapState>(
-        listener: (context, state) async {
-          print('GMAPVIEW ... LISTENER');
-          switch (state.error) {
-            case 1:
-              print('STATE ERROR !!! 1 - 1 -1');
-              await Geolocator.openLocationSettings();
-              break;
-            case 2:
+    return BlocListener<ui.GMapCubit, ui.GMapState>(
+      listener: (context, state) async {
+        print('GMAPVIEW ... LISTENER');
+        switch (state.error) {
+          case 1:
+            print('STATE ERROR !!! 1 - 1 -1');
+            await Geolocator.openLocationSettings();
+            break;
+          case 2:
 
-              break;
-            case 3:
+            break;
+          case 3:
 
-              break;
-            default:
-          }
-        },
-        child: Stack(
-          alignment: AlignmentDirectional.bottomCenter,
-          children: [
-            _GoogleMap(),
-            BlocBuilder<gbloc.GMapBloc, gbloc.GMapState>(
-              builder: (context, state) {
-                print("BLOC BUILD : ${state.status}");
+            break;
+          default:
+        }
+      },
+      child: Stack(
+        alignment: AlignmentDirectional.bottomCenter,
+        children: [
+          _GoogleMap(),
+          BlocBuilder<gbloc.GMapBloc, gbloc.GMapState>(
+            builder: (context, state) {
+              print("BLOC BUILD : ${state.status}");
+              
+              switch (state.status) {
+                case gbloc.GMapStatus.unknown:
+                  // Waiting for the current position
+                  return Container(
+                    height: 30.0,
+                    color: Colors.blue,
+                  );
+                case gbloc.GMapStatus.home:
+                  return GMapHome();
                 
-                switch (state.status) {
-                  case gbloc.GMapStatus.unknown:
-                    // Waiting for the current position
-                    return Container(
-                      height: 30.0,
-                      color: Colors.blue,
-                    );
-                  case gbloc.GMapStatus.home:
-                    return GMapHome();
-                  
-                  case gbloc.GMapStatus.bookingTaxi:
-                    return GMapBookingPage();
+                case gbloc.GMapStatus.bookingTaxi:
+                  return GMapBookingPage();
 
-                  case gbloc.GMapStatus.searchingTaxi:
-                    return GMapSearchingPage();
-                    
-                  default:
-                    return Container(
-                      height: 50.0,
-                      color: Colors.black,
-                    );
-                }
+                case gbloc.GMapStatus.searchingTaxi:
+                  return GMapSearchingPage();
+                  
+                default:
+                  return Container(
+                    height: 50.0,
+                    color: Colors.black,
+                  );
               }
-            )
-          ],
-        )
+            }
+          )
+        ],
       )
     );
   }

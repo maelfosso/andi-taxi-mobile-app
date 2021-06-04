@@ -10,6 +10,7 @@ import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // Will have it's own state
 // GMap for Google Map
@@ -31,19 +32,27 @@ class HomePage extends StatelessWidget {
     final BookingTaxiRepository bookingTaxiRepository = BookingTaxiRepository();
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.home,
+          style: TextStyle(
+            color: Colors.black
+          ),
         ),
-        toolbarOpacity: 0.0,
+        centerTitle: true,
         actions: <Widget>[
           IconButton(
             key: const Key('homePage_logout_iconButton'),
-            icon: const Icon(Icons.exit_to_app),
+            icon: const Icon(
+              Icons.exit_to_app
+            ),
             onPressed: () => context.read<AuthenticationBloc>().add(AuthenticationLogoutRequested()),
           )
         ],
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        // extend
       ),
       body: MultiRepositoryProvider(
         providers: [
@@ -64,16 +73,6 @@ class HomePage extends StatelessWidget {
         //   child: HomeView(),
         // ) 
       )
-      //  RepositoryProvider.value(
-      //   value: geolocationRepository,
-      //   // create: (_) => GeolocationRepository(),
-        // child: BlocProvider(
-        //   create: (context) => GMapBloc(
-        //     geolocationRepository: geolocationRepository
-        //   ),
-        //   child: HomeView()
-      //   ) 
-      // )
     );
   }
 }
