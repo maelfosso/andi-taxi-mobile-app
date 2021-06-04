@@ -37,17 +37,25 @@ class HomePage extends StatelessWidget {
         title: Text(
           AppLocalizations.of(context)!.home,
           style: TextStyle(
-            color: Colors.black
+            color: Colors.black,
+            fontWeight: FontWeight.bold
           ),
         ),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(
-            key: const Key('homePage_logout_iconButton'),
-            icon: const Icon(
-              Icons.exit_to_app
-            ),
-            onPressed: () => context.read<AuthenticationBloc>().add(AuthenticationLogoutRequested()),
+          ConstrainedBox(
+            constraints: BoxConstraints.tightFor(width: 40, height: 40),
+            child: Ink(
+              decoration: ShapeDecoration(
+                shape: CircleBorder(), 
+                color: Colors.white
+              ),
+              child: IconButton(
+                icon: Icon(Icons.exit_to_app),
+                color: Color(0xFFC6902E),
+                onPressed: () {},
+              ),
+            )
           )
         ],
         elevation: 0.0,
