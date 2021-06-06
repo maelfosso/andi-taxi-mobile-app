@@ -62,6 +62,9 @@
   },
 
   "home": "Home",
+  "titleBTAddressSelection": "Address Selection",
+  "titleBTDetails": "Cost Selection",
+  "titleBTPayment": "Payment Methods",
 
   "@gmapHome": {
     "description": "GMap Home UI : lib/pages/gmap_home/gmap_home_page.dart"
@@ -86,6 +89,8 @@
 
   "address": "Address",
   "country": "Country",
-  "nextBookingDetails": "Next: Booking details"
+  "nextBookingDetails": "Next: Booking details",
+
+  "btCanceled": "Booking taxi canceled"
 
 }

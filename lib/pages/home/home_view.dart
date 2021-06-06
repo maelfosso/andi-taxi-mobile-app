@@ -14,22 +14,22 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GMapBloc, GMapState>(
       builder: (context, state) {
+        
         return new WillPopScope(
-    onWillPop: () async {
-      switch (state.status) {
-        case GMapStatus.home :
-          // Open the Drawer
+          onWillPop: () async {
+            switch (state.status) {
+              case GMapStatus.home :
+                // Open the Drawer
 
-          break;
-        case GMapStatus.bookingTaxi:
-          context.read<BookingTaxiBloc>().add(BookingTaxiPreviousStep());
-          break;
-        default:
-      }
-      return Future.value(false);
-    },
-    child: 
-     Scaffold(
+                break;
+              case GMapStatus.bookingTaxi:
+                context.read<BookingTaxiBloc>().add(BookingTaxiPreviousStep());
+                break;
+              default:
+            }
+            return Future.value(false);
+          },
+    child: Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         automaticallyImplyLeading: true,
@@ -90,13 +90,35 @@ class HomeView extends StatelessWidget {
                 )
               )
             ),
-            Text(
-              AppLocalizations.of(context)!.home,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold
-              ),
+            BlocBuilder<BookingTaxiBloc, BookingTaxiState>(
+              builder: (context, state) {
+                String title = "";
+
+                if (state.status == BookingTaxiStatus.address) {
+                  title = AppLocalizations.of(context)!.titleBTAddressSelection; // "Address selection";
+                } else if (state.status == BookingTaxiStatus.details) {
+                  title = AppLocalizations.of(context)!.titleBTDetails; // "Details";
+                } else if (state.status == BookingTaxiStatus.payment) {
+                  title = AppLocalizations.of(context)!.titleBTPayment; // "Payment";
+                } else {
+                  title = AppLocalizations.of(context)!.home;
+                }
+                return Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold
+                  ),
+                );
+              },
             ),
+            // Text(
+            //   title,
+            //   style: TextStyle(
+            //     color: Colors.black,
+            //     fontWeight: FontWeight.bold
+            //   ),
+            // ),
             ConstrainedBox(
               constraints: BoxConstraints.tightFor(width: 40, height: 40),
               child: ElevatedButton(

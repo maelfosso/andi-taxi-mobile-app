@@ -2,7 +2,7 @@ part of 'gmap_bloc.dart';
 
 class GMapState extends Equatable {
   const GMapState._({
-    this.status = GMapStatus.unknown,
+    this.status = GMapStatus.home,
     this.message = "",
     this.location = UserPositionPlace.empty,
   });

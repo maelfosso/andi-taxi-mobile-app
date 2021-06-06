@@ -3,7 +3,7 @@ part of 'booking_taxi_bloc.dart';
 
 class BookingTaxiState extends Equatable {
   const BookingTaxiState._({
-    this.status = BookingTaxiStatus.address,
+    this.status = BookingTaxiStatus.unknown,
     this.from = UserPositionPlace.empty,
     this.to = UserPositionPlace.empty,
     this.distance = 0.0,

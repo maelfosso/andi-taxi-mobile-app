@@ -21,7 +21,7 @@ class GMapBookingView extends StatelessWidget {
           ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(
-                SnackBar(content: Text("Canceled"))
+                SnackBar(content: Text(AppLocalizations.of(context)!.btCanceled))
               ); 
         }
       },
