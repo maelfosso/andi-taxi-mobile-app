@@ -8,9 +8,10 @@ abstract class GMapEvent extends Equatable {
 }
 
 class GMapStatusChanged extends GMapEvent {
-  const GMapStatusChanged(this.status);
+  const GMapStatusChanged(this.status, {this.message = ""});
 
   final GMapStatus status;
+  final String message;
 
   @override
   List<Object> get props => [status];

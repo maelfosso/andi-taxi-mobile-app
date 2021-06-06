@@ -13,7 +13,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 part 'booking_taxi_event.dart';
 part 'booking_taxi_state.dart';
 
-enum BookingTaxiStatus { unknown, address, details, payment, ended }
+enum BookingTaxiStatus { unknown, address, details, payment, ended, canceled }
 
 enum CarType { standard, vip, scooter, access, baby, electric, exec, van }
 
@@ -69,6 +69,10 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
         print('LAST POSITION $lastPositions');
 
         return BookingTaxiState.address(currentPosition, lastPositions);
+        
+      case BookingTaxiStatus.canceled:
+
+        return BookingTaxiState.canceled();
       default:
         return const BookingTaxiState.unknown();
     }

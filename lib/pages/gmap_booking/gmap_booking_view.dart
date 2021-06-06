@@ -15,7 +15,16 @@ part 'booking_taxi_payment_widget.dart';
 class GMapBookingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BookingTaxiBloc, BookingTaxiState>(
+    return BlocConsumer<BookingTaxiBloc, BookingTaxiState>(
+      listener: (context, state) {
+        if (state.status == BookingTaxiStatus.canceled) {
+          ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(content: Text("Canceled"))
+              ); 
+        }
+      },
       builder: (context, state) {
         print('[GMAP BOOKING VIEW] $state');
 
@@ -26,7 +35,9 @@ class GMapBookingView extends StatelessWidget {
             return BookingTaxiDetailsWidget();
           case BookingTaxiStatus.payment:
             return BookingTaxiPaymentWidget();
-          // case BookingTaxiStatus.unknown
+          case BookingTaxiStatus.canceled:
+            
+            return Container();
           default:
             print('[GMAP BOOKING VIEW] STATE STATUS : DEFAULT');
             return Container(

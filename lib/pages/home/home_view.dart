@@ -33,7 +33,9 @@ class HomeView extends StatelessWidget {
                   elevation: 8.0
                 ),
                 child: IconButton(
-                  icon: Icon(Icons.sort),
+                  icon: Icon(
+                    state.status == GMapStatus.home ?  Icons.sort : Icons.chevron_left
+                  ),
                   color: Color(0xFFC6902E),
                   onPressed: () {},
                 )
@@ -62,7 +64,48 @@ class HomeView extends StatelessWidget {
                     state.status == GMapStatus.home ?  Icons.exit_to_app : Icons.cancel
                   ),
                   color: Color(0xFFC6902E),
-                  onPressed: () {},
+                  onPressed: () {
+                    switch (state.status) {
+                      case GMapStatus.home :
+                        
+                        break;
+                      case GMapStatus.bookingTaxi:
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Booking a taxi"),
+                              content: Text(
+                                "Are you sure you want to cancel the taxi booking ?"
+                              ),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                  child: Text("No"),
+                                  onPressed: () {
+                                    Navigator.pop(context, "No");
+                                  },
+                                ),
+                                ElevatedButton(
+                                  child: Text("Yes"),
+                                  onPressed: () {
+                                    Navigator.pop(context, "Yes");
+                                  },
+                                )
+                              ],
+                            );
+                          },
+                        ).then((val) {
+                          if (val == "No") {
+
+                          } else {
+                            context.read<BookingTaxiBloc>().add(BookingTaxiStatusChanged(BookingTaxiStatus.canceled));
+                          }
+                        });
+
+                        break;
+                      default:
+                    }
+                  },
                 )
               )
             )

@@ -6,12 +6,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GMapHome extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<gbloc.GMapBloc, gbloc.GMapState>(
       builder: (context, state) {
         print('GMAP HOME $state');
         var place = state.location.place;
+        
+        if (state.message.isNotEmpty) {
+          // ScaffoldMessenger.of(context)
+          //     ..hideCurrentSnackBar()
+          //     ..showSnackBar(
+          //       SnackBar(content: Text(state.message))
+          //     ); 
+        }
 
         return Container(
           child: Container(

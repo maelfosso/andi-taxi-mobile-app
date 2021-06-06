@@ -28,6 +28,8 @@ class BookingTaxiState extends Equatable {
 
   const BookingTaxiState.unknown(): this._();
 
+  const BookingTaxiState.canceled(): this._(status: BookingTaxiStatus.canceled);
+  
   const BookingTaxiState.address(
     UserPositionPlace currentPosition,
     List<UserPosition> positions

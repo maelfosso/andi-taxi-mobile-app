@@ -11,6 +11,7 @@ import 'package:andi_taxi/repository/booking_taxi/booking_taxi_repository.dart';
 import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 part 'gmap_state.dart';
@@ -27,23 +28,19 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
       super(const GMapState.unknown()) {
     _bookingTaxiBloc = bookingTaxiBloc;  // BookingTaxiBloc(geolocationRepository: geolocationRepository, bookingTaxiRepository: this._bookingTaxiRepository);
     
-    _bookingTaxiBloc.stream.listen((event) {
-      print('[GMAP BLOC] - Booking Taxi Bloc STream - $event');
-      if (event.status == BookingTaxiStatus.ended) {
+    _bookingTaxiBloc.stream.listen((state) {
+      print('[GMAP BLOC] - Booking Taxi Bloc STream - $state');
+      if (state.status == BookingTaxiStatus.ended) {
         print('[GMAP BLOC] BOOKING STATUS IS ENDED');
         add(GMapStatusChanged(GMapStatus.searchingTaxi));
+      } else if (state.status == BookingTaxiStatus.canceled) {
+        add(GMapStatusChanged(GMapStatus.home, message: "Booking Taxi Canceled"));
       }
     });
 
     _gmapStatusSubscription = _geolocationRepository.status.listen(
       (status) => add(GMapStatusChanged(status)),
     );
-    // _bookingTaxiStatusSubscription = _bookingTaxiRepository.status.listen(
-    //   (status) {
-    //     print('GMAP BLOC - BOOKING STATUS CHANGED - $status');
-    //     add(GMapStatusChanged(status));
-    //   },
-    // );
   }
 
   late BookingTaxiBloc _bookingTaxiBloc;
@@ -75,7 +72,7 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
         print('GMAP STATUS ... HOME ... CAR GETTING');
         print(cars);
 
-        return GMapState.home(position);
+        return GMapState.home(position, event.message);
 
       case GMapStatus.bookingTaxi:
         final position = _geolocationRepository.currentPosition;
