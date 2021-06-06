@@ -144,19 +144,17 @@ class HomeView extends StatelessWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text("Booking a taxi"),
-                              content: Text(
-                                "Are you sure you want to cancel the taxi booking ?"
-                              ),
+                              title: Text(AppLocalizations.of(context)!.dgCancelTitle),
+                              content: Text(AppLocalizations.of(context)!.dgCancelContent),
                               actions: <Widget>[
                                 ElevatedButton(
-                                  child: Text("No"),
+                                  child: Text(AppLocalizations.of(context)!.no),
                                   onPressed: () {
                                     Navigator.pop(context, "No");
                                   },
                                 ),
                                 ElevatedButton(
-                                  child: Text("Yes"),
+                                  child: Text(AppLocalizations.of(context)!.ok),
                                   onPressed: () {
                                     Navigator.pop(context, "Yes");
                                   },

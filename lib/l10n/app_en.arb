@@ -1,4 +1,7 @@
 {
+  "ok": "OK",
+  "no": "No",
+
   "@welcome": {
     "description": "Welcome UI : lib/ui/welcome.dart"
   },
@@ -91,6 +94,8 @@
   "country": "Country",
   "nextBookingDetails": "Next: Booking details",
 
+  "dgCancelTitle":"Booking a taxi",
+  "dgCancelContent": "Are you sure you want to cancel the taxi booking ?",
   "btCanceled": "Booking taxi canceled"
 
 }

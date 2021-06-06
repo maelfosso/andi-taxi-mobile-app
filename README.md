@@ -100,6 +100,8 @@ Copy the content of `app_en.arb` and modify it with the good content.
 
 ### Run the app
 
+Please, enable the **Location** on your smartphone.
+
 Just run the app like usual with `flutter run`
 
 ## Run tests

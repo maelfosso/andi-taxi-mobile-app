@@ -79,7 +79,7 @@ class _Footer extends StatelessWidget {
               style: defaultStyle,
             ),
             TextSpan(
-              text: 'Sign In',
+              text: AppLocalizations.of(context)!.signIn,
               style: linkStyle,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
