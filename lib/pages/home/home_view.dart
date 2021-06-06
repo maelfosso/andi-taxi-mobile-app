@@ -14,10 +14,23 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GMapBloc, GMapState>(
       builder: (context, state) {
-        return 
+        return new WillPopScope(
+    onWillPop: () async {
+      switch (state.status) {
+        case GMapStatus.home :
+          // Open the Drawer
+
+          break;
+        case GMapStatus.bookingTaxi:
+          context.read<BookingTaxiBloc>().add(BookingTaxiPreviousStep());
+          break;
+        default:
+      }
+      return Future.value(false);
+    },
+    child: 
      Scaffold(
       extendBodyBehindAppBar: true,
-      
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: Row(
@@ -150,7 +163,8 @@ class HomeView extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       body: GMapPage()
-    );
+    )
+        );
       }
     );
   }
