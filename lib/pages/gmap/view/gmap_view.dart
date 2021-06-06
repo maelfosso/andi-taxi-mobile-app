@@ -16,7 +16,6 @@ class GMapView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<ui.GMapCubit, ui.GMapState>(
       listener: (context, state) async {
-        print('GMAPVIEW ... LISTENER');
         switch (state.error) {
           case 1:
             print('STATE ERROR !!! 1 - 1 -1');
@@ -75,40 +74,29 @@ class _GoogleMap extends StatelessWidget {
     print('CUSTOM GOOGLE MAP');
     return BlocBuilder<ui.GMapCubit, ui.GMapState>(
       builder: (context, state) {
-        print('GMAP VIEW STATE : $state');
-        print('CUStom GMap : ${state.currentPosition} - ${state.error}');
         print('SET OF MARKERS : ${Set<Marker>.of(state.markers.values)}');
-        print("GEOLOCATION : ${state.currentPlace.locality}, ${state.currentPlace.street}, ${state.currentPlace.country}");
-        print(state.currentPlace.toJson());
+        
         return GoogleMap(
           mapToolbarEnabled: true,
-          // onLongPress: null,
           onTap: (LatLng latLng) {
             print('TAPPEDD ---- ${context.read<gbloc.GMapBloc>().state.status} -- ${gbloc.GMapStatus.bookingTaxi}');
-            // final position = Position(latitude: latLng.latitude, longitude: latLng.longitude);
             if (
               context.read<gbloc.GMapBloc>().state.status == gbloc.GMapStatus.bookingTaxi &&
               context.read<BookingTaxiBloc>().state.status == BookingTaxiStatus.address
             ) {
-              // print("Google Map TAPPED 00000000---------- $latLng");
               context.read<BookingTaxiBloc>().add(DestinationAddressAdded(latLng));
-            } else {
-              print('NOTHING...');
+              context.read<ui.GMapCubit>().addMarker(latLng);
             }
           },
-            // context.read<gbloc.GMapBloc>().state.status == gbloc.GMapStatus.bookingTaxi
-            // ? (LatLng latLng) { print("Google Map TAPPED 00000000---------- $latLng"); }
-            // : null,
           onMapCreated: (GoogleMapController controller) {
-            print('ON MAP CREATED .. _GOOGLEMAP');
             context.read<ui.GMapCubit>().mapCreated(controller);
-            print('ON MAP CREATED --- END OF CALL');
           },
           initialCameraPosition: CameraPosition(
             target: state.currentPosition,
-            zoom: 11.0
+            zoom: 16.0
           ),
           markers: Set<Marker>.of(state.markers.values),
+          polylines: Set<Polyline>.of(state.polylines.values),
         );
       }
     );

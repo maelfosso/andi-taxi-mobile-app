@@ -7,12 +7,16 @@ import 'package:andi_taxi/models/user.dart';
 import 'package:andi_taxi/models/user_position.dart';
 import 'package:andi_taxi/models/user_position_place.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GeolocationRepository {
   final _controller = StreamController<GMapStatus>();
   final CacheClient _cache;
+  PolylinePoints polylinePoints = PolylinePoints();
 
   @visibleForTesting
   static const currentPositionCacheKey = '__current_position_cache_key__';
@@ -34,11 +38,40 @@ class GeolocationRepository {
 
   Stream<Position> get position {
     return Geolocator.getPositionStream();
-    // .listen(
-    // (Position position) {
-    //     print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
-    // });
+  }
 
+  Future<List<LatLng>> getRouteBetweenCoordinates(LatLng source, LatLng destination) async {
+
+    List<LatLng> polylineCoordinates = [];
+
+    try {
+
+      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        FlutterConfig.variables['GOOGLE_MAPS_API_KEY'],
+        PointLatLng(source.latitude, source.longitude),
+        PointLatLng(destination.latitude, destination.longitude),
+        travelMode: TravelMode.driving,
+        // wayPoints: [PolylineWayPoint(location: "Sabo, Yaba Lagos Nigeria")]
+      );
+
+      print('ROUTE BETWEEKN ');
+      print(result.points);
+      print(result.errorMessage);
+      print(result.status);
+
+      if (result.points.isNotEmpty) {
+        result.points.forEach((PointLatLng point) {
+          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+        });
+
+        
+      }
+    } on Exception catch (e) {
+      print('EXCEPTION ON ROUTING BETWEEN COOD');
+      print(e);
+    }
+
+    return polylineCoordinates;
   }
 
   // Future<Position> determinePosition() async {
