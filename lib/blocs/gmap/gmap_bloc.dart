@@ -25,14 +25,14 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
     required GeolocationRepository geolocationRepository,
     required BookingTaxiBloc bookingTaxiBloc
   }):  _geolocationRepository = geolocationRepository, 
-      super(const GMapState.unknown()) {
-    _bookingTaxiBloc = bookingTaxiBloc;  // BookingTaxiBloc(geolocationRepository: geolocationRepository, bookingTaxiRepository: this._bookingTaxiRepository);
+      super(const GMapState.home(UserPositionPlace.empty, "")) {
+    _bookingTaxiBloc = bookingTaxiBloc;
     
     _bookingTaxiBloc.stream.listen((state) {
-      print('[GMAP BLOC] - Booking Taxi Bloc STream - $state');
       if (state.status == BookingTaxiStatus.ended) {
-        print('[GMAP BLOC] BOOKING STATUS IS ENDED');
         add(GMapStatusChanged(GMapStatus.searchingTaxi));
+      } else if (state.status == BookingTaxiStatus.address && state.to != UserPositionPlace.empty) {
+        
       } else if (state.status == BookingTaxiStatus.canceled || state.status == BookingTaxiStatus.unknown) {
         add(GMapStatusChanged(GMapStatus.home, message: "Booking Taxi Canceled"));
       }
@@ -55,13 +55,7 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
     
     if (event is GMapStatusChanged) {
       yield await _mapGMapStatusChangedToState(event);
-    } 
-    // else if (event is GMapTapped) {
-    //   yield await _mapGMapTappedToState(event);
-    // }
-    // else if (event is GMapBookingTaxi) {
-
-    // }
+    }
   }
 
   Future<GMapState> _mapGMapStatusChangedToState(GMapStatusChanged event) async {
@@ -69,14 +63,12 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
       case GMapStatus.home:
         final position = _geolocationRepository.currentPosition;
         List<Car> cars = await _bookingTaxiRepository.taxiAround(position.position);
-        print('GMAP STATUS ... HOME ... CAR GETTING');
         print(cars);
 
         return GMapState.home(position, event.message);
 
       case GMapStatus.bookingTaxi:
         final position = _geolocationRepository.currentPosition;
-        // _bookingTaxiBloc.emit(BookingTaxiState.address(position, positions))
         _bookingTaxiBloc.add(BookingTaxiStatusChanged(BookingTaxiStatus.address));
 
         return GMapState.bookingTaxi(position);
@@ -92,10 +84,4 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
     }
   }
 
-  // Future<GMapState> _mapGMapTappedToState(GMapTapped event) async {
-  //   if (currentState) {
-
-  //   }
-  //   return;
-  // }
 }

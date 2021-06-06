@@ -22,7 +22,31 @@ class HomeView extends StatelessWidget {
         automaticallyImplyLeading: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: context.read<GMapBloc>().state.status == GMapStatus.searchingTaxi
+          ? [
+            ConstrainedBox(
+              constraints: BoxConstraints.tightFor(width: 40, height: 40),
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.all(0.0),
+                  primary: Colors.white,
+                  shape: CircleBorder(),
+                  elevation: 8.0
+                ),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.close
+                  ),
+                  color: Color(0xFF97ADB6),
+                  onPressed: () {
+                    
+                  },
+                )
+              )
+            )
+          ] 
+          : [
             ConstrainedBox(
               constraints: BoxConstraints.tightFor(width: 40, height: 40),
               child: ElevatedButton(
@@ -37,7 +61,7 @@ class HomeView extends StatelessWidget {
                   icon: Icon(
                     state.status == GMapStatus.home ?  Icons.sort : Icons.chevron_left
                   ),
-                  color: Color(0xFFC6902E),
+                  color: Color(0xFF97ADB6),
                   onPressed: () {
                     switch (state.status) {
                       case GMapStatus.home :
@@ -46,7 +70,6 @@ class HomeView extends StatelessWidget {
                         break;
                       case GMapStatus.bookingTaxi:
                         context.read<BookingTaxiBloc>().add(BookingTaxiPreviousStep());
-                        // context.read<BookingTaxiBloc>().add(BookingTaxiStatusChanged(BookingTaxiStatus.canceled));
                         break;
                       default:
                     }
@@ -66,7 +89,6 @@ class HomeView extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  // padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
                   padding: EdgeInsets.all(0.0),
                   primary: Colors.white,
                   shape: CircleBorder(),
@@ -76,7 +98,7 @@ class HomeView extends StatelessWidget {
                   icon: Icon(
                     state.status == GMapStatus.home ?  Icons.exit_to_app : Icons.cancel
                   ),
-                  color: Color(0xFFC6902E),
+                  color: Color(0xFF97ADB6),
                   onPressed: () {
                     switch (state.status) {
                       case GMapStatus.home :
@@ -131,12 +153,5 @@ class HomeView extends StatelessWidget {
     );
       }
     );
-    // BlocProvider(
-    //   create: (context) => GMapBloc(
-    //     geolocationRepository: context.read<GeolocationRepository>(),
-    //     bookingTaxiBloc: context.read<BookingTaxiBloc>()
-    //   ),
-    //   child: GMapPage()
-    // );
   }
 }

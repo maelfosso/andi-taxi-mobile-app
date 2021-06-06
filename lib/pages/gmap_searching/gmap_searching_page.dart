@@ -16,14 +16,17 @@ class GMapSearchingPage extends StatelessWidget {
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
               ),
-              IconButton(
-                icon: Icon(
-                  Icons.close,
-                  color: Colors.white,
-                  size: 30.0
-                ),
-                onPressed: () {} //=> context.read<GMapBloc>().add(GMapEvent),
+              Center(
+                child: Image.asset("assets/images/ic_car_loader.png"),
               )
+              // IconButton(
+              //   icon: Icon(
+              //     Icons.close,
+              //     color: Colors.white,
+              //     size: 30.0
+              //   ),
+              //   onPressed: () {} //=> context.read<GMapBloc>().add(GMapEvent),
+              // )
             ],
           )
         );
