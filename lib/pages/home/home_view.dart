@@ -2,6 +2,7 @@ import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
 import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart';
 // import 'package:andi_taxi/pages/gmap/cubit/gmap_cubit.dart';
 import 'package:andi_taxi/pages/gmap/view/gmap_page.dart';
+import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:andi_taxi/repository/gmap/geolocation_repository.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,7 +38,19 @@ class HomeView extends StatelessWidget {
                     state.status == GMapStatus.home ?  Icons.sort : Icons.chevron_left
                   ),
                   color: Color(0xFFC6902E),
-                  onPressed: () {},
+                  onPressed: () {
+                    switch (state.status) {
+                      case GMapStatus.home :
+                        // Open the Drawer
+
+                        break;
+                      case GMapStatus.bookingTaxi:
+                        context.read<BookingTaxiBloc>().add(BookingTaxiPreviousStep());
+                        // context.read<BookingTaxiBloc>().add(BookingTaxiStatusChanged(BookingTaxiStatus.canceled));
+                        break;
+                      default:
+                    }
+                  },
                 )
               )
             ),
@@ -67,7 +80,7 @@ class HomeView extends StatelessWidget {
                   onPressed: () {
                     switch (state.status) {
                       case GMapStatus.home :
-                        
+                        context.read<AuthenticationRepository>().signOut();
                         break;
                       case GMapStatus.bookingTaxi:
                         showDialog(

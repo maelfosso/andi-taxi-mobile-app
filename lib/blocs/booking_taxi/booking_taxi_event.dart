@@ -38,4 +38,6 @@ class BookingPaymentSetUp extends BookingTaxiEvent {
   List<Object?> get props => [method];
 }
 
+class BookingTaxiPreviousStep extends BookingTaxiEvent {}
+
 class BookingTaxiEnded extends BookingTaxiEvent {}

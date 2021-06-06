@@ -41,8 +41,8 @@ class GMapBookingView extends StatelessWidget {
           default:
             print('[GMAP BOOKING VIEW] STATE STATUS : DEFAULT');
             return Container(
-              color: Colors.deepOrange,
-              width: 50.0,
+              // color: Colors.deepOrange,
+              // width: 50.0,
             );
         }
       }

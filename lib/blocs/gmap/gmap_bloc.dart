@@ -33,7 +33,7 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
       if (state.status == BookingTaxiStatus.ended) {
         print('[GMAP BLOC] BOOKING STATUS IS ENDED');
         add(GMapStatusChanged(GMapStatus.searchingTaxi));
-      } else if (state.status == BookingTaxiStatus.canceled) {
+      } else if (state.status == BookingTaxiStatus.canceled || state.status == BookingTaxiStatus.unknown) {
         add(GMapStatusChanged(GMapStatus.home, message: "Booking Taxi Canceled"));
       }
     });

@@ -86,8 +86,11 @@ class _GoogleMap extends StatelessWidget {
           onTap: (LatLng latLng) {
             print('TAPPEDD ---- ${context.read<gbloc.GMapBloc>().state.status} -- ${gbloc.GMapStatus.bookingTaxi}');
             // final position = Position(latitude: latLng.latitude, longitude: latLng.longitude);
-            if (context.read<gbloc.GMapBloc>().state.status == gbloc.GMapStatus.bookingTaxi) {
-              print("Google Map TAPPED 00000000---------- $latLng");
+            if (
+              context.read<gbloc.GMapBloc>().state.status == gbloc.GMapStatus.bookingTaxi &&
+              context.read<BookingTaxiBloc>().state.status == BookingTaxiStatus.address
+            ) {
+              // print("Google Map TAPPED 00000000---------- $latLng");
               context.read<BookingTaxiBloc>().add(DestinationAddressAdded(latLng));
             } else {
               print('NOTHING...');

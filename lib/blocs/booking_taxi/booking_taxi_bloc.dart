@@ -50,6 +50,8 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
       yield await _mapBookingPaymentSetUpToState(event);
     } else if (event is BookingTaxiEnded) {
       yield await _mapBookingTaxiEndedToState(event);
+    } else if (event is BookingTaxiPreviousStep) {
+      yield await _mapBookingTaxiPreviousStepToState(event);
     }
   }
 
@@ -149,5 +151,22 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
   ) async {
 
     return const BookingTaxiState.unknown();
+  }
+
+  Future<BookingTaxiState> _mapBookingTaxiPreviousStepToState(
+    BookingTaxiPreviousStep event
+  ) async {
+    BookingTaxiStatus status;
+    if (state.status == BookingTaxiStatus.address) {
+      status = BookingTaxiStatus.unknown; // canceled;
+    } else if (state.status == BookingTaxiStatus.details) {
+      status = BookingTaxiStatus.address;
+    } else {
+      status = BookingTaxiStatus.details;
+    }
+
+    return state.copyWith(
+      status: status
+    );
   }
 }
