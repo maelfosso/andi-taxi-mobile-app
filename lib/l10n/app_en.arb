@@ -65,6 +65,12 @@
   },
 
   "home": "Home",
+  "menuTravelHistory": "Travel History",
+  "menuPayment": "Payment",
+  "menuPromoCode": "Promotional codes",
+  "menuSoutient": "Soutient",
+  "menuQuit": "Quit the profil",
+
   "titleBTAddressSelection": "Address Selection",
   "titleBTDetails": "Cost Selection",
   "titleBTPayment": "Payment Methods",

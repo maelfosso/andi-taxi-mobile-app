@@ -1,6 +1,6 @@
 import 'package:andi_taxi/blocs/booking_taxi/booking_taxi_bloc.dart';
 import 'package:andi_taxi/blocs/gmap/gmap_bloc.dart';
-// import 'package:andi_taxi/pages/gmap/cubit/gmap_cubit.dart';
+import 'package:andi_taxi/models/models.dart';
 import 'package:andi_taxi/pages/gmap/view/gmap_page.dart';
 import 'package:andi_taxi/repository/authentication/authentication_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,17 +11,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeView extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  User currentUser = User.empty;
+  
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GMapBloc, GMapState>(
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+
+    return FutureBuilder<User>(
+      future: context.read<AuthenticationRepository>().currentUser,
+      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          currentUser = snapshot.data!;
+          return BlocBuilder<GMapBloc, GMapState>(
       builder: (context, state) {
         
         return new WillPopScope(
           onWillPop: () async {
             switch (state.status) {
               case GMapStatus.home :
-                // Open the Drawer
                 if (_scaffoldKey.currentState!.isDrawerOpen) {
                   Navigator.of(context).pop();
                   return false;
@@ -36,12 +47,10 @@ class HomeView extends StatelessWidget {
             return Future.value(false);
           },
           child: Scaffold(
-              key: _scaffoldKey,
-
+            key: _scaffoldKey,
             extendBodyBehindAppBar: true,
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              // leading: Container(),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: context.read<GMapBloc>().state.status == GMapStatus.searchingTaxi
@@ -88,7 +97,6 @@ class HomeView extends StatelessWidget {
                           switch (state.status) {
                             case GMapStatus.home :
                               // Open the Drawer
-                              // Scaffold.of(context).openEndDrawer();
                               _scaffoldKey.currentState!.openDrawer();
                               break;
                             case GMapStatus.bookingTaxi:
@@ -122,13 +130,6 @@ class HomeView extends StatelessWidget {
                       );
                     },
                   ),
-                  // Text(
-                  //   title,
-                  //   style: TextStyle(
-                  //     color: Colors.black,
-                  //     fontWeight: FontWeight.bold
-                  //   ),
-                  // ),
                   ConstrainedBox(
                     constraints: BoxConstraints.tightFor(width: 40, height: 40),
                     child: ElevatedButton(
@@ -193,39 +194,112 @@ class HomeView extends StatelessWidget {
               backgroundColor: Colors.transparent,
             ),
             drawer: Drawer(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: const <Widget>[
-                  DrawerHeader(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    height: statusBarHeight + 160,
+                    padding: EdgeInsets.only(top: statusBarHeight),
                     decoration: BoxDecoration(
-                      color: Colors.blue,
-                    ),
-                    child: Text(
-                      'Drawer Header',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
+                      border: Border(
+                        bottom: Divider.createBorderSide(context),
                       ),
+                      color: Color(0xFFC6902E),
+                    ),
+                    child: AnimatedContainer(
+                      width: double.infinity,
+                      padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFC6902E),
+                      ),
+                      duration: const Duration(milliseconds: 250),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Stack(
+                            fit: StackFit.passthrough,
+                            overflow: Overflow.visible,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle
+                                ),
+                                child: Image(
+                                  image: AssetImage('assets/images/ic_user.png')
+                                ),
+                              ),
+                              Positioned(
+                                top: -20.0,
+                                right: -30.0,
+                                child: InkWell(
+                                  child: Image(
+                                    image: AssetImage('assets/images/ic_edit.png')
+                                  ),
+                                  onTap: () {
+                                    print("Edit the user information");
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "${currentUser.name}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            "${currentUser.phoneNumber}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      ) 
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.message),
-                    title: Text('Messages'),
+                    title: Text(
+                      AppLocalizations.of(context)!.menuTravelHistory
+                    ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.account_circle),
-                    title: Text('Profile'),
+                    title: Text(
+                      AppLocalizations.of(context)!.menuPayment
+                    ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text('Settings'),
+                    title: Text(
+                      AppLocalizations.of(context)!.menuPromoCode
+                    ),
                   ),
+                  ListTile(
+                    title: Text(
+                      AppLocalizations.of(context)!.menuSoutient
+                    ),
+                  ),
+                  Spacer(),
+                  ListTile(
+                    title: Text(
+                      AppLocalizations.of(context)!.menuQuit
+                    ),
+                    onTap: () => context.read<AuthenticationRepository>().signOut(),
+                  )
                 ],
               ),
             ),
             body: GMapPage()
           )
         );
+      }
+    );
+        }
       }
     );
   }
