@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+part 'booking_taxi_home_widget.dart';
 part 'booking_taxi_address_widget.dart';
 part 'booking_taxi_details_widget.dart';
 part 'booking_taxi_payment_widget.dart';
@@ -29,6 +30,8 @@ class GMapBookingView extends StatelessWidget {
         print('[GMAP BOOKING VIEW] $state');
 
         switch(state.status) {
+          case BookingTaxiStatus.home:
+            return BookingTaxiHomeWidget();
           case BookingTaxiStatus.address:
             return BookingTaxiAddressWidget();
           case BookingTaxiStatus.details:
@@ -36,13 +39,15 @@ class GMapBookingView extends StatelessWidget {
           case BookingTaxiStatus.payment:
             return BookingTaxiPaymentWidget();
           case BookingTaxiStatus.canceled:
-            
-            return Container();
+            return Container(
+              color: Colors.red,
+              width: 50.0,
+            );
           default:
             print('[GMAP BOOKING VIEW] STATE STATUS : DEFAULT');
             return Container(
-              // color: Colors.deepOrange,
-              // width: 50.0,
+              color: Colors.deepOrange,
+              width: 50.0,
             );
         }
       }

@@ -31,18 +31,20 @@ class HomeView extends StatelessWidget {
         
         return new WillPopScope(
           onWillPop: () async {
-            switch (state.status) {
-              case GMapStatus.home :
-                if (_scaffoldKey.currentState!.isDrawerOpen) {
-                  Navigator.of(context).pop();
-                  return false;
-                }
+            if (state.status == GMapStatus.home || ( 
+              state.status == GMapStatus.bookingTaxi 
+              && context.read<BookingTaxiBloc>().state.status == BookingTaxiStatus.home 
+            )) {
+              // Open the Drawer
+              if (_scaffoldKey.currentState!.isDrawerOpen) {
+                Navigator.of(context).pop();
+                return false;
+              }
 
-                return true;
-              case GMapStatus.bookingTaxi:
-                context.read<BookingTaxiBloc>().add(BookingTaxiPreviousStep());
-                break;
-              default:
+              return true;
+            } else if (state.status == GMapStatus.bookingTaxi) {
+              context.read<BookingTaxiBloc>().add(BookingTaxiPreviousStep());
+              return false;
             }
             return Future.value(false);
           },
@@ -90,19 +92,28 @@ class HomeView extends StatelessWidget {
                       ),
                       child: IconButton(
                         icon: Icon(
-                          state.status == GMapStatus.home ?  Icons.sort : Icons.chevron_left
+                          state.status == GMapStatus.home 
+                            || ( 
+                              state.status == GMapStatus.bookingTaxi 
+                              && context.read<BookingTaxiBloc>().state.status == BookingTaxiStatus.home 
+                            )
+                          ? Icons.sort 
+                          : Icons.chevron_left
                         ),
                         color: Color(0xFF97ADB6),
                         onPressed: () {
-                          switch (state.status) {
-                            case GMapStatus.home :
-                              // Open the Drawer
-                              _scaffoldKey.currentState!.openDrawer();
-                              break;
-                            case GMapStatus.bookingTaxi:
-                              context.read<BookingTaxiBloc>().add(BookingTaxiPreviousStep());
-                              break;
-                            default:
+                          // switch (state.status) {
+                          if (state.status == GMapStatus.home || ( 
+                            state.status == GMapStatus.bookingTaxi 
+                            && context.read<BookingTaxiBloc>().state.status == BookingTaxiStatus.home 
+                          )) {
+                            // Open the Drawer
+                            _scaffoldKey.currentState!.openDrawer();
+                              // break;
+                          } else if (state.status == GMapStatus.bookingTaxi) {
+                            context.read<BookingTaxiBloc>().add(BookingTaxiPreviousStep());
+                            //   break;
+                            // default:
                           }
                         },
                       )
