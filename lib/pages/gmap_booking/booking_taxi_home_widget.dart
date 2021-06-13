@@ -32,6 +32,15 @@ class BookingTaxiHomeWidget extends StatelessWidget {
                       
                     )
                   ),
+                  onTap: () async {
+                    final sessionToken = Uuid().v4();
+                    print('ON TAP TEXTFIEL $sessionToken');
+                    final Suggestion? result = await showSearch(
+                      context: context,
+                      delegate: AddressSearch(sessionToken),
+                    );
+                    print(result);
+                  },
                 ),
 
                 // TextField(

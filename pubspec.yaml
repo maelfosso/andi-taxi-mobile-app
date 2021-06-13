@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.0.6
   intl: ^0.17.0
   flutter_polyline_points: ^1.0.0
+  uuid: ^3.0.4
 
 
 

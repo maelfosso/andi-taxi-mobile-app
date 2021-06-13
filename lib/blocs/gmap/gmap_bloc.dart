@@ -67,7 +67,7 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
       case GMapStatus.home:
         final position = _geolocationRepository.currentPosition;
         List<Car> cars = await _bookingTaxiRepository.taxiAround(position.position);
-        print(cars);
+        print("CARS ARROUND --- $cars");
 
         return GMapState.home(position, event.message);
 

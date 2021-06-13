@@ -63,8 +63,8 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
     switch (event.status) {
       case BookingTaxiStatus.home:
       final currentPosition = _geolocationRepository.currentPosition;
-        List<UserPosition> lastPositions = await _bookingTaxiRepository.lastLocations();
-        // List<UserPosition> lastPositions = [];
+        // List<UserPosition> lastPositions = await _bookingTaxiRepository.lastLocations();
+        List<UserPosition> lastPositions = [];
 
         print('CURRENT POSITION $currentPosition');
         print('LAST POSITION $lastPositions');
@@ -77,8 +77,8 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
         List<UserPosition> lastPositions = await _bookingTaxiRepository.lastLocations();
         // List<UserPosition> lastPositions = [];
 
-        print('CURRENT POSITION $currentPosition');
-        print('LAST POSITION $lastPositions');
+        // print('CURRENT POSITION $currentPosition');
+        // print('LAST POSITION $lastPositions');
 
         return BookingTaxiState.address(currentPosition, lastPositions);
         
