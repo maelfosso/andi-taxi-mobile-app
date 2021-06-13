@@ -7,8 +7,42 @@ class BookingTaxiHomeWidget extends StatelessWidget {
     return BlocBuilder<BookingTaxiBloc, BookingTaxiState>(
       builder: (context, state) {
         return Container(
-          color: Colors.cyan,
-          width: 50,
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+          color: Colors.white,
+          // width: double.infinity,
+          // height: 150,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                child: TextField(
+                  // controller: editingController,
+                  decoration: InputDecoration(
+                      // labelText: "Search",
+                      hintText: "Search",
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Color(0xFFC6902E),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFFC6902E)),
+                        borderRadius: BorderRadius.all(Radius.circular(25.0),
+                      ),
+                      
+                    )
+                  ),
+                ),
+
+                // TextField(
+                //   decoration: InputDecoration(
+                //     border: InputBorder.none,
+                //     hintText: 'Enter a search term'
+                //   ),
+                // )
+              )
+            ]
+          )
         );
       }
     );
