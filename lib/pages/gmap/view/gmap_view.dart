@@ -109,7 +109,7 @@ class _GoogleMap extends StatelessWidget {
           // markers: Set<Marker>.of(state.markers.values),
           circles: circles,
           polylines: Set<Polyline>.of(state.polylines.values),
-          compassEnabled: true,
+          // compassEnabled: true,
           myLocationEnabled: true,
         );
       }
