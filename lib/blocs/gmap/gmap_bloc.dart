@@ -41,6 +41,10 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
     _gmapStatusSubscription = _geolocationRepository.status.listen(
       (status) => add(GMapStatusChanged(status)),
     );
+
+    // add()
+    print('ADD ENVENT BOOKING TAXI');
+    add(GMapStatusChanged(GMapStatus.bookingTaxi));
   }
 
   late BookingTaxiBloc _bookingTaxiBloc;
@@ -63,13 +67,16 @@ class GMapBloc extends Bloc<GMapEvent, GMapState> {
       case GMapStatus.home:
         final position = _geolocationRepository.currentPosition;
         List<Car> cars = await _bookingTaxiRepository.taxiAround(position.position);
-        print(cars);
+        print("CARS ARROUND --- $cars");
 
         return GMapState.home(position, event.message);
 
       case GMapStatus.bookingTaxi:
         final position = _geolocationRepository.currentPosition;
-        _bookingTaxiBloc.add(BookingTaxiStatusChanged(BookingTaxiStatus.address));
+        _bookingTaxiBloc.add(BookingTaxiStatusChanged(BookingTaxiStatus.home));
+
+        print('INITI BOOKING TAXI EVENT STATUS CHANGED');
+        print(position);
 
         return GMapState.bookingTaxi(position);
 

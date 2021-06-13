@@ -53,13 +53,17 @@ class GMapCubit extends Cubit<GMapState> {
         destinationLocationIcon = onValue;
       }
     );
-    // _positionSubscription = this._geolocationRepository.position.listen(
-    //   (Position position) {
-    //     // the state will change with the new position
-    //     // emit the change with currentPosition 
-    //     print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
-    //   }
-    // );
+    _positionSubscription = this._geolocationRepository.position.listen(
+      (Position position) {
+        // the state will change with the new position
+        // emit the change with currentPosition 
+        print('STREAM CURRENT POSITION : $position');
+        print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
+        emit(state.copyWith(
+          currentPosition: LatLng(position.latitude, position.longitude)
+        ));
+      }
+    );
   }
 
   final GeolocationRepository _geolocationRepository;

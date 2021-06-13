@@ -13,7 +13,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 part 'booking_taxi_event.dart';
 part 'booking_taxi_state.dart';
 
-enum BookingTaxiStatus { unknown, address, details, payment, ended, canceled }
+enum BookingTaxiStatus { unknown, home, address, details, payment, ended, canceled }
 
 enum CarType { standard, vip, scooter, access, baby, electric, exec, van }
 
@@ -61,20 +61,31 @@ class BookingTaxiBloc extends Bloc<BookingTaxiEvent, BookingTaxiState> {
     print('_mapBOKING STATUS CHANGED : ${event.status}');
     
     switch (event.status) {
+      case BookingTaxiStatus.home:
+      final currentPosition = _geolocationRepository.currentPosition;
+        // List<UserPosition> lastPositions = await _bookingTaxiRepository.lastLocations();
+        List<UserPosition> lastPositions = [];
+
+        print('CURRENT POSITION $currentPosition');
+        print('LAST POSITION $lastPositions');
+
+        return BookingTaxiState.home(currentPosition, lastPositions);
+
       case BookingTaxiStatus.address:
 
         final currentPosition = _geolocationRepository.currentPosition;
         List<UserPosition> lastPositions = await _bookingTaxiRepository.lastLocations();
         // List<UserPosition> lastPositions = [];
 
-        print('CURRENT POSITION $currentPosition');
-        print('LAST POSITION $lastPositions');
+        // print('CURRENT POSITION $currentPosition');
+        // print('LAST POSITION $lastPositions');
 
         return BookingTaxiState.address(currentPosition, lastPositions);
         
       case BookingTaxiStatus.canceled:
 
         return BookingTaxiState.canceled();
+      // case 
       default:
         return const BookingTaxiState.unknown();
     }

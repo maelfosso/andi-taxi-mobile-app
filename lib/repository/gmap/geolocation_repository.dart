@@ -136,7 +136,7 @@ class GeolocationRepository {
       );
     
       _cache.write<UserPositionPlace>(key: currentPositionCacheKey, value: userPositionPlace); // UserPosition.fromPosition(position));
-      _controller.add(GMapStatus.home);
+      _controller.add(GMapStatus.bookingTaxi);
     } catch (e) {
       print('ERROR CALLED GET CURRENT POSITION $e');
     }
