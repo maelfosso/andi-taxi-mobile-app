@@ -75,9 +75,18 @@ class _GoogleMap extends StatelessWidget {
     return BlocBuilder<ui.GMapCubit, ui.GMapState>(
       builder: (context, state) {
         print('SET OF MARKERS : ${Set<Marker>.of(state.markers.values)}');
-        
+        Set<Circle> circles = Set.from([
+          Circle(
+            circleId: CircleId("current-location"),
+            center: state.currentPosition,
+            radius: 50,
+            fillColor: Color(0xFFC6902E),
+            strokeWidth: 0,
+            strokeColor: Color(0xFFC6902E),
+          )
+        ]);
+
         return GoogleMap(
-          mapToolbarEnabled: true,
           onTap: (LatLng latLng) {
             print('TAPPEDD ---- ${context.read<gbloc.GMapBloc>().state.status} -- ${gbloc.GMapStatus.bookingTaxi}');
             if (
@@ -95,8 +104,13 @@ class _GoogleMap extends StatelessWidget {
             target: state.currentPosition,
             zoom: 16.0
           ),
-          markers: Set<Marker>.of(state.markers.values),
+          mapType: MapType.normal,
+          // trafficEnabled: true,
+          // markers: Set<Marker>.of(state.markers.values),
+          circles: circles,
           polylines: Set<Polyline>.of(state.polylines.values),
+          compassEnabled: true,
+          myLocationEnabled: true,
         );
       }
     );
